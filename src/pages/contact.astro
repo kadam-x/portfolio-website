@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact" backgroundColor="#FFE4AF">
+  <main class="contact-container">
+    <a href="/" class="back-link">
+      <span class="arrow">←</span>
+      <span>take me home</span>
+    </a>
+    
+    <div class="contact-box">
+      <h1 class="title">get in touch</h1>
+      
+      <div class="contact-content">
+        <p class="intro">
+          Have a project in mind or just want to chat? Drop me a message!
+        </p>
+        
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="message">message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Your message..." required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            send message →
+          </button>
+        </form>
+        
+        <div class="social-links">
+          <a href="mailto:your@email.com" class="social-link">email</a>
+          <a href="https://github.com/yourusername" target="_blank" class="social-link">github</a>
+          <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">linkedin</a>
+          <a href="https://twitter.com/yourusername" target="_blank" class="social-link">twitter</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .contact-container {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #412E20;
+    font-size: 1rem;
+    transition: color 0.2s;
+    margin-bottom: 3rem;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+  }
+
+  .back-link:hover {
+    color: #EC753A;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+  }
+
+  .contact-box {
+    background: rgba(218, 159, 95, 0.2);
+    border: 3px solid #7B4F2E;
+    padding: 3rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    color: #412E20;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 3px solid #EC753A;
+    padding-bottom: 1rem;
+  }
+
+  .intro {
+    font-size: 1.1rem;
+    color: #412E20;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    color: #412E20;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: lowercase;
+  }
+
+  input,
+  textarea {
+    padding: 0.75rem;
+    border: 2px solid #7B4F2E;
+    background: rgba(255, 228, 175, 0.5);
+    color: #412E20;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #EC753A;
+    background: #FFE4AF;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .submit-btn {
+    padding: 1rem 2rem;
+    border: 3px solid #7B4F2E;
+    background: #EC753A;
+    color: #FFE4AF;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: lowercase;
+  }
+
+  .submit-btn:hover {
+    background: #7B4F2E;
+    border-color: #412E20;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(65, 46, 32, 0.3);
+  }
+
+  .social-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 2px solid #DA9F5F;
+  }
+
+  .social-link {
+    padding: 0.75rem;
+    border: 2px solid #7B4F2E;
+    background: rgba(218, 159, 95, 0.3);
+    color: #412E20;
+    text-align: center;
+    transition: all 0.2s;
+    text-transform: lowercase;
+  }
+
+  .social-link:hover {
+    background: #EC753A;
+    border-color: #EC753A;
+    color: #FFE4AF;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .contact-box {
+      padding: 1.5rem;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+  }
+</style>

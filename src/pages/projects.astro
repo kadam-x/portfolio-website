@@ -1,0 +1,403 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Projects" backgroundColor="#342331">
+  <div id="vanta-background"></div>
+  <main class="projects-container">
+    <div class="nav-buttons">
+      <a href="/" class="back-link" id="homeLink">
+        <span class="arrow">←</span>
+        <span>take me home</span>
+      </a>
+      
+      <button class="projects-toggle" id="projectsToggle">
+        <span class="button-text">projects</span>
+      </button>
+    </div>
+    
+    <div class="projects-sidebar" id="projectsSidebar">
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-header">
+            <h2>Project Name</h2>
+            <span class="tag">React</span>
+          </div>
+          <p class="project-desc">
+            A brief description of what this project does and the problem it solves.
+          </p>
+          <div class="project-links">
+            <a href="#" class="project-link">Live Demo →</a>
+            <a href="#" class="project-link">Code →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h2>Another Project</h2>
+            <span class="tag">TypeScript</span>
+          </div>
+          <p class="project-desc">
+            Another cool project description goes here.
+          </p>
+          <div class="project-links">
+            <a href="#" class="project-link">Live Demo →</a>
+            <a href="#" class="project-link">Code →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h2>Third Project</h2>
+            <span class="tag">Astro</span>
+          </div>
+          <p class="project-desc">
+            Yet another project that showcases your skills.
+          </p>
+          <div class="project-links">
+            <a href="#" class="project-link">Live Demo →</a>
+            <a href="#" class="project-link">Code →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script is:inline src="/vanta.globe.min.js"></script>
+<script is:inline>
+  (function() {
+    let vantaEffect = null;
+    let isProjectsOpen = false;
+    let animationTimeout = null;
+
+    function initVanta() {
+      // Clean up existing effect if any
+      if (vantaEffect && typeof vantaEffect.destroy === 'function') {
+        vantaEffect.destroy();
+      }
+      
+      if (typeof VANTA !== 'undefined' && VANTA.GLOBE) {
+        vantaEffect = VANTA.GLOBE({
+          el: "#vanta-background",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          color: 0xec753a,
+          color2: 0xffe4af,
+          backgroundColor: 0x412e20
+        });
+      }
+    }
+
+    function initProjectsToggle() {
+      const projectsToggle = document.getElementById('projectsToggle');
+      const projectsSidebar = document.getElementById('projectsSidebar');
+      const homeLink = document.getElementById('homeLink');
+      const buttonText = projectsToggle ? projectsToggle.querySelector('.button-text') : null;
+      
+      if (projectsToggle && projectsSidebar && homeLink && buttonText) {
+        // Remove existing listeners by cloning
+        const newToggle = projectsToggle.cloneNode(true);
+        const parent = projectsToggle.parentNode;
+        if (parent) {
+          parent.replaceChild(newToggle, projectsToggle);
+        }
+        
+        const newButtonText = newToggle.querySelector('.button-text');
+        
+        newToggle.addEventListener('click', function() {
+          // Cancel any ongoing animation
+          if (animationTimeout) {
+            clearTimeout(animationTimeout);
+            projectsSidebar.classList.remove('active', 'closing');
+          }
+          
+          if (!isProjectsOpen) {
+            // Opening projects
+            isProjectsOpen = true;
+            if (newButtonText) newButtonText.textContent = '<-back';
+            homeLink.classList.add('hidden');
+            projectsSidebar.classList.remove('closing');
+            projectsSidebar.classList.add('active');
+          } else {
+            // Closing projects
+            isProjectsOpen = false;
+            projectsSidebar.classList.add('closing');
+            
+            // Change button text immediately when closing starts
+            if (newButtonText) newButtonText.textContent = 'projects';
+            homeLink.classList.remove('hidden');
+            
+            animationTimeout = setTimeout(function() {
+              projectsSidebar.classList.remove('active', 'closing');
+              animationTimeout = null;
+            }, 500);
+          }
+        });
+      }
+    }
+
+    function init() {
+      initVanta();
+      initProjectsToggle();
+    }
+
+    // Initialize on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    // Re-initialize after view transition
+    document.addEventListener('astro:page-load', function() {
+      init();
+      isProjectsOpen = false;
+    });
+  })();
+</script>
+
+<style>
+  #vanta-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .projects-container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+
+  .nav-buttons {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFE4AF;
+    font-size: 1rem;
+    transition: all 0.3s;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-link.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+
+  .back-link:hover {
+    color: #EC753A;
+  }
+
+  .back-link.hidden:hover {
+    transform: translateY(-10px);
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+  }
+
+  .projects-toggle {
+    color: #D73F24;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    transition: all 0.2s;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  .projects-toggle:hover {
+    color: #EC753A;
+  }
+
+  .button-text {
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+
+  .projects-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 100vh;
+    padding: 4rem 2rem;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .projects-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .projects-sidebar.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 6rem;
+  }
+
+  .project-card {
+    background: #412E20;
+    border: 3px solid #DA9F5F;
+    padding: 2rem;
+    transition: all 0.3s;
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+
+  .projects-sidebar.active .project-card {
+    animation: slideUp 0.4s ease both;
+  }
+
+  .projects-sidebar.active .project-card:nth-child(1) {
+    animation-delay: 0.08s;
+  }
+
+  .projects-sidebar.active .project-card:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .projects-sidebar.active .project-card:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+
+  .projects-sidebar.closing .project-card {
+    animation: slideDown 0.4s ease both !important;
+  }
+
+  .projects-sidebar.closing .project-card:nth-child(1) {
+    animation-delay: 0.24s;
+  }
+
+  .projects-sidebar.closing .project-card:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .projects-sidebar.closing .project-card:nth-child(3) {
+    animation-delay: 0.08s;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+  .project-card:hover {
+    border-color: #EC753A;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(236, 117, 58, 0.3);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .project-header h2 {
+    font-size: 1.5rem;
+    color: #FFE4AF;
+  }
+
+  .tag {
+    background: #DA9F5F;
+    color: #342331;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    border: 1px solid #EC753A;
+  }
+
+  .project-desc {
+    color: #DA9F5F;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .project-link {
+    color: #EC753A;
+    border: 2px solid #EC753A;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+    flex: 1;
+    text-align: center;
+  }
+
+  .project-link:hover {
+    background: #EC753A;
+    color: #342331;
+  }
+
+  @media (max-width: 640px) {
+    .projects-sidebar {
+      width: 100%;
+    }
+
+    .nav-buttons {
+      top: 1rem;
+      left: 1rem;
+    }
+  }
+</style>

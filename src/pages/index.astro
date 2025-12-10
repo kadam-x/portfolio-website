@@ -1,16 +1,120 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Portfolio" backgroundColor="#342331">
+  <main class="hero-container">
+    <div class="center-box">
+      <div class="welcome-header">
+        <span class="welcome-text">WELCOME</span>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="/about" class="nav-link">about</a>
+        <a href="/projects" class="nav-link">projects</a>
+        <a href="/contact" class="nav-link">contact</a>
+      </nav>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .hero-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .center-box {
+    padding: 3rem 2rem 3rem 3rem;
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    position: relative;
+  }
+
+  .center-box::before {
+    content: '[';
+    position: absolute;
+    left: 15px;
+    top: 150px;
+    height: 100%;
+    font-size: 18rem;
+    color: #FFE4AF;
+    line-height: 1;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-weight: 300;
+    display: flex;
+    align-items: flex-start;
+    transform-origin: top left;
+    transform: scaleY(5);
+	transform: scaleX(1);
+  }
+
+  .center-box::after {
+    content: ']';
+    position: absolute;
+    right: 0px;
+    top: 150px;
+    height: 100%;
+    font-size: 18rem;
+    color: #FFE4AF;
+    line-height: 1;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-weight: 300;
+    display: flex;
+    align-items: flex-start;
+    transform-origin: top right;
+    transform: scaleY(5);
+	transform: scaleX(1);
+  }
+
+  .welcome-header {
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border: 2px solid #DA9F5F;
+    padding: 0.75rem 5rem;
+    background: #342331;
+    display: inline-block;
+  }
+
+  .welcome-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFE4AF;
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+    color: #FFE4AF;
+    text-align: center;
+    transition: all 0.2s;
+    padding: 0.5rem;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+  }
+
+  .nav-link:hover {
+    color: #EC753A;
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 640px) {
+    .center-box {
+      min-width: unset;
+      width: 100%;
+      padding: 2rem;
+    }
+  }
+</style>
