@@ -71,17 +71,32 @@ import Layout from '../layouts/Layout.astro';
     let vantaEffect = null;
     let isProjectsOpen = false;
     let animationTimeout = null;
+    let vantaRetryCount = 0;
+    const maxRetries = 50;
+    let scriptsLoaded = false;
+
+    // Check if scripts are already loaded
+    if (typeof THREE !== 'undefined' && typeof VANTA !== 'undefined') {
+      scriptsLoaded = true;
+    }
 
     function initVanta() {
       const vantaEl = document.getElementById('vanta-background');
       if (!vantaEl) {
-        setTimeout(initVanta, 100);
+        if (vantaRetryCount < maxRetries) {
+          vantaRetryCount++;
+          setTimeout(initVanta, 100);
+        }
         return;
       }
       
       // Clean up existing effect if any
       if (vantaEffect && typeof vantaEffect.destroy === 'function') {
-        vantaEffect.destroy();
+        try {
+          vantaEffect.destroy();
+        } catch (e) {
+          console.warn('Error destroying vanta effect:', e);
+        }
         vantaEffect = null;
       }
       
@@ -101,14 +116,22 @@ import Layout from '../layouts/Layout.astro';
             color2: 0xffe4af,
             backgroundColor: 0x412e20
           });
+          vantaRetryCount = 0; // Reset on success
         } catch (e) {
           console.error('Vanta initialization error:', e);
-          // Retry after a short delay
-          setTimeout(initVanta, 100);
+          if (vantaRetryCount < maxRetries) {
+            vantaRetryCount++;
+            setTimeout(initVanta, 200);
+          }
         }
       } else {
         // VANTA not loaded yet, retry
-        setTimeout(initVanta, 100);
+        if (vantaRetryCount < maxRetries) {
+          vantaRetryCount++;
+          setTimeout(initVanta, 100);
+        } else {
+          console.error('VANTA.GLOBE not available after max retries');
+        }
       }
     }
 
@@ -162,25 +185,36 @@ import Layout from '../layouts/Layout.astro';
 
     function init() {
       initProjectsToggle();
-      // Delay Vanta slightly to ensure scripts are loaded
-      setTimeout(initVanta, 50);
+    }
+
+    // Initialize Vanta with multiple strategies
+    function initVantaWithDelay() {
+      vantaRetryCount = 0;
+      setTimeout(initVanta, 100);
     }
 
     // Initialize on page load
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener('DOMContentLoaded', function() {
+        init();
+        initVantaWithDelay();
+      });
     } else {
       init();
+      initVantaWithDelay();
     }
 
     // Re-initialize after view transition
     document.addEventListener('astro:page-load', function() {
       init();
       isProjectsOpen = false;
+      vantaRetryCount = 0;
+      initVantaWithDelay();
     });
     
     // Also listen for when scripts are fully loaded
     window.addEventListener('load', function() {
+      vantaRetryCount = 0;
       initVanta();
     });
   })();
