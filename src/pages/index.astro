@@ -14,6 +14,18 @@ import Layout from '../layouts/Layout.astro';
         <a href="/projects" class="nav-link">projects</a>
         <a href="/contact" class="nav-link">contact</a>
       </nav>
+      
+	  <div class="color-palette">
+		<div class="color-square" style="background-color: #FFE4AF;"></div>
+		<div class="color-square" style="background-color: #DA9F5F;"></div>
+		<div class="color-square" style="background-color: #B88C57;"></div>
+		<div class="color-square" style="background-color: #7B4F2E;"></div>
+		<div class="color-square" style="background-color: #412E20;"></div>
+		<div class="color-square" style="background-color: #342331;"></div>
+		<div class="color-square" style="background-color: #2B1B12;"></div>
+		<div class="color-square" style="background-color: #D73F24;"></div>
+		<div class="color-square" style="background-color: #BD3B1F;"></div>
+	  </div>
     </div>
   </main>
 </Layout>
@@ -107,7 +119,24 @@ import Layout from '../layouts/Layout.astro';
 
   .nav-link:hover {
     color: #EC753A;
-    transform: translateX(4px);
+  }
+
+  .color-palette {
+    margin: 0 auto;
+    border: 0px solid #DA9F5F;
+    padding: 0.75rem 1.3rem;
+    background: #342331;
+    display: inline-flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .color-square {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid rgba(255, 228, 175, 0.3);
   }
 
   @media (max-width: 640px) {

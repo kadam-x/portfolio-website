@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Projects" backgroundColor="#342331">
-  <div id="vanta-background"></div>
+  <div id="vanta-background" data-astro-transition-scope="vanta-bg"></div>
   <main class="projects-container">
     <div class="nav-buttons">
       <a href="/" class="back-link" id="homeLink">
@@ -73,25 +73,42 @@ import Layout from '../layouts/Layout.astro';
     let animationTimeout = null;
 
     function initVanta() {
+      const vantaEl = document.getElementById('vanta-background');
+      if (!vantaEl) {
+        setTimeout(initVanta, 100);
+        return;
+      }
+      
       // Clean up existing effect if any
       if (vantaEffect && typeof vantaEffect.destroy === 'function') {
         vantaEffect.destroy();
+        vantaEffect = null;
       }
       
+      // Wait for VANTA to be available
       if (typeof VANTA !== 'undefined' && VANTA.GLOBE) {
-        vantaEffect = VANTA.GLOBE({
-          el: "#vanta-background",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          color: 0xec753a,
-          color2: 0xffe4af,
-          backgroundColor: 0x412e20
-        });
+        try {
+          vantaEffect = VANTA.GLOBE({
+            el: "#vanta-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xec753a,
+            color2: 0xffe4af,
+            backgroundColor: 0x412e20
+          });
+        } catch (e) {
+          console.error('Vanta initialization error:', e);
+          // Retry after a short delay
+          setTimeout(initVanta, 100);
+        }
+      } else {
+        // VANTA not loaded yet, retry
+        setTimeout(initVanta, 100);
       }
     }
 
@@ -144,8 +161,9 @@ import Layout from '../layouts/Layout.astro';
     }
 
     function init() {
-      initVanta();
       initProjectsToggle();
+      // Delay Vanta slightly to ensure scripts are loaded
+      setTimeout(initVanta, 50);
     }
 
     // Initialize on page load
@@ -159,6 +177,11 @@ import Layout from '../layouts/Layout.astro';
     document.addEventListener('astro:page-load', function() {
       init();
       isProjectsOpen = false;
+    });
+    
+    // Also listen for when scripts are fully loaded
+    window.addEventListener('load', function() {
+      initVanta();
     });
   })();
 </script>
