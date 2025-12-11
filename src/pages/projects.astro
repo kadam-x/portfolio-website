@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Projects" backgroundColor="#342331">
+<Layout title="Projects" backgroundColor="#412E20">
   <div id="vanta-background" data-astro-transition-scope="vanta-bg"></div>
   <main class="projects-container" style="view-transition-name: projects-page;">
     <div class="nav-buttons">
@@ -157,6 +157,17 @@ import Layout from '../layouts/Layout.astro';
     min-height: 100vh;
   }
 
+  @keyframes slideInFromRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   .nav-buttons {
     position: fixed;
     top: 2rem;
@@ -175,8 +186,10 @@ import Layout from '../layouts/Layout.astro';
     font-size: 1rem;
     transition: all 0.3s;
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0;
+    transform: translateX(100px);
+    animation: slideInFromRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.2s;
   }
 
   .back-link.hidden {
@@ -208,6 +221,10 @@ import Layout from '../layouts/Layout.astro';
     transition: all 0.2s;
     text-align: left;
     font-weight: 700;
+    opacity: 0;
+    transform: translateX(100px);
+    animation: slideInFromRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.35s;
   }
 
   .projects-toggle:hover {
