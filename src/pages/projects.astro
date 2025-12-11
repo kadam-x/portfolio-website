@@ -66,101 +66,8 @@ import Layout from '../layouts/Layout.astro';
 
 <script is:inline>
   (function() {
-    let vantaEffect = null;
     let isProjectsOpen = false;
     let animationTimeout = null;
-
-    // Load scripts dynamically to ensure proper order
-    function loadScript(src) {
-      return new Promise(function(resolve, reject) {
-        // Check if already loaded
-        if (src.includes('three.js') && typeof THREE !== 'undefined') {
-          resolve();
-          return;
-        }
-        if (src.includes('vanta') && typeof VANTA !== 'undefined') {
-          resolve();
-          return;
-        }
-        
-        // Check if script tag already exists
-        const existingScript = document.querySelector('script[src="' + src + '"]');
-        if (existingScript) {
-          // Script tag exists, wait a bit for it to load
-          let attempts = 0;
-          const checkLoaded = setInterval(function() {
-            attempts++;
-            if ((src.includes('three.js') && typeof THREE !== 'undefined') ||
-                (src.includes('vanta') && typeof VANTA !== 'undefined')) {
-              clearInterval(checkLoaded);
-              resolve();
-            } else if (attempts > 50) {
-              clearInterval(checkLoaded);
-              reject(new Error('Script timeout: ' + src));
-            }
-          }, 100);
-          return;
-        }
-        
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    function initVanta() {
-      const vantaEl = document.getElementById('vanta-background');
-      if (!vantaEl) {
-        return;
-      }
-      
-      // Clean up existing effect if any
-      if (vantaEffect && typeof vantaEffect.destroy === 'function') {
-        try {
-          vantaEffect.destroy();
-        } catch (e) {
-          console.warn('Error destroying vanta effect:', e);
-        }
-        vantaEffect = null;
-      }
-      
-      // Wait for VANTA to be available
-      if (typeof VANTA !== 'undefined' && VANTA.GLOBE) {
-        try {
-          vantaEffect = VANTA.GLOBE({
-            el: "#vanta-background",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0xec753a,
-            color2: 0xffe4af,
-            backgroundColor: 0x412e20
-          });
-        } catch (e) {
-          console.error('Vanta initialization error:', e);
-        }
-      }
-    }
-
-    // Load scripts and initialize
-    function loadAndInit() {
-      Promise.all([
-        loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js'),
-        loadScript('/vanta.globe.min.js')
-      ]).then(function() {
-        initVanta();
-      }).catch(function(err) {
-        console.error('Failed to load scripts:', err);
-        // Retry after delay
-        setTimeout(loadAndInit, 500);
-      });
-    }
 
     function initProjectsToggle() {
       const projectsToggle = document.getElementById('projectsToggle');
@@ -211,43 +118,26 @@ import Layout from '../layouts/Layout.astro';
     }
 
     function init() {
-      initProjectsToggle();
-    }
-
-    // Initialize on page load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        init();
-        loadAndInit();
-      });
-    } else {
-      init();
-      loadAndInit();
-    }
-
-    // Re-initialize after view transition
-    document.addEventListener('astro:page-load', function() {
-      init();
       isProjectsOpen = false;
-      // Small delay to ensure DOM is ready
-      setTimeout(function() {
-        loadAndInit();
-      }, 100);
-    });
-
-    // Add class to body when projects page loads for swipe animation
-    document.addEventListener('astro:page-load', function() {
+      initProjectsToggle();
+      
+      // Add class to body for swipe animation
       if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
         document.body.classList.add('projects-page-active');
       } else {
         document.body.classList.remove('projects-page-active');
       }
-    });
-
-    // Also check on initial load
-    if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
-      document.body.classList.add('projects-page-active');
     }
+
+    // Initialize on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    // Re-initialize after view transition
+    document.addEventListener('astro:page-load', init);
   })();
 </script>
 

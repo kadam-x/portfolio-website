@@ -27,28 +27,211 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
   <body style={`background-color: ${backgroundColor}`}>
     <slot />
     <script is:inline>
-      // Add class for projects page swipe animation
-      document.addEventListener('astro:before-preparation', (ev) => {
-        const to = ev.to;
-        if (to && (to.pathname === '/projects' || to.pathname === '/projects/')) {
-          document.documentElement.classList.add('transitioning-to-projects');
-        } else {
-          document.documentElement.classList.remove('transitioning-to-projects');
-        }
-      });
-      
-      document.addEventListener('astro:after-swap', () => {
-        if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
-          document.documentElement.classList.add('on-projects-page');
-        } else {
-          document.documentElement.classList.remove('on-projects-page');
-        }
-      });
-      
-      // Check on initial load
-      if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
-        document.documentElement.classList.add('on-projects-page');
+      // Vanta.js initialization - must be in Layout to work with View Transitions
+      // Use window to store state across View Transition navigations
+      window._vantaState = window._vantaState || { effect: null, scriptsLoaded: false };
+
+      function loadVantaScript(src) {
+        return new Promise(function(resolve, reject) {
+          // First check if global is already available
+          if (src.includes('three') && typeof THREE !== 'undefined') {
+            resolve();
+            return;
+          }
+          if (src.includes('vanta') && typeof VANTA !== 'undefined') {
+            resolve();
+            return;
+          }
+
+          // Need to load the script
+          var script = document.createElement('script');
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
       }
+
+      function destroyVanta() {
+        if (window._vantaState.effect) {
+          try {
+            window._vantaState.effect.destroy();
+          } catch (e) {}
+          window._vantaState.effect = null;
+        }
+      }
+
+      function createVanta() {
+        var el = document.getElementById('vanta-background');
+        if (!el) return;
+        if (typeof VANTA === 'undefined' || !VANTA.GLOBE) return;
+
+        destroyVanta();
+
+        try {
+          window._vantaState.effect = VANTA.GLOBE({
+            el: el,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xec753a,
+            color2: 0xffe4af,
+            backgroundColor: 0x412e20
+          });
+        } catch (e) {
+          console.error('Vanta init error:', e);
+        }
+      }
+
+      function initVantaBackground() {
+        var el = document.getElementById('vanta-background');
+        if (!el) {
+          destroyVanta();
+          return;
+        }
+
+        // Check if scripts are actually loaded and functional (not just script tags present)
+        var scriptsReady = typeof THREE !== 'undefined' && typeof VANTA !== 'undefined' && VANTA.GLOBE;
+        
+        if (scriptsReady) {
+          createVanta();
+          return;
+        }
+
+        // Scripts not ready - need to load them
+        // First, remove any existing broken script tags
+        var oldThree = document.querySelector('script[src*="three"]');
+        var oldVanta = document.querySelector('script[src*="vanta"]');
+        if (oldThree) oldThree.remove();
+        if (oldVanta) oldVanta.remove();
+
+        // Load fresh
+        loadVantaScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js')
+          .then(function() {
+            return loadVantaScript('/vanta.globe.min.js');
+          })
+          .then(function() {
+            createVanta();
+          })
+          .catch(function(err) {
+            console.error('Script load failed:', err);
+          });
+      }
+
+      // Run on initial load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVantaBackground);
+      } else {
+        initVantaBackground();
+      }
+
+      // Run after View Transition swap - use both events for reliability
+      document.addEventListener('astro:after-swap', function() {
+        // Small delay to ensure DOM is settled
+        setTimeout(initVantaBackground, 50);
+      });
+
+      document.addEventListener('astro:page-load', function() {
+        // Backup trigger with delay
+        setTimeout(initVantaBackground, 100);
+      });
+
+      // Intercept link clicks BEFORE Astro handles them
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (!link || !link.href) return;
+        
+        try {
+          const targetUrl = new URL(link.href, window.location.origin);
+          const targetPath = targetUrl.pathname;
+          const currentPath = window.location.pathname;
+          
+          // Detect back navigation: going to home from any page
+          const isGoingHome = targetPath === '/' && currentPath !== '/';
+          
+          // Check if this is a "back" link by class or content
+          const hasBackClass = link.classList.contains('back-link');
+          const hasBackText = link.textContent && (
+            link.textContent.includes('take me home') || 
+            link.textContent.includes('←') ||
+            link.textContent.includes('back')
+          );
+          
+          console.log('Link clicked:', {
+            targetPath,
+            currentPath,
+            isGoingHome,
+            hasBackClass,
+            hasBackText,
+            linkText: link.textContent
+          });
+          
+          if (isGoingHome || hasBackClass || hasBackText) {
+            sessionStorage.setItem('navigating-back', 'true');
+            document.documentElement.classList.add('navigating-back');
+            console.log('Set navigating-back = true, class list:', document.documentElement.className);
+          } else {
+            sessionStorage.removeItem('navigating-back');
+            document.documentElement.classList.remove('navigating-back');
+            console.log('Removed navigating-back');
+          }
+        } catch (err) {
+          console.error('Error in click handler:', err);
+        }
+      }, true);
+      
+      // Detect browser back/forward buttons
+      window.addEventListener('popstate', function() {
+        sessionStorage.setItem('navigating-back', 'true');
+        document.documentElement.classList.add('navigating-back');
+      });
+      
+      // CRITICAL: Ensure class persists throughout the entire transition
+      document.addEventListener('astro:before-preparation', function(ev) {
+        const isBack = sessionStorage.getItem('navigating-back') === 'true';
+        console.log('Before preparation, navigating-back:', isBack, 'class list:', document.documentElement.className);
+        
+        if (isBack) {
+          document.documentElement.classList.add('navigating-back');
+        }
+      });
+      
+      // CRITICAL: Apply to new document before swap
+      document.addEventListener('astro:before-swap', function(ev) {
+        const isBack = sessionStorage.getItem('navigating-back') === 'true';
+        console.log('Before swap, navigating-back:', isBack);
+        
+        if (isBack) {
+          // Add to BOTH old and new documents
+          document.documentElement.classList.add('navigating-back');
+          ev.newDocument.documentElement.classList.add('navigating-back');
+          console.log('Added to new document, class list:', ev.newDocument.documentElement.className);
+        }
+      });
+      
+      // Keep class after swap
+      document.addEventListener('astro:after-swap', function() {
+        const isBack = sessionStorage.getItem('navigating-back') === 'true';
+        console.log('After swap, navigating-back:', isBack, 'class list:', document.documentElement.className);
+        
+        if (isBack) {
+          document.documentElement.classList.add('navigating-back');
+        }
+      });
+      
+      // Clear only after page load is complete
+      document.addEventListener('astro:page-load', function() {
+        console.log('Page load, class list before clear:', document.documentElement.className);
+        setTimeout(function() {
+          document.documentElement.classList.remove('navigating-back');
+          sessionStorage.removeItem('navigating-back');
+          console.log('Cleared navigating-back');
+        }, 350);
+      });
     </script>
   </body>
 </html>

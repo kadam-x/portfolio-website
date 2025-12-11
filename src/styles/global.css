@@ -1,78 +1,19 @@
-/* Glitch Animation Keyframes */
-@keyframes glitch-in {
-    from {
-        opacity: 0;
-        filter: hue-rotate(90deg) blur(5px);
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        filter: hue-rotate(0deg) blur(0);
-        transform: scale(1);
-    }
-}
-
-@keyframes glitch-out {
-    from {
-        opacity: 1;
-        filter: hue-rotate(0deg) blur(0);
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        filter: hue-rotate(-90deg) blur(5px);
-        transform: scale(1.1);
-    }
-}
-
-/* Apply the Glitch Animation to the View Transition Elements */
-/* --- New Content (page coming into view) --- */
-::view-transition-new(root) {
-    animation: glitch-in 0.3s cubic-bezier(0.7, 0, 0.3, 1) both;
-}
-
-/* --- Old Content (page leaving view) --- */
-::view-transition-old(root) {
-    animation: glitch-out 0.3s cubic-bezier(0.7, 0, 0.3, 1) both;
-}
-
-/* Swipe animation specifically for projects page transitions */
-/* When navigating TO projects page - projects slides in from right */
-::view-transition-new(projects-page) {
-    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
-    z-index: 2;
-}
-
-/* When navigating FROM projects page - projects slides out to left */
-::view-transition-old(projects-page) {
-    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
-    z-index: 1;
-}
-
-/* Override root transition when transitioning to/from projects */
-html.transitioning-to-projects ::view-transition-old(root) {
-    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
-}
-
-html.transitioning-to-projects ::view-transition-new(root) {
-    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
-}
-
-/* When leaving projects page */
-html:not(.on-projects-page):not(.transitioning-to-projects) ::view-transition-old(root) {
-    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
-}
-
-/* Optional: Ensure the transition happens quickly */
-::view-transition-group(root) {
-    animation-duration: 0.3s;
-}
-
-/* Swipe Animation for Projects Page */
+/* Swipe Animation Keyframes with smoother motion */
 @keyframes swipe-in-from-right {
     from {
         opacity: 0;
         transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes swipe-in-from-left {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
     }
     to {
         opacity: 1;
@@ -86,32 +27,72 @@ html:not(.on-projects-page):not(.transitioning-to-projects) ::view-transition-ol
         transform: translateX(0);
     }
     to {
-        opacity: 0;
-        transform: translateX(-100%);
+        opacity: 0.8;
+        transform: translateX(-30%);
     }
 }
 
-/* Apply swipe animation when transitioning TO projects page */
+@keyframes swipe-out-to-right {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0.8;
+        transform: translateX(30%);
+    }
+}
+
+/* Apply Swipe Animation to all View Transitions */
+/* Default: forward navigation (new from right, old to left) */
+::view-transition-new(root) {
+    animation: swipe-in-from-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+::view-transition-old(root) {
+    animation: swipe-out-to-left 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+/* Back navigation: reversed (new from left, old to right) */
+.navigating-back ::view-transition-new(root),
+html.navigating-back ::view-transition-new(root),
+:root.navigating-back ::view-transition-new(root) {
+    animation: swipe-in-from-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+
+.navigating-back ::view-transition-old(root),
+html.navigating-back ::view-transition-old(root),
+:root.navigating-back ::view-transition-old(root) {
+    animation: swipe-out-to-right 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both !important;
+}
+
+/* Ensure the transition happens smoothly */
+::view-transition-group(root) {
+    animation-duration: 0.3s;
+}
+
+/* Swipe animation for projects page (uses same as root, but can be customized) */
 ::view-transition-new(projects-page) {
-    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-/* Apply swipe animation when transitioning FROM projects page */
-::view-transition-old(projects-page) {
-    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-/* Override root transition when projects-page is involved */
-::view-transition-group(projects-page) {
-    animation-duration: 0.4s;
-}
-
-/* When navigating TO projects, old page slides out */
-::view-transition-old(root):only-child {
-    z-index: 1;
-}
-
-::view-transition-new(projects-page) {
+    animation: swipe-in-from-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     z-index: 2;
 }
 
+::view-transition-old(projects-page) {
+    animation: swipe-out-to-left 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+    z-index: 1;
+}
+
+html.navigating-back ::view-transition-new(projects-page),
+.navigating-back ::view-transition-new(projects-page) {
+    animation: swipe-in-from-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+
+html.navigating-back ::view-transition-old(projects-page),
+.navigating-back ::view-transition-old(projects-page) {
+    animation: swipe-out-to-right 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both !important;
+}
+
+/* Smooth transition container */
+::view-transition-group(*) {
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
