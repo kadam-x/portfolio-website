@@ -36,8 +36,82 @@
     animation: glitch-out 0.3s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 
+/* Swipe animation specifically for projects page transitions */
+/* When navigating TO projects page - projects slides in from right */
+::view-transition-new(projects-page) {
+    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+    z-index: 2;
+}
+
+/* When navigating FROM projects page - projects slides out to left */
+::view-transition-old(projects-page) {
+    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+    z-index: 1;
+}
+
+/* Override root transition when transitioning to/from projects */
+html.transitioning-to-projects ::view-transition-old(root) {
+    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+}
+
+html.transitioning-to-projects ::view-transition-new(root) {
+    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+}
+
+/* When leaving projects page */
+html:not(.on-projects-page):not(.transitioning-to-projects) ::view-transition-old(root) {
+    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+}
+
 /* Optional: Ensure the transition happens quickly */
 ::view-transition-group(root) {
     animation-duration: 0.3s;
+}
+
+/* Swipe Animation for Projects Page */
+@keyframes swipe-in-from-right {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes swipe-out-to-left {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+/* Apply swipe animation when transitioning TO projects page */
+::view-transition-new(projects-page) {
+    animation: swipe-in-from-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Apply swipe animation when transitioning FROM projects page */
+::view-transition-old(projects-page) {
+    animation: swipe-out-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Override root transition when projects-page is involved */
+::view-transition-group(projects-page) {
+    animation-duration: 0.4s;
+}
+
+/* When navigating TO projects, old page slides out */
+::view-transition-old(root):only-child {
+    z-index: 1;
+}
+
+::view-transition-new(projects-page) {
+    z-index: 2;
 }
 

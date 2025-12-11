@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Projects" backgroundColor="#342331">
   <div id="vanta-background" data-astro-transition-scope="vanta-bg"></div>
-  <main class="projects-container">
+  <main class="projects-container" style="view-transition-name: projects-page;">
     <div class="nav-buttons">
       <a href="/" class="back-link" id="homeLink">
         <span class="arrow">←</span>
@@ -64,29 +64,55 @@ import Layout from '../layouts/Layout.astro';
   </main>
 </Layout>
 
-<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script is:inline src="/vanta.globe.min.js"></script>
 <script is:inline>
   (function() {
     let vantaEffect = null;
     let isProjectsOpen = false;
     let animationTimeout = null;
-    let vantaRetryCount = 0;
-    const maxRetries = 50;
-    let scriptsLoaded = false;
 
-    // Check if scripts are already loaded
-    if (typeof THREE !== 'undefined' && typeof VANTA !== 'undefined') {
-      scriptsLoaded = true;
+    // Load scripts dynamically to ensure proper order
+    function loadScript(src) {
+      return new Promise(function(resolve, reject) {
+        // Check if already loaded
+        if (src.includes('three.js') && typeof THREE !== 'undefined') {
+          resolve();
+          return;
+        }
+        if (src.includes('vanta') && typeof VANTA !== 'undefined') {
+          resolve();
+          return;
+        }
+        
+        // Check if script tag already exists
+        const existingScript = document.querySelector('script[src="' + src + '"]');
+        if (existingScript) {
+          // Script tag exists, wait a bit for it to load
+          let attempts = 0;
+          const checkLoaded = setInterval(function() {
+            attempts++;
+            if ((src.includes('three.js') && typeof THREE !== 'undefined') ||
+                (src.includes('vanta') && typeof VANTA !== 'undefined')) {
+              clearInterval(checkLoaded);
+              resolve();
+            } else if (attempts > 50) {
+              clearInterval(checkLoaded);
+              reject(new Error('Script timeout: ' + src));
+            }
+          }, 100);
+          return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
     }
 
     function initVanta() {
       const vantaEl = document.getElementById('vanta-background');
       if (!vantaEl) {
-        if (vantaRetryCount < maxRetries) {
-          vantaRetryCount++;
-          setTimeout(initVanta, 100);
-        }
         return;
       }
       
@@ -116,23 +142,24 @@ import Layout from '../layouts/Layout.astro';
             color2: 0xffe4af,
             backgroundColor: 0x412e20
           });
-          vantaRetryCount = 0; // Reset on success
         } catch (e) {
           console.error('Vanta initialization error:', e);
-          if (vantaRetryCount < maxRetries) {
-            vantaRetryCount++;
-            setTimeout(initVanta, 200);
-          }
-        }
-      } else {
-        // VANTA not loaded yet, retry
-        if (vantaRetryCount < maxRetries) {
-          vantaRetryCount++;
-          setTimeout(initVanta, 100);
-        } else {
-          console.error('VANTA.GLOBE not available after max retries');
         }
       }
+    }
+
+    // Load scripts and initialize
+    function loadAndInit() {
+      Promise.all([
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js'),
+        loadScript('/vanta.globe.min.js')
+      ]).then(function() {
+        initVanta();
+      }).catch(function(err) {
+        console.error('Failed to load scripts:', err);
+        // Retry after delay
+        setTimeout(loadAndInit, 500);
+      });
     }
 
     function initProjectsToggle() {
@@ -187,36 +214,40 @@ import Layout from '../layouts/Layout.astro';
       initProjectsToggle();
     }
 
-    // Initialize Vanta with multiple strategies
-    function initVantaWithDelay() {
-      vantaRetryCount = 0;
-      setTimeout(initVanta, 100);
-    }
-
     // Initialize on page load
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         init();
-        initVantaWithDelay();
+        loadAndInit();
       });
     } else {
       init();
-      initVantaWithDelay();
+      loadAndInit();
     }
 
     // Re-initialize after view transition
     document.addEventListener('astro:page-load', function() {
       init();
       isProjectsOpen = false;
-      vantaRetryCount = 0;
-      initVantaWithDelay();
+      // Small delay to ensure DOM is ready
+      setTimeout(function() {
+        loadAndInit();
+      }, 100);
     });
-    
-    // Also listen for when scripts are fully loaded
-    window.addEventListener('load', function() {
-      vantaRetryCount = 0;
-      initVanta();
+
+    // Add class to body when projects page loads for swipe animation
+    document.addEventListener('astro:page-load', function() {
+      if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
+        document.body.classList.add('projects-page-active');
+      } else {
+        document.body.classList.remove('projects-page-active');
+      }
     });
+
+    // Also check on initial load
+    if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
+      document.body.classList.add('projects-page-active');
+    }
   })();
 </script>
 

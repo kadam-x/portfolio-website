@@ -26,6 +26,30 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
   </head>
   <body style={`background-color: ${backgroundColor}`}>
     <slot />
+    <script is:inline>
+      // Add class for projects page swipe animation
+      document.addEventListener('astro:before-preparation', (ev) => {
+        const to = ev.to;
+        if (to && (to.pathname === '/projects' || to.pathname === '/projects/')) {
+          document.documentElement.classList.add('transitioning-to-projects');
+        } else {
+          document.documentElement.classList.remove('transitioning-to-projects');
+        }
+      });
+      
+      document.addEventListener('astro:after-swap', () => {
+        if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
+          document.documentElement.classList.add('on-projects-page');
+        } else {
+          document.documentElement.classList.remove('on-projects-page');
+        }
+      });
+      
+      // Check on initial load
+      if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
+        document.documentElement.classList.add('on-projects-page');
+      }
+    </script>
   </body>
 </html>
 
