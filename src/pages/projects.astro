@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Projects" backgroundColor="#412E20">
   <div id="vanta-background" data-astro-transition-scope="vanta-bg"></div>
-  <main class="projects-container" style="view-transition-name: projects-page;">
+  <main class="projects-container">
     <div class="nav-buttons" id="navButtons">
       <a href="/" class="back-link" id="homeLink">
         <span class="arrow">←</span>
@@ -19,7 +19,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="projects-sidebar" id="projectsSidebar">
       <div class="projects-grid" id="projectsGrid">
         <!-- Column 1 -->
-        <div class="project-card col-1" data-project="1">
+        <a href="/projects/project-1" class="project-card col-1" transition:name="project-1">
           <div class="project-header">
             <h2>Project Name</h2>
             <span class="tag">React</span>
@@ -27,27 +27,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A brief description of what this project does and the problem it solves.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>This is a comprehensive React application that demonstrates advanced state management, custom hooks, and modern UI patterns. Built with performance and accessibility in mind.</p>
-            <div class="project-tech">
-              <span>React 18</span>
-              <span>Redux Toolkit</span>
-              <span>Styled Components</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-2" data-project="2">
+        <a href="/projects/project-2" class="project-card col-2" transition:name="project-2">
           <div class="project-header">
             <h2>Another Project</h2>
             <span class="tag">TypeScript</span>
@@ -55,27 +42,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             Another cool project description goes here.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A fully typed TypeScript application with strict type checking. Features include custom utility types, generic components, and comprehensive error handling.</p>
-            <div class="project-tech">
-              <span>TypeScript</span>
-              <span>Zod</span>
-              <span>tRPC</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-1" data-project="3">
+        <a href="/projects/project-3" class="project-card col-1" transition:name="project-3">
           <div class="project-header">
             <h2>Third Project</h2>
             <span class="tag">Astro</span>
@@ -83,27 +57,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             Yet another project that showcases your skills.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A blazing-fast static site built with Astro. Features island architecture, partial hydration, and optimal Core Web Vitals scores.</p>
-            <div class="project-tech">
-              <span>Astro</span>
-              <span>MDX</span>
-              <span>Tailwind</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-2" data-project="4">
+        <a href="/projects/project-4" class="project-card col-2" transition:name="project-4">
           <div class="project-header">
             <h2>Fourth Project</h2>
             <span class="tag">Node.js</span>
@@ -111,27 +72,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A backend project showcasing server-side skills.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A robust REST API with authentication, rate limiting, and comprehensive documentation. Includes WebSocket support for real-time features.</p>
-            <div class="project-tech">
-              <span>Node.js</span>
-              <span>Express</span>
-              <span>PostgreSQL</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-1" data-project="5">
+        <a href="/projects/project-5" class="project-card col-1" transition:name="project-5">
           <div class="project-header">
             <h2>Fifth Project</h2>
             <span class="tag">Python</span>
@@ -139,27 +87,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A data-focused project with Python.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A machine learning pipeline for data analysis and prediction. Features automated data preprocessing, model training, and visualization dashboards.</p>
-            <div class="project-tech">
-              <span>Python</span>
-              <span>Pandas</span>
-              <span>Scikit-learn</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-2" data-project="6">
+        <a href="/projects/project-6" class="project-card col-2" transition:name="project-6">
           <div class="project-header">
             <h2>Sixth Project</h2>
             <span class="tag">Vue</span>
@@ -167,27 +102,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A Vue.js application with modern features.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A progressive web app built with Vue 3 Composition API. Features include offline support, push notifications, and smooth page transitions.</p>
-            <div class="project-tech">
-              <span>Vue 3</span>
-              <span>Pinia</span>
-              <span>Vite</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-1" data-project="7">
+        <a href="/projects/project-7" class="project-card col-1" transition:name="project-7">
           <div class="project-header">
             <h2>Seventh Project</h2>
             <span class="tag">Rust</span>
@@ -195,27 +117,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A high-performance systems project.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A high-performance CLI tool written in Rust. Features memory safety, zero-cost abstractions, and cross-platform support.</p>
-            <div class="project-tech">
-              <span>Rust</span>
-              <span>Tokio</span>
-              <span>Serde</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
 
-        <div class="project-card col-2" data-project="8">
+        <a href="/projects/project-8" class="project-card col-2" transition:name="project-8">
           <div class="project-header">
             <h2>Eighth Project</h2>
             <span class="tag">Go</span>
@@ -223,44 +132,25 @@ import Layout from '../layouts/Layout.astro';
           <p class="project-desc">
             A cloud-native application built with Go.
           </p>
-          <button class="expand-btn" aria-label="Expand project">
+          <button class="expand-btn" aria-label="View project details">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
           </button>
-          <div class="project-extra">
-            <h3>Full Details</h3>
-            <p>A containerized microservice with Kubernetes deployment. Features gRPC communication, distributed tracing, and auto-scaling capabilities.</p>
-            <div class="project-tech">
-              <span>Go</span>
-              <span>Docker</span>
-              <span>Kubernetes</span>
-            </div>
-            <div class="project-links-expanded">
-              <a href="#" class="project-link-btn">Live Demo →</a>
-              <a href="#" class="project-link-btn">View Code →</a>
-            </div>
-          </div>
-        </div>
+        </a>
       </div>
-    </div>
-
-    <!-- Expanded project overlay -->
-    <div class="expanded-overlay" id="expandedOverlay">
-      <button class="close-expanded" id="closeExpanded">
-        <span class="arrow">←</span>
-        <span>back</span>
-      </button>
     </div>
   </main>
 </Layout>
 
 <script is:inline>
   (function() {
+    // Use window object to persist state across page navigations
+    if (!window._projectsState) {
+      window._projectsState = { isOpen: false };
+    }
+    
     let isProjectsOpen = false;
-    let isProjectExpanded = false;
-    let expandedCard = null;
-    let animationTimeout = null;
 
     function initProjectsToggle() {
       const projectsToggle = document.getElementById('projectsToggle');
@@ -269,7 +159,6 @@ import Layout from '../layouts/Layout.astro';
       const buttonText = projectsToggle ? projectsToggle.querySelector('.button-text') : null;
       
       if (projectsToggle && projectsSidebar && homeLink && buttonText) {
-        // Remove existing listeners by cloning
         const newToggle = projectsToggle.cloneNode(true);
         const parent = projectsToggle.parentNode;
         if (parent) {
@@ -278,197 +167,82 @@ import Layout from '../layouts/Layout.astro';
         
         const newButtonText = newToggle.querySelector('.button-text');
         
+        // Restore sidebar state if it was open
+        if (isProjectsOpen) {
+          if (newButtonText) newButtonText.textContent = '<-back';
+          homeLink.classList.add('hidden');
+          projectsSidebar.classList.remove('closing');
+          projectsSidebar.classList.add('active');
+        }
+        
         newToggle.addEventListener('click', function() {
-          if (isProjectExpanded) return; // Don't toggle if a project is expanded
-          
-          // Cancel any ongoing animation
-          if (animationTimeout) {
-            clearTimeout(animationTimeout);
-            projectsSidebar.classList.remove('active', 'closing');
-          }
-          
           if (!isProjectsOpen) {
-            // Opening projects
             isProjectsOpen = true;
+            window._projectsState.isOpen = true;
             if (newButtonText) newButtonText.textContent = '<-back';
             homeLink.classList.add('hidden');
             projectsSidebar.classList.remove('closing');
             projectsSidebar.classList.add('active');
           } else {
-            // Closing projects
             isProjectsOpen = false;
+            window._projectsState.isOpen = false;
             projectsSidebar.classList.add('closing');
-            
-            // Change button text immediately when closing starts
             if (newButtonText) newButtonText.textContent = 'projects';
-            
-            // Start fading in home link immediately
             homeLink.classList.remove('hidden');
             
-            // Clean up after animation
-            animationTimeout = setTimeout(function() {
+            setTimeout(function() {
               projectsSidebar.classList.remove('active', 'closing');
-              animationTimeout = null;
             }, 400);
           }
         });
       }
     }
 
-    function initExpandButtons() {
-      const expandBtns = document.querySelectorAll('.expand-btn');
-      const overlay = document.getElementById('expandedOverlay');
-      const closeBtn = document.getElementById('closeExpanded');
-      const navButtons = document.getElementById('navButtons');
-      const projectsGrid = document.getElementById('projectsGrid');
-      
-      expandBtns.forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const card = btn.closest('.project-card');
-          if (!card || isProjectExpanded) return;
-          
-          isProjectExpanded = true;
-          expandedCard = card;
-          
-          // Get card position BEFORE making it fixed
-          const rect = card.getBoundingClientRect();
-          const cardWidth = rect.width;
-          const cardHeight = rect.height;
-          const cardLeft = rect.left;
-          const cardTop = rect.top;
-          const cardCenterX = cardLeft + cardWidth / 2;
-          const cardCenterY = cardTop + cardHeight / 2;
-          
-          // Calculate center of screen
-          const centerX = window.innerWidth / 2;
-          const centerY = window.innerHeight / 2;
-          
-          // Calculate how far to move the center (in pixels)
-          const deltaX = centerX - cardCenterX;
-          const deltaY = centerY - cardCenterY;
-          
-          // Store values for animation
-          card.style.setProperty('--delta-x', deltaX + 'px');
-          card.style.setProperty('--delta-y', deltaY + 'px');
-          card.style.setProperty('--original-width', cardWidth + 'px');
-          card.style.setProperty('--start-top', cardTop + 'px');
-          card.style.setProperty('--start-left', cardLeft + 'px');
-          
-          // Hide other cards and nav
-          document.querySelectorAll('.project-card').forEach(function(c) {
-            if (c !== card) {
-              c.classList.add('fade-out');
-            }
-          });
-          navButtons.classList.add('fade-out');
-          
-          // Set initial fixed position at original location
-          card.style.position = 'fixed';
-          card.style.top = cardTop + 'px';
-          card.style.left = cardLeft + 'px';
-          card.style.width = cardWidth + 'px';
-          card.style.transform = 'translate(0, 0)';
-          card.style.zIndex = '100';
-          
-          // Force reflow to ensure styles are applied
-          void card.offsetHeight;
-          
-          // Now add expanded class to trigger animation
-          requestAnimationFrame(function() {
-            card.classList.add('expanded');
-            overlay.classList.add('active');
-          });
-          
-          // Position close button on top of the expanded card
-          setTimeout(function() {
-            closeBtn.style.display = 'flex';
-          }, 50);
-        });
-      });
-      
-      if (closeBtn) {
-        closeBtn.style.display = 'none';
-        
-        closeBtn.addEventListener('click', function() {
-          if (!isProjectExpanded || !expandedCard) return;
-          
-          // Hide close button immediately
-          closeBtn.style.display = 'none';
-          
-          // The stored values from expansion are still available, no need to recalculate
-          
-          // Collapse the card
-          expandedCard.classList.remove('expanded');
-          expandedCard.classList.add('collapsing');
-          overlay.classList.remove('active');
-          
-          // Show other cards and nav
-          document.querySelectorAll('.project-card').forEach(function(c) {
-            c.classList.remove('fade-out');
-          });
-          navButtons.classList.remove('fade-out');
-          
-          // Clean up after animation
-          setTimeout(function() {
-            if (expandedCard) {
-              expandedCard.classList.remove('collapsing');
-              // Reset styles
-              expandedCard.style.position = '';
-              expandedCard.style.top = '';
-              expandedCard.style.left = '';
-              expandedCard.style.width = '';
-              expandedCard.style.height = '';
-              expandedCard.style.margin = '';
-              expandedCard.style.transform = '';
-            }
-            isProjectExpanded = false;
-            expandedCard = null;
-          }, 400);
-        });
-      }
-      
-      // Close on overlay click
-      if (overlay) {
-        overlay.addEventListener('click', function(e) {
-          if (e.target === overlay && closeBtn) {
-            closeBtn.click();
-          }
-        });
-      }
-      
-      // Close on Escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && isProjectExpanded && closeBtn) {
-          closeBtn.click();
-        }
-      });
-    }
-
     function init() {
-      isProjectsOpen = false;
-      isProjectExpanded = false;
-      expandedCard = null;
-      initProjectsToggle();
-      initExpandButtons();
+      // Check if we're coming from a project detail page
+      var referrer = document.referrer;
+      var fromProjectDetail = referrer && referrer.includes('/projects/project-');
       
-      // Add class to body for swipe animation
-      if (window.location.pathname === '/projects' || window.location.pathname === '/projects/') {
-        document.body.classList.add('projects-page-active');
+      // If coming from a project detail page, restore the state
+      // Otherwise, only restore if state was explicitly set (not from index)
+      if (fromProjectDetail) {
+        isProjectsOpen = window._projectsState.isOpen || false;
       } else {
-        document.body.classList.remove('projects-page-active');
+        // Check if we're coming from index (home page)
+        var fromIndex = referrer && (referrer.endsWith('/') || referrer.endsWith('/index.html') || new URL(referrer).pathname === '/');
+        if (fromIndex) {
+          // Reset state when coming from index
+          isProjectsOpen = false;
+          window._projectsState.isOpen = false;
+        } else {
+          // Restore state for other cases (e.g., direct navigation)
+          isProjectsOpen = window._projectsState.isOpen || false;
+        }
       }
+      
+      initProjectsToggle();
     }
 
-    // Initialize on page load
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
     }
 
-    // Re-initialize after view transition
     document.addEventListener('astro:page-load', init);
+    
+    // Reset state when navigating to home
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a');
+      if (link && link.href) {
+        try {
+          var url = new URL(link.href, location.origin);
+          if (url.pathname === '/' || url.pathname === '/index.html') {
+            window._projectsState.isOpen = false;
+          }
+        } catch(err) {}
+      }
+    });
   })();
 </script>
 
@@ -508,11 +282,6 @@ import Layout from '../layouts/Layout.astro';
     flex-direction: column;
     gap: 1rem;
     transition: opacity 0.3s ease;
-  }
-
-  .nav-buttons.fade-out {
-    opacity: 0;
-    pointer-events: none;
   }
 
   .back-link {
@@ -565,11 +334,6 @@ import Layout from '../layouts/Layout.astro';
     color: #EC753A;
   }
 
-  .button-text {
-    display: inline-block;
-    transition: opacity 0.2s;
-  }
-
   .projects-sidebar {
     position: fixed;
     top: 0;
@@ -614,15 +378,11 @@ import Layout from '../layouts/Layout.astro';
     transform: translateX(-100vw);
     opacity: 0;
     position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
   }
 
-  .project-card.fade-out {
-    opacity: 0 !important;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  /* Expand button */
   .expand-btn {
     position: absolute;
     bottom: 0.75rem;
@@ -638,6 +398,7 @@ import Layout from '../layouts/Layout.astro';
     justify-content: center;
     transition: all 0.2s;
     padding: 5px;
+    pointer-events: none;
   }
 
   .expand-btn svg {
@@ -647,251 +408,42 @@ import Layout from '../layouts/Layout.astro';
     transition: color 0.2s;
   }
 
-  .expand-btn:hover {
+  .project-card:hover .expand-btn {
     border-color: #EC753A;
     background: #EC753A;
   }
 
-  .expand-btn:hover svg {
+  .project-card:hover .expand-btn svg {
     color: #342331;
   }
 
-  /* Hidden extra content in normal state */
-  .project-extra {
-    display: none;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #DA9F5F;
-  }
-
-  .project-extra h3 {
-    color: #FFE4AF;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-
-  .project-extra p {
-    color: #DA9F5F;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-
-  .project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .project-tech span {
-    background: rgba(218, 159, 95, 0.2);
-    color: #DA9F5F;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8rem;
-    border: 1px solid #DA9F5F;
-  }
-
-  .project-links-expanded {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .project-link-btn {
-    color: #EC753A;
-    border: 2px solid #EC753A;
-    padding: 0.75rem 1.5rem;
-    transition: all 0.2s;
-    text-align: center;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-  }
-
-  .project-link-btn:hover {
-    background: #EC753A;
-    color: #342331;
-  }
-
-  /* Expanded state */
-  .project-card.expanded {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 90vw !important;
-    max-width: 600px !important;
-    max-height: 80vh;
-    overflow-y: auto;
-    z-index: 100 !important;
-    opacity: 1 !important;
-    padding: 2.5rem 2rem 2rem !important;
-    animation: expandCard 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    will-change: transform, width;
-  }
-
-  .project-card.expanded .expand-btn {
-    display: none;
-  }
-
-  .project-card.expanded .project-extra {
-    display: block;
-  }
-
-  .project-card.expanded .project-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .project-card.expanded .project-desc {
-    font-size: 1rem;
-  }
-
-  .project-card.collapsing {
-    animation: collapseCard 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
-  @keyframes expandCard {
-    0% {
-      top: var(--start-top, 0px) !important;
-      left: var(--start-left, 0px) !important;
-      transform: translate(0, 0) !important;
-      width: var(--original-width, 260px) !important;
-    }
-    100% {
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 90vw !important;
-      max-width: 600px !important;
-    }
-  }
-
-  @keyframes collapseCard {
-    0% {
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 90vw !important;
-      max-width: 600px !important;
-      opacity: 1;
-    }
-    100% {
-      top: var(--start-top, 0px) !important;
-      left: var(--start-left, 0px) !important;
-      transform: translate(0, 0) !important;
-      width: var(--original-width, 260px) !important;
-      opacity: 0;
-    }
-  }
-
-  /* Expanded overlay */
-  .expanded-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 50;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .expanded-overlay.active {
-    pointer-events: all;
-    opacity: 1;
-  }
-
-  .close-expanded {
-    position: fixed;
-    top: calc(50% - min(40vh, 300px) - 2rem);
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    color: #FFE4AF;
-    font-size: 0.95rem;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-    background: #412E20;
-    border: 2px solid #DA9F5F;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    z-index: 101;
-    transition: all 0.2s;
-  }
-
-  .close-expanded .arrow {
-    font-size: 1.2rem;
-  }
-
-  .close-expanded:hover {
-    color: #EC753A;
-    border-color: #EC753A;
-  }
-
-  /* Opening animation - slide from left */
+  /* Opening animation */
   .projects-sidebar.active .project-card {
     animation: slideInFromLeft 0.4s ease both;
   }
 
-  /* Column 1 cards animate first */
-  .projects-sidebar.active .project-card.col-1:nth-of-type(1) {
-    animation-delay: 0.05s;
-  }
-  .projects-sidebar.active .project-card.col-1:nth-of-type(3) {
-    animation-delay: 0.1s;
-  }
-  .projects-sidebar.active .project-card.col-1:nth-of-type(5) {
-    animation-delay: 0.15s;
-  }
-  .projects-sidebar.active .project-card.col-1:nth-of-type(7) {
-    animation-delay: 0.2s;
-  }
+  .projects-sidebar.active .project-card.col-1:nth-of-type(1) { animation-delay: 0.05s; }
+  .projects-sidebar.active .project-card.col-1:nth-of-type(3) { animation-delay: 0.1s; }
+  .projects-sidebar.active .project-card.col-1:nth-of-type(5) { animation-delay: 0.15s; }
+  .projects-sidebar.active .project-card.col-1:nth-of-type(7) { animation-delay: 0.2s; }
+  .projects-sidebar.active .project-card.col-2:nth-of-type(2) { animation-delay: 0.15s; }
+  .projects-sidebar.active .project-card.col-2:nth-of-type(4) { animation-delay: 0.2s; }
+  .projects-sidebar.active .project-card.col-2:nth-of-type(6) { animation-delay: 0.25s; }
+  .projects-sidebar.active .project-card.col-2:nth-of-type(8) { animation-delay: 0.3s; }
 
-  /* Column 2 cards animate after column 1 */
-  .projects-sidebar.active .project-card.col-2:nth-of-type(2) {
-    animation-delay: 0.15s;
-  }
-  .projects-sidebar.active .project-card.col-2:nth-of-type(4) {
-    animation-delay: 0.2s;
-  }
-  .projects-sidebar.active .project-card.col-2:nth-of-type(6) {
-    animation-delay: 0.25s;
-  }
-  .projects-sidebar.active .project-card.col-2:nth-of-type(8) {
-    animation-delay: 0.3s;
-  }
-
-  /* Closing animation - slide back to left */
+  /* Closing animation */
   .projects-sidebar.closing .project-card {
     animation: slideOutToLeft 0.4s ease both !important;
   }
 
-  /* Column 2 closes first (reverse order) */
-  .projects-sidebar.closing .project-card.col-2:nth-of-type(8) {
-    animation-delay: 0.05s;
-  }
-  .projects-sidebar.closing .project-card.col-2:nth-of-type(6) {
-    animation-delay: 0.1s;
-  }
-  .projects-sidebar.closing .project-card.col-2:nth-of-type(4) {
-    animation-delay: 0.15s;
-  }
-  .projects-sidebar.closing .project-card.col-2:nth-of-type(2) {
-    animation-delay: 0.2s;
-  }
-
-  /* Column 1 closes after column 2 */
-  .projects-sidebar.closing .project-card.col-1:nth-of-type(7) {
-    animation-delay: 0.15s;
-  }
-  .projects-sidebar.closing .project-card.col-1:nth-of-type(5) {
-    animation-delay: 0.2s;
-  }
-  .projects-sidebar.closing .project-card.col-1:nth-of-type(3) {
-    animation-delay: 0.25s;
-  }
-  .projects-sidebar.closing .project-card.col-1:nth-of-type(1) {
-    animation-delay: 0.3s;
-  }
+  .projects-sidebar.closing .project-card.col-2:nth-of-type(8) { animation-delay: 0.05s; }
+  .projects-sidebar.closing .project-card.col-2:nth-of-type(6) { animation-delay: 0.1s; }
+  .projects-sidebar.closing .project-card.col-2:nth-of-type(4) { animation-delay: 0.15s; }
+  .projects-sidebar.closing .project-card.col-2:nth-of-type(2) { animation-delay: 0.2s; }
+  .projects-sidebar.closing .project-card.col-1:nth-of-type(7) { animation-delay: 0.15s; }
+  .projects-sidebar.closing .project-card.col-1:nth-of-type(5) { animation-delay: 0.2s; }
+  .projects-sidebar.closing .project-card.col-1:nth-of-type(3) { animation-delay: 0.25s; }
+  .projects-sidebar.closing .project-card.col-1:nth-of-type(1) { animation-delay: 0.3s; }
 
   @keyframes slideInFromLeft {
     from {
@@ -921,11 +473,6 @@ import Layout from '../layouts/Layout.astro';
     box-shadow: 0 12px 24px rgba(236, 117, 58, 0.3);
   }
 
-  .project-card.expanded:hover {
-    transform: translate(-50%, -50%) !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  }
-
   .project-header {
     display: flex;
     justify-content: space-between;
@@ -937,7 +484,6 @@ import Layout from '../layouts/Layout.astro';
   .project-header h2 {
     font-size: 1.2rem;
     color: #FFE4AF;
-    transition: font-size 0.3s;
   }
 
   .tag {
@@ -953,7 +499,6 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.5;
     margin-bottom: 0;
     font-size: 0.9rem;
-    transition: font-size 0.3s;
   }
 
   @media (max-width: 768px) {
@@ -974,24 +519,6 @@ import Layout from '../layouts/Layout.astro';
       padding: 1.25rem;
     }
 
-    .project-card.expanded {
-      width: 95vw !important;
-      max-height: 85vh;
-      padding: 2rem 1.5rem 1.5rem !important;
-    }
-
-    .close-expanded {
-      top: calc(50% - min(42.5vh, 350px) - 2rem);
-      font-size: 0.85rem;
-      padding: 0.4rem 0.8rem;
-    }
-
-    /* On mobile, treat all cards as column 1 for sequential animation */
-    .projects-sidebar.active .project-card.col-1,
-    .projects-sidebar.active .project-card.col-2 {
-      animation: slideInFromLeft 0.4s ease both;
-    }
-
     .projects-sidebar.active .project-card:nth-child(1) { animation-delay: 0.05s; }
     .projects-sidebar.active .project-card:nth-child(2) { animation-delay: 0.1s; }
     .projects-sidebar.active .project-card:nth-child(3) { animation-delay: 0.15s; }
@@ -1000,11 +527,6 @@ import Layout from '../layouts/Layout.astro';
     .projects-sidebar.active .project-card:nth-child(6) { animation-delay: 0.3s; }
     .projects-sidebar.active .project-card:nth-child(7) { animation-delay: 0.35s; }
     .projects-sidebar.active .project-card:nth-child(8) { animation-delay: 0.4s; }
-
-    .projects-sidebar.closing .project-card.col-1,
-    .projects-sidebar.closing .project-card.col-2 {
-      animation: slideOutToLeft 0.4s ease both !important;
-    }
 
     .projects-sidebar.closing .project-card:nth-child(8) { animation-delay: 0.05s; }
     .projects-sidebar.closing .project-card:nth-child(7) { animation-delay: 0.1s; }

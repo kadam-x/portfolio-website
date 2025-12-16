@@ -1,0 +1,263 @@
+---
+// src/pages/projects/project-1.astro
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Project Name" backgroundColor="#412E20">
+  <div id="vanta-background" data-astro-transition-scope="vanta-bg"></div>
+  <main class="project-detail-container">
+    <a href="/projects" class="back-link">
+      <span class="arrow">←</span>
+      <span>back to projects</span>
+    </a>
+
+    <article class="project-detail" transition:name="project-1">
+      <div class="project-header">
+        <h1>Project Name</h1>
+        <span class="tag">React</span>
+      </div>
+      
+      <p class="project-intro">
+        A brief description of what this project does and the problem it solves.
+      </p>
+
+      <div class="project-content">
+        <h2>Overview</h2>
+        <p>
+          This is a comprehensive React application that demonstrates advanced state management, 
+          custom hooks, and modern UI patterns. Built with performance and accessibility in mind.
+        </p>
+
+        <h2>Technologies Used</h2>
+        <div class="project-tech">
+          <span>React 18</span>
+          <span>Redux Toolkit</span>
+          <span>Styled Components</span>
+          <span>TypeScript</span>
+          <span>Jest</span>
+          <span>React Testing Library</span>
+        </div>
+
+        <h2>Key Features</h2>
+        <ul>
+          <li>Advanced state management with Redux Toolkit</li>
+          <li>Custom hooks for reusable logic</li>
+          <li>Responsive design that works on all devices</li>
+          <li>Comprehensive test coverage</li>
+          <li>Optimized performance with code splitting</li>
+          <li>Accessibility-first approach</li>
+        </ul>
+
+        <h2>Challenges & Solutions</h2>
+        <p>
+          One of the main challenges was optimizing rendering performance for large data sets.
+          We solved this by implementing virtualization with react-window and memoization strategies
+          to prevent unnecessary re-renders.
+        </p>
+
+        <div class="project-links">
+          <a href="#" class="project-link-btn primary">
+            <span>Live Demo</span>
+            <span class="arrow">→</span>
+          </a>
+          <a href="#" class="project-link-btn">
+            <span>View Code</span>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  #vanta-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .project-detail-container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 4rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .back-link {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFE4AF;
+    font-size: 1rem;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    transition: color 0.2s;
+    z-index: 10;
+  }
+
+  .back-link:hover {
+    color: #EC753A;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+  }
+
+  .project-detail {
+    background: #412E20;
+    border: 3px solid #DA9F5F;
+    padding: 2.5rem 2rem;
+    max-width: 800px;
+    width: 100%;
+    margin-top: 3rem;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .project-header h1 {
+    font-size: 2rem;
+    color: #FFE4AF;
+    margin: 0;
+  }
+
+  .tag {
+    background: #DA9F5F;
+    color: #342331;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid #EC753A;
+    white-space: nowrap;
+  }
+
+  .project-intro {
+    color: #DA9F5F;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .project-content h2 {
+    color: #FFE4AF;
+    font-size: 1.4rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-content p {
+    color: #DA9F5F;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-tech span {
+    background: rgba(218, 159, 95, 0.2);
+    color: #DA9F5F;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid #DA9F5F;
+  }
+
+  .project-content ul {
+    color: #DA9F5F;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .project-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .project-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #EC753A;
+    border: 2px solid #EC753A;
+    padding: 1rem 1.75rem;
+    transition: all 0.2s;
+    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-size: 1rem;
+  }
+
+  .project-link-btn.primary {
+    background: #EC753A;
+    color: #342331;
+  }
+
+  .project-link-btn:hover {
+    background: #EC753A;
+    color: #342331;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 117, 58, 0.3);
+  }
+
+  .project-link-btn.primary:hover {
+    background: #DA9F5F;
+    border-color: #DA9F5F;
+  }
+
+  @media (max-width: 768px) {
+    .project-detail-container {
+      padding: 3rem 1rem 2rem;
+    }
+
+    .back-link {
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .project-detail {
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .project-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .project-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .project-links {
+      flex-direction: column;
+    }
+
+    .project-link-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

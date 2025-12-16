@@ -180,6 +180,33 @@ html[data-transition="slide-bottom"]::view-transition-new(root) {
     animation: slide-in-from-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1) both !important;
 }
 
+/* Fade transition for project detail pages - no swipe, just crossfade */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+html[data-transition="fade"]::view-transition-old(root) {
+    animation: fade-out 0.3s ease both !important;
+}
+
+html[data-transition="fade"]::view-transition-new(root) {
+    animation: fade-in 0.3s ease both !important;
+}
+
 /* Enable crossfade */
 ::view-transition-image-pair(root) {
     isolation: isolate;
@@ -193,4 +220,26 @@ html[data-transition="slide-bottom"]::view-transition-new(root) {
 ::view-transition-group(root) {
     animation-duration: 0.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure background color persists during transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+    background-color: #412E20 !important;
+}
+
+/* Ensure html element maintains background during transitions */
+html {
+    background-color: #412E20;
+}
+
+/* Ensure vanta background is included in transitions */
+::view-transition-group(vanta-bg) {
+    z-index: 0;
+}
+
+::view-transition-old(vanta-bg),
+::view-transition-new(vanta-bg) {
+    animation: none;
+    mix-blend-mode: normal;
 }

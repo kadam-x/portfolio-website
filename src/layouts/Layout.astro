@@ -148,6 +148,28 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
           var from = fromPath.replace(/\/$/, '') || '/';
           var to = toPath.replace(/\/$/, '') || '/';
           
+          // Check if navigating to/from project detail pages
+          var isProjectDetail = function(path) {
+            return path.startsWith('/projects/project-');
+          };
+          
+          var fromIsProject = isProjectDetail(from);
+          var toIsProject = isProjectDetail(to);
+          
+          // Project detail pages - use fade transition (no swipe)
+          if (fromIsProject || toIsProject) {
+            // If going back to projects from a project detail, use fade
+            if (to === '/projects' && fromIsProject) return 'fade';
+            // If going from projects to project detail, use fade
+            if (from === '/projects' && toIsProject) return 'fade';
+            // If navigating between project details, use fade
+            if (fromIsProject && toIsProject) return 'fade';
+            // If coming from elsewhere to project detail, use fade
+            if (toIsProject) return 'fade';
+            // If going from project detail to elsewhere (except projects), use fade
+            if (fromIsProject && to !== '/projects') return 'fade';
+          }
+          
           // Going home from about - slide back up (reverse of slide-top)
           if (to === '/' && from === '/about') return 'back-top';
           
@@ -217,6 +239,10 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  html {
+    background-color: #412E20;
   }
 
   body {
