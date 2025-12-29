@@ -1,74 +1,74 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="About" backgroundColor="#FFE4AF">
-  <main class="about-container">
-    <a href="/" class="back-link">
-      <span class="arrow">←</span>
-      <span>take me home</span>
-    </a>
-      
-      <div class="about-content">
-        <p>
-          Hey! I'm [Your Name], a developer who loves building things for the web.
-        </p>
-        
-        <p>
-          I specialize in [your skills here - e.g., React, TypeScript, Node.js].
-          Currently working on [what you're working on].
-        </p>
-        
-        <p>
-          When I'm not coding, you can find me [your hobbies/interests].
-        </p>
-    </div>
-  </main>
+    <main class="about-container">
+        <a href="/" class="back-link">
+            <span class="arrow">←</span>
+            <span>take me home</span>
+        </a>
+
+        <div class="about-content">
+            <p>
+                Hey! I'm Adam, a self-taught developer who loves building things for
+                the web.
+            </p>
+
+            <p>
+                I specialize in Python, Building backtests for all sorts of trading Currently Learning C++. Currently working on [what you're working on].
+            </p>
+
+            <p>
+                When I'm not coding, you can find me [your hobbies/interests].
+            </p>
+        </div>
+    </main>
 </Layout>
 
 <style>
-  .about-container {
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #412E20;
-    font-size: 1rem;
-    transition: all 0.2s;
-    margin-bottom: 3rem;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-  }
-
-  .back-link:hover {
-    color: #EC753A;
-  }
-
-  .arrow {
-    font-size: 1.5rem;
-  }
-
-  .about-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .about-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #412E20;
-    letter-spacing: 0.1em;
-  }
-
-  @media (max-width: 640px) {
     .about-container {
-      padding: 2rem 1rem;
+        min-height: 100vh;
+        padding: 4rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
     }
-  }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #412e20;
+        font-size: 1rem;
+        transition: all 0.2s;
+        margin-bottom: 3rem;
+        font-family: "Fira Code", "FiraCode Nerd Font", monospace;
+    }
+
+    .back-link:hover {
+        color: #ec753a;
+    }
+
+    .arrow {
+        font-size: 1.5rem;
+    }
+
+    .about-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .about-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #412e20;
+        letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 640px) {
+        .about-container {
+            padding: 2rem 1rem;
+        }
+    }
 </style>
