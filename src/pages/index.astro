@@ -45,42 +45,6 @@ import Layout from '../layouts/Layout.astro';
     position: relative;
   }
 
-  .center-box::before {
-    content: '[';
-    position: absolute;
-    left: 40px;
-    top: 150px;
-    height: 100%;
-    font-size: 18rem;
-    color: #FFE4AF;
-    line-height: 1;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-    font-weight: 300;
-    display: flex;
-    align-items: flex-start;
-    transform-origin: top left;
-    transform: scaleY(5);
-    transform: scaleX(1);
-  }
-
-  .center-box::after {
-    content: ']';
-    position: absolute;
-    right: 40px;
-    top: 150px;
-    height: 100%;
-    font-size: 18rem;
-    color: #FFE4AF;
-    line-height: 1;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
-    font-weight: 300;
-    display: flex;
-    align-items: flex-start;
-    transform-origin: top right;
-    transform: scaleY(5);
-    transform: scaleX(1);
-  }
-
   .welcome-header {
     text-align: center;
     margin: 0 auto;
@@ -102,11 +66,14 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    padding: 1rem 0;
+    padding: 3rem 6rem;
+    margin: 0 auto;
+    border: 2px solid #FFE4AF; /* Changed to old bracket color */
+    background: #412E20;
   }
 
   .nav-link {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #FFE4AF;
     text-align: center;
     transition: all 0.2s;
