@@ -1,0 +1,1 @@
+- add click to kill to robot
