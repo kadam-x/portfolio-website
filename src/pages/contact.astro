@@ -2,92 +2,241 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Contact" backgroundColor="#342331">
+<Layout title="Contact" backgroundColor="#412E20">
   <main class="contact-container">
-    <a href="/" class="back-link">
-      <span class="arrow">←</span>
-      <span>take me home</span>
-    </a>
+    <div class="terminal-nav">
+      <span class="prompt">guest@kovacsadam.dev:~$</span>
+      <a href="/" class="back-link">cd ~</a>
+    </div>
     
     <div class="contact-box">
-      <h1 class="title">get in touch</h1>
-      
-      <div class="contact-content">
-        <div class="social-links">
-          <a href="mailto:your@email.com" class="social-link">email</a>
-          <a href="https://github.com/yourusername" target="_blank" class="social-link">github</a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">linkedin</a>
-          <a href="https://twitter.com/yourusername" target="_blank" class="social-link">twitter</a>
+      <div class="social-links">
+        <a href="mailto:your@email.com" class="social-link">email</a>
+        <a href="https://github.com/yourusername" target="_blank" class="social-link">github</a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">linkedin</a>
+      </div>
+    </div>
+
+    <div class="floating-console">
+      <div class="console-border-top">
+        <span class="console-label">TERMINAL_PROMPT_V1.0</span>
+      </div>
+      <div id="terminal-history">
         </div>
+      <div class="input-line">
+        <span class="prompt">></span>
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
       </div>
     </div>
   </main>
 </Layout>
 
+<script>
+  const initTerminal = () => {
+    const input = document.getElementById('terminal-input') as HTMLInputElement;
+    const history = document.getElementById('terminal-history');
+    
+    if (!input || !history || input.dataset.initialized) return;
+
+    const COMMANDS = {
+      'help': 'Available: whoami, cd ~, ls, coffee, jarvis, clear',
+      'whoami': 'Genius, billionaire, playboy, philanthropist. (Working on the middle two.)',
+      'ls': 'about/  projects/  contact/  mark_85_schematics.pdf',
+      'coffee': '☕ [System] Error 418: I\'m a teapot. Just kidding, I just need a refill.',
+      'jarvis': 'Systems at 100%. All arc reactor levels nominal. Welcome home, Mr. Kovacs.',
+      'sudo': 'Access Denied. You are not authorized to access the Stark Industries mainframe.',
+      'cd ~': 'Redirecting to root...',
+      'cd ..': 'Redirecting to root...',
+    };
+
+    // The Typewriter Function
+    const typeWriter = (text, element, speed = 30) => {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          history.scrollTop = history.scrollHeight;
+        } else {
+          clearInterval(interval);
+        }
+      }, speed);
+    };
+
+    // Initial Login Sequence
+    const welcomeMsgs = [
+      'Establishing secure connection...',
+      'Login successful: GUEST_01',
+      'Type "help" for available commands.'
+    ];
+
+    welcomeMsgs.forEach((msg, i) => {
+      setTimeout(() => {
+        const p = document.createElement('p');
+        p.className = 'sys-msg';
+        history.appendChild(p);
+        typeWriter(msg, p, 20);
+      }, i * 600);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = input.value.toLowerCase().trim();
+        
+        const line = document.createElement('div');
+        line.innerHTML = `<span style="color: #EC753A">> ${val}</span>`;
+        history.appendChild(line);
+
+        if (val === 'clear') {
+          history.innerHTML = '';
+        } else if (val === 'cd ~' || val === 'cd ..') {
+          setTimeout(() => window.location.href = '/', 500);
+        } else if (COMMANDS[val]) {
+          const response = document.createElement('p');
+          response.style.color = '#DA9F5F';
+          history.appendChild(response);
+          typeWriter(COMMANDS[val], response);
+        } else if (val !== "") {
+          const err = document.createElement('p');
+          history.appendChild(err);
+          typeWriter(`sh: command not found: ${val}`, err);
+        }
+
+        input.value = '';
+      }
+    });
+
+    setTimeout(() => input.focus(), 800);
+    document.querySelector('.floating-console')?.addEventListener('click', () => input.focus());
+    input.dataset.initialized = "true";
+  };
+
+  initTerminal();
+  document.addEventListener('astro:page-load', initTerminal);
+</script>
+
 <style>
+  /* Container Setup */
   .contact-container {
     min-height: 100vh;
     padding: 4rem 2rem;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #FFE4AF;
-    font-size: 1rem;
-    transition: color 0.2s;
-    margin-bottom: 3rem;
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
   }
 
+  /* Navigation */
+  .terminal-nav { 
+    margin-bottom: 5rem; 
+  }
+  .prompt { 
+    color: #EC753A; 
+    margin-right: 0.5rem; 
+  }
+  .back-link { 
+    color: #FFE4AF; 
+    text-decoration: none; 
+    border-bottom: 1px dashed;
+    font-size: 0.9rem;
+  }
   .back-link:hover {
     color: #EC753A;
+    border-bottom-style: solid;
   }
 
-  .arrow {
-    font-size: 1.5rem;
+  /* Social Links Grid */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 6rem;
+  }
+  .social-link {
+    padding: 0.8rem 2.2rem;
+    border: 2px solid #FFE4AF;
+    color: #FFE4AF;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-transform: lowercase;
+    min-width: 140px;
+    text-align: center;
+  }
+  .social-link:hover { 
+    background: #FFE4AF; 
+    color: #412E20; 
   }
 
-  .contact-box {
+  /* Flat Terminal Window */
+  .floating-console {
+    background: #342331; 
+    border: 2px solid #DA9F5F;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .console-border-top {
+    background: rgba(218, 159, 95, 0.1);
+    padding: 0.5rem;
+    border-bottom: 2px solid #DA9F5F;
+    text-align: center;
+  }
+
+  .console-label {
+    font-size: 0.65rem;
+    color: #DA9F5F;
+    letter-spacing: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  #terminal-history {
+    height: 220px;
+    padding: 1.2rem;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    color: #FFE4AF;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .input-line {
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #terminal-input {
     background: transparent;
     border: none;
-    padding: 0;
-  }
-
-  .title {
-    display: none;
-  }
-
-  .social-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
-  }
-
-  .social-link {
-    padding: 0.75rem;
-    border: 2px solid #FFE4AF;
-    background: transparent;
+    outline: none;
     color: #FFE4AF;
-    text-align: center;
-    transition: color 0.2s;
-    text-transform: lowercase;
+    font-family: inherit;
+    font-size: 0.95rem;
+    width: 100%;
   }
 
-  .social-link:hover {
-    color: #EC753A;
+  .sys-msg { 
+    color: #DA9F5F; 
+    font-style: italic; 
+    opacity: 0.9;
+  }
+
+  /* Scrollbar Styling */
+  #terminal-history::-webkit-scrollbar {
+    width: 4px;
+  }
+  #terminal-history::-webkit-scrollbar-thumb {
+    background: #DA9F5F;
   }
 
   @media (max-width: 640px) {
-    .contact-box {
-      padding: 1.5rem;
-    }
-
-    .title {
-      font-size: 2rem;
-    }
+    .social-links { gap: 1rem; }
+    .social-link { width: 100%; }
+    .floating-console { max-width: 100%; }
   }
 </style>
