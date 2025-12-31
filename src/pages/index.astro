@@ -61,14 +61,36 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: 0.1em;
   }
 
-  .nav-links {
+.nav-links {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    padding: 3rem 6rem;
+    padding: 2rem 4.9rem;
     margin: 0 auto;
-    border: 6px solid #FFE4AF; /* Changed to old bracket color */
     background: #412E20;
+    border: 20px solid #FFE4AF; /* The full box */
+    position: relative;        /* Keeps the "covers" attached to this box */
+  }
+
+  /* These are the "Erasers" that create the bracket look */
+  .nav-links::before,
+  .nav-links::after {
+    content: "";
+    position: absolute;
+    left: 15%;            /* Adjust this to make brackets wider or thinner */
+    right: 15%;           /* Adjust this to match the left value */
+    background: #412E20;  /* Matches your background color exactly */
+    height: 20px;          /* Matches your border thickness exactly */
+  }
+
+  /* Position the top eraser over the top border */
+  .nav-links::before {
+    top: -20px;
+  }
+
+  /* Position the bottom eraser over the bottom border */
+  .nav-links::after {
+    bottom: -20px;
   }
 
   .nav-link {
@@ -78,6 +100,7 @@ import Layout from '../layouts/Layout.astro';
     transition: all 0.2s;
     padding: 0.5rem;
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    z-index: 1; /* Ensures text stays "above" the erasers if they overlap */
   }
 
   .nav-link:hover {
@@ -87,7 +110,6 @@ import Layout from '../layouts/Layout.astro';
   .color-palette {
     margin: 0 auto;
     border: 2px solid #DA9F5F;
-    /* padding: 1rem 1.5rem; */
     background: #412E20;
     display: inline-flex;
     gap: 0rem;
