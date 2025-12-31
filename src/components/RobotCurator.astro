@@ -1,0 +1,178 @@
+---
+---
+<div id="robot-container"></div>
+
+<script>
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+  let scene, camera, renderer, mixer, model;
+  let actions = {};
+  let animationId;
+  let clock;
+
+  function init() {
+    const container = document.getElementById('robot-container');
+    if (!container) return;
+    
+    // Clear previous canvas if any
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    scene = new THREE.Scene();
+    clock = new THREE.Clock();
+
+    // Camera setup
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 100);
+    camera.position.set(5, 2, 8); 
+    camera.lookAt(0, 1, 0);
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    const dirLight = new THREE.DirectionalLight(0xEC753A, 2);
+    dirLight.position.set(5, 10, 5);
+    scene.add(dirLight);
+
+    const loader = new GLTFLoader();
+    loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
+      model = gltf.scene;
+      model.position.set(2, -2, 0); 
+      
+     model.traverse((child) => {
+  if (child.isMesh) {
+    child.material.wireframe = false;
+    
+    // Only color parts without any _number suffix (the main body parts)
+    if (!child.name.match(/_\d+$/)) {
+      child.material.color.setHex(0xEC753A);
+    }
+    // Everything with _1, _2, _3, _4 keeps original color
+  }
+});
+      scene.add(model);
+
+      mixer = new THREE.AnimationMixer(model);
+      if (gltf.animations) {
+          gltf.animations.forEach((clip) => {
+            const action = mixer.clipAction(clip);
+            actions[clip.name] = action;
+            
+            // Configure non-idle animations to play once
+            if (clip.name !== 'Idle' && clip.name !== 'Walking' && clip.name !== 'Running') {
+                action.clampWhenFinished = true;
+                action.loop = THREE.LoopOnce;
+            }
+          });
+      }
+
+      // Start with Wave, then go to Idle
+      const startEmote = 'Wave';
+      if (actions[startEmote]) {
+          const action = actions[startEmote];
+          action.reset().play();
+          activeAction = action;
+          
+          const duration = action.getClip().duration;
+          timeoutId = setTimeout(() => {
+              action.fadeOut(0.2);
+              if (actions['Idle']) actions['Idle'].reset().fadeIn(0.2).play();
+              activeAction = null;
+          }, duration * 1000);
+      } else if (actions['Idle']) {
+          actions['Idle'].play();
+      }
+
+      animate();
+    }, undefined, (error) => {
+        console.error('An error occurred loading the robot:', error);
+    });
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+    
+    window.addEventListener('resize', onWindowResize, false);
+  }
+
+  function onWindowResize() {
+    if (!camera || !renderer) return;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+    if (mixer && clock) mixer.update(clock.getDelta());
+    if (renderer && scene && camera) renderer.render(scene, camera);
+  }
+
+  let activeAction = null;
+  let timeoutId = null;
+
+  function onRobotEmote(e) {
+    const emote = e.detail.name;
+    const newAction = actions[emote];
+    const idleAction = actions['Idle'];
+
+    if (newAction && newAction !== activeAction) {
+        // If we have a pending return to idle, cancel it
+        if (timeoutId) clearTimeout(timeoutId);
+
+        // Fade out current active action (or idle)
+        const prevAction = activeAction || idleAction;
+        if (prevAction && prevAction !== newAction) {
+            prevAction.fadeOut(0.2);
+        }
+
+        // Play new action
+        newAction.reset();
+        newAction.fadeIn(0.2);
+        newAction.play();
+        activeAction = newAction;
+
+        // Schedule return to idle
+        const duration = newAction.getClip().duration;
+        // Add a tiny buffer to ensure it finishes
+        timeoutId = setTimeout(() => {
+            newAction.fadeOut(0.2);
+            if (idleAction) {
+                idleAction.reset();
+                idleAction.fadeIn(0.2);
+                idleAction.play();
+            }
+            activeAction = null;
+        }, duration * 1000); 
+    }
+  }
+
+  // Lifecycle handling
+  document.addEventListener('astro:page-load', () => {
+    init();
+    window.addEventListener('robot-emote', onRobotEmote);
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    if (animationId) cancelAnimationFrame(animationId);
+    window.removeEventListener('resize', onWindowResize);
+    window.removeEventListener('robot-emote', onRobotEmote);
+    if (renderer) {
+        renderer.dispose();
+    }
+  });
+</script>
+
+<style>
+  #robot-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Sit behind the cards (z-index: 10) but above the background */
+    pointer-events: none; /* Crucial: allows you to click cards through the 3D layer */
+  }
+</style>

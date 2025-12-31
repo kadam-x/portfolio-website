@@ -232,14 +232,3 @@ html[data-transition="fade"]::view-transition-new(root) {
 html {
     background-color: #412E20;
 }
-
-/* Ensure vanta background is included in transitions */
-::view-transition-group(vanta-bg) {
-    z-index: 0;
-}
-
-::view-transition-old(vanta-bg),
-::view-transition-new(vanta-bg) {
-    animation: none;
-    mix-blend-mode: normal;
-}

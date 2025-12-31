@@ -27,119 +27,6 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
   <body style={`background-color: ${backgroundColor}`}>
     <slot />
     <script is:inline>
-      // Vanta.js initialization - must be in Layout to work with View Transitions
-      // Use window to store state across View Transition navigations
-      window._vantaState = window._vantaState || { effect: null, scriptsLoaded: false };
-
-      function loadVantaScript(src) {
-        return new Promise(function(resolve, reject) {
-          // First check if global is already available
-          if (src.includes('three') && typeof THREE !== 'undefined') {
-            resolve();
-            return;
-          }
-          if (src.includes('vanta') && typeof VANTA !== 'undefined') {
-            resolve();
-            return;
-          }
-
-          // Need to load the script
-          var script = document.createElement('script');
-          script.src = src;
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
-        });
-      }
-
-      function destroyVanta() {
-        if (window._vantaState.effect) {
-          try {
-            window._vantaState.effect.destroy();
-          } catch (e) {}
-          window._vantaState.effect = null;
-        }
-      }
-
-      function createVanta() {
-        var el = document.getElementById('vanta-background');
-        if (!el) return;
-        if (typeof VANTA === 'undefined' || !VANTA.GLOBE) return;
-
-        destroyVanta();
-
-        try {
-          window._vantaState.effect = VANTA.GLOBE({
-            el: el,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0xec753a,
-            color2: 0xffe4af,
-            backgroundColor: 0x412e20
-          });
-        } catch (e) {
-          console.error('Vanta init error:', e);
-        }
-      }
-
-      function initVantaBackground() {
-        var el = document.getElementById('vanta-background');
-        if (!el) {
-          destroyVanta();
-          return;
-        }
-
-        // Check if scripts are actually loaded and functional (not just script tags present)
-        var scriptsReady = typeof THREE !== 'undefined' && typeof VANTA !== 'undefined' && VANTA.GLOBE;
-        
-        if (scriptsReady) {
-          createVanta();
-          return;
-        }
-
-        // Scripts not ready - need to load them
-        // First, remove any existing broken script tags
-        var oldThree = document.querySelector('script[src*="three"]');
-        var oldVanta = document.querySelector('script[src*="vanta"]');
-        if (oldThree) oldThree.remove();
-        if (oldVanta) oldVanta.remove();
-
-        // Load fresh
-        loadVantaScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js')
-          .then(function() {
-            return loadVantaScript('/vanta.globe.min.js');
-          })
-          .then(function() {
-            createVanta();
-          })
-          .catch(function(err) {
-            console.error('Script load failed:', err);
-          });
-      }
-
-      // Run on initial load
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initVantaBackground);
-      } else {
-        initVantaBackground();
-      }
-
-      // Run after View Transition swap - use both events for reliability
-      document.addEventListener('astro:after-swap', function() {
-        // Small delay to ensure DOM is settled
-        setTimeout(initVantaBackground, 50);
-      });
-
-      document.addEventListener('astro:page-load', function() {
-        // Backup trigger with delay
-        setTimeout(initVantaBackground, 100);
-      });
-
       // Navigation handling for View Transitions
       if (!window._transitionHandlersSet) {
         window._transitionHandlersSet = true;
@@ -148,7 +35,6 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
           var from = fromPath.replace(/\/$/, '') || '/';
           var to = toPath.replace(/\/$/, '') || '/';
           
-          // Check if navigating to/from project detail pages
           var isProjectDetail = function(path) {
             return path.startsWith('/projects/project-');
           };
@@ -156,43 +42,23 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
           var fromIsProject = isProjectDetail(from);
           var toIsProject = isProjectDetail(to);
           
-          // Project detail pages - use fade transition (no swipe)
           if (fromIsProject || toIsProject) {
-            // If going back to projects from a project detail, use fade
             if (to === '/projects' && fromIsProject) return 'fade';
-            // If going from projects to project detail, use fade
             if (from === '/projects' && toIsProject) return 'fade';
-            // If navigating between project details, use fade
             if (fromIsProject && toIsProject) return 'fade';
-            // If coming from elsewhere to project detail, use fade
             if (toIsProject) return 'fade';
-            // If going from project detail to elsewhere (except projects), use fade
             if (fromIsProject && to !== '/projects') return 'fade';
           }
           
-          // Going home from about - slide back up (reverse of slide-top)
           if (to === '/' && from === '/about') return 'back-top';
-          
-          // Going home from contact - slide back down (reverse of slide-bottom)
           if (to === '/' && from === '/contact') return 'back-bottom';
-          
-          // Going home from projects - slide back right (reverse of swipe)
           if (to === '/' && from === '/projects') return 'back-right';
-          
-          // Going home from other pages
           if (to === '/' && from !== '/') return 'back';
-          
-          // About page - slide from top
           if (to === '/about') return 'slide-top';
-          
-          // Contact page - slide from bottom
           if (to === '/contact') return 'slide-bottom';
-          
-          // Default - swipe from right
           return 'swipe';
         }
 
-        // Set on click - earliest possible moment
         document.addEventListener('click', function(e) {
           var link = e.target.closest('a');
           if (!link || !link.href) return;
@@ -203,27 +69,21 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
             
             var type = getTransitionType(location.pathname, url.pathname);
             document.documentElement.setAttribute('data-transition', type);
-            console.log('click: Set transition type:', type);
           } catch(err) {}
         }, true);
 
-        // Also set in astro events as backup
         document.addEventListener('astro:before-preparation', function(e) {
           var type = getTransitionType(e.from.pathname, e.to.pathname);
           document.documentElement.setAttribute('data-transition', type);
-          console.log('before-preparation: Set transition type:', type);
         });
 
-        // Copy attribute to new document before swap
         document.addEventListener('astro:before-swap', function(e) {
           var type = document.documentElement.getAttribute('data-transition');
           if (type) {
             e.newDocument.documentElement.setAttribute('data-transition', type);
-            console.log('before-swap: Copied transition type:', type);
           }
         });
 
-        // Clear after transition completes
         document.addEventListener('astro:page-load', function() {
           setTimeout(function() {
             document.documentElement.removeAttribute('data-transition');
