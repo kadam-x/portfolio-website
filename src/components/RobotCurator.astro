@@ -6,7 +6,7 @@
   import * as THREE from 'three';
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-  let scene, camera, renderer, mixer, model;
+  let scene, camera, renderer, mixer, model, face;
   let actions = {};
   let animationId;
   let clock;
@@ -40,7 +40,7 @@
       model = gltf.scene;
       model.position.set(2, -2, 0); 
       
-     model.traverse((child) => {
+      model.traverse((child) => {
   if (child.isMesh) {
     child.material.wireframe = false;
     
@@ -51,6 +51,14 @@
     // Everything with _1, _2, _3, _4 keeps original color
   }
 });
+
+      // Detect face for expressions
+      model.traverse((child) => {
+        if (child.isMesh && child.morphTargetDictionary && child.morphTargetInfluences) {
+            face = child;
+        }
+      });
+
       scene.add(model);
 
       mixer = new THREE.AnimationMixer(model);
@@ -73,10 +81,12 @@
           const action = actions[startEmote];
           action.reset().play();
           activeAction = action;
+          fadeExpression('Surprised', 1, 0.2);
           
           const duration = action.getClip().duration;
           timeoutId = setTimeout(() => {
               action.fadeOut(0.2);
+              fadeExpression('Surprised', 0, 0.5);
               if (actions['Idle']) actions['Idle'].reset().fadeIn(0.2).play();
               activeAction = null;
           }, duration * 1000);
@@ -110,6 +120,27 @@
     if (renderer && scene && camera) renderer.render(scene, camera);
   }
 
+  function fadeExpression(name, targetValue, duration) {
+      if (!face || !face.morphTargetDictionary) return;
+      const index = face.morphTargetDictionary[name];
+      if (index === undefined) return;
+
+      const startValue = face.morphTargetInfluences[index];
+      const startTime = performance.now();
+
+      function updateExpression() {
+          const elapsed = (performance.now() - startTime) / 1000;
+          const t = Math.min(elapsed / duration, 1);
+          
+          face.morphTargetInfluences[index] = THREE.MathUtils.lerp(startValue, targetValue, t);
+
+          if (t < 1) {
+              requestAnimationFrame(updateExpression);
+          }
+      }
+      updateExpression();
+  }
+
   let activeAction = null;
   let timeoutId = null;
 
@@ -134,11 +165,26 @@
         newAction.play();
         activeAction = newAction;
 
+        // Expressions
+        const expressionMap = {
+            'Jump': 'Surprised',
+            'Yes': 'Surprised',
+            'No': 'Angry',
+            'ThumbsUp': 'Surprised',
+            'Wave': 'Surprised',
+            'Death': 'Sad',
+            'Punch': 'Angry'
+        };
+        const expression = expressionMap[emote];
+        if (expression) fadeExpression(expression, 1, 0.2);
+
         // Schedule return to idle
         const duration = newAction.getClip().duration;
         // Add a tiny buffer to ensure it finishes
         timeoutId = setTimeout(() => {
             newAction.fadeOut(0.2);
+            if (expression) fadeExpression(expression, 0, 0.5);
+
             if (idleAction) {
                 idleAction.reset();
                 idleAction.fadeIn(0.2);
