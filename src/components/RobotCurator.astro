@@ -1,6 +1,9 @@
----
----
-<div id="robot-container"></div>
+<div id="robot-container">
+  <div id="robot-bubble" class="hidden">
+    <div class="bubble-content"></div>
+    <div class="bubble-arrow"></div>
+  </div>
+</div>
 
 <script>
   import * as THREE from 'three';
@@ -8,27 +11,47 @@
 
   let scene, camera, renderer, mixer, model, face;
   let actions = {};
-  let animationId;
-  let clock;
+  let animationId, clock, activeAction = null, timeoutId = null, bubbleTimeout = null;
+  let currentTypeId = 0;
+
+  function showDialogue(text) {
+    const bubble = document.getElementById('robot-bubble');
+    const content = bubble?.querySelector('.bubble-content');
+    if (!bubble || !content) return;
+
+    clearTimeout(bubbleTimeout);
+    bubble.classList.remove('hidden');
+    content.textContent = '';
+    
+    const typeId = ++currentTypeId; 
+    let i = 0;
+    const speed = 15;
+
+    function type() {
+      if (typeId !== currentTypeId) return; 
+      if (i < text.length) {
+        content.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+
+    bubbleTimeout = setTimeout(() => {
+      if (typeId === currentTypeId) bubble.classList.add('hidden');
+    }, 4000);
+  }
 
   function init() {
     const container = document.getElementById('robot-container');
     if (!container) return;
     
-    // Clear previous canvas if any
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
     scene = new THREE.Scene();
     clock = new THREE.Clock();
-
-    // Camera setup
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 100);
     camera.position.set(5, 2, 8); 
     camera.lookAt(0, 1, 0);
 
-    // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
     const dirLight = new THREE.DirectionalLight(0xEC753A, 2);
@@ -41,95 +64,38 @@
       model.position.set(2, -2, 0); 
       
       model.traverse((child) => {
-  if (child.isMesh) {
-    child.material.wireframe = false;
-    
-    // Only color parts without any _number suffix (the main body parts)
-    if (!child.name.match(/_\d+$/)) {
-      child.material.color.setHex(0xEC753A);
-    }
-    // Everything with _1, _2, _3, _4 keeps original color
-  }
-});
-
-      // Detect face for expressions
-      model.traverse((child) => {
-        if (child.isMesh && child.morphTargetDictionary && child.morphTargetInfluences) {
-            face = child;
+        if (child.isMesh) {
+          if (!child.name.match(/_\d+$/)) child.material.color.setHex(0xEC753A);
+          // Find the face mesh for morph targets
+          if (child.morphTargetDictionary && child.morphTargetInfluences) face = child;
         }
       });
 
       scene.add(model);
-
       mixer = new THREE.AnimationMixer(model);
-      if (gltf.animations) {
-          gltf.animations.forEach((clip) => {
-            const action = mixer.clipAction(clip);
-            actions[clip.name] = action;
-            
-            // Configure non-idle animations to play once
-            if (clip.name !== 'Idle' && clip.name !== 'Walking' && clip.name !== 'Running') {
-                action.clampWhenFinished = true;
-                action.loop = THREE.LoopOnce;
-            }
-          });
-      }
 
-      // Start with Wave, then go to Idle
-      const startEmote = 'Wave';
-      if (actions[startEmote]) {
-          const action = actions[startEmote];
-          action.reset().play();
-          activeAction = action;
-          fadeExpression('Surprised', 1, 0.2);
-          
-          const duration = action.getClip().duration;
-          timeoutId = setTimeout(() => {
-              action.fadeOut(0.2);
-              fadeExpression('Surprised', 0, 0.5);
-              if (actions['Idle']) actions['Idle'].reset().fadeIn(0.2).play();
-              activeAction = null;
-          }, duration * 1000);
-      } else if (actions['Idle']) {
-          actions['Idle'].play();
-      }
+      gltf.animations.forEach((clip) => {
+        const action = mixer.clipAction(clip);
+        actions[clip.name] = action;
+        // Non-looping animations
+        if (!['Idle', 'Walking', 'Running', 'Standing', 'Sitting'].includes(clip.name)) {
+            action.clampWhenFinished = true;
+            action.loop = THREE.LoopOnce;
+        }
+      });
 
+      if (actions['Idle']) actions['Idle'].play();
       animate();
-    }, undefined, (error) => {
-        console.error('An error occurred loading the robot:', error);
     });
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-    
-    container.addEventListener('click', onContainerClick);
     window.addEventListener('resize', onWindowResize, false);
   }
 
-  function onContainerClick(event) {
-  console.log('Container clicked!'); // Add this
-  if (!camera || !model) return;
-  
-  const mouse = new THREE.Vector2();
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-  const raycaster = new THREE.Raycaster();
-  raycaster.setFromCamera(mouse, camera);
-
-  const intersects = raycaster.intersectObject(model, true);
-  console.log('Intersects:', intersects.length); // Add this
-
-  if (intersects.length > 0) {
-    console.log('Robot hit!'); // Add this
-    onRobotEmote({ detail: { name: 'Death' } });
-  }
-}
-
   function onWindowResize() {
-    if (!camera || !renderer) return;
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -137,111 +103,75 @@
 
   function animate() {
     animationId = requestAnimationFrame(animate);
-    if (mixer && clock) mixer.update(clock.getDelta());
-    if (renderer && scene && camera) renderer.render(scene, camera);
+    if (mixer) mixer.update(clock.getDelta());
+    renderer.render(scene, camera);
   }
 
-  function fadeExpression(name, targetValue, duration) {
-      if (!face || !face.morphTargetDictionary) return;
+  // Updated Expression handler (0 to 1 values)
+  function setExpression(name, value, duration = 0.3) {
+      if (!face) return;
       const index = face.morphTargetDictionary[name];
       if (index === undefined) return;
 
       const startValue = face.morphTargetInfluences[index];
       const startTime = performance.now();
 
-      function updateExpression() {
+      function update() {
           const elapsed = (performance.now() - startTime) / 1000;
           const t = Math.min(elapsed / duration, 1);
-          
-          face.morphTargetInfluences[index] = THREE.MathUtils.lerp(startValue, targetValue, t);
-
-          if (t < 1) {
-              requestAnimationFrame(updateExpression);
-          }
+          face.morphTargetInfluences[index] = THREE.MathUtils.lerp(startValue, value, t);
+          if (t < 1) requestAnimationFrame(update);
       }
-      updateExpression();
+      update();
   }
-
-  let activeAction = null;
-  let timeoutId = null;
 
   function onRobotEmote(e) {
     const emote = e.detail.name;
+    const text = e.detail.text;
+    const expression = e.detail.expression;
     const newAction = actions[emote];
-    const idleAction = actions['Idle'];
+    
+    if (text) showDialogue(text);
 
     if (newAction && newAction !== activeAction) {
-        // If we have a pending return to idle, cancel it
         if (timeoutId) clearTimeout(timeoutId);
+        
+        // Crossfade logic
+        const fromAction = activeAction || actions['Idle'];
+        if (fromAction) fromAction.fadeOut(0.2);
 
-        // Fade out current active action (or idle)
-        const prevAction = activeAction || idleAction;
-        if (prevAction && prevAction !== newAction) {
-            prevAction.fadeOut(0.2);
-        }
-
-        // Play new action
-        newAction.reset();
-        newAction.fadeIn(0.2);
-        newAction.play();
+        newAction.reset().fadeIn(0.2).play();
         activeAction = newAction;
 
-        // Expressions
-        const expressionMap = {
-            'Jump': 'Surprised',
-            'Yes': 'Surprised',
-            'No': 'Angry',
-            'ThumbsUp': 'Surprised',
-            'Wave': 'Surprised',
-            'Death': 'Sad',
-            'Punch': 'Angry'
-        };
-        const expression = expressionMap[emote];
-        if (expression) fadeExpression(expression, 1, 0.2);
+        // Use passed expression or map emotes to expressions
+        if (expression) {
+            setExpression(expression, 1);
+        } else {
+            // Fallback mapping
+            if (emote === 'No') setExpression('Sad', 1);
+            else if (emote === 'Jump' || emote === 'Dance') setExpression('Surprised', 1);
+        }
 
-        // Schedule return to idle
         const duration = newAction.getClip().duration;
-        // Add a tiny buffer to ensure it finishes
         timeoutId = setTimeout(() => {
             newAction.fadeOut(0.2);
-            if (expression) fadeExpression(expression, 0, 0.5);
-
-            if (idleAction) {
-                idleAction.reset();
-                idleAction.fadeIn(0.2);
-                idleAction.play();
-            }
+            // Reset expressions to 0
+            ['Angry', 'Surprised', 'Sad'].forEach(exp => setExpression(exp, 0));
+            if (actions['Idle']) actions['Idle'].reset().fadeIn(0.2).play();
             activeAction = null;
         }, duration * 1000); 
     }
   }
 
-  // Lifecycle handling
   document.addEventListener('astro:page-load', () => {
     init();
     window.addEventListener('robot-emote', onRobotEmote);
   });
-
-  document.addEventListener('astro:before-swap', () => {
-    if (animationId) cancelAnimationFrame(animationId);
-    const container = document.getElementById('robot-container');
-    if (container) container.removeEventListener('click', onContainerClick);
-    window.removeEventListener('resize', onWindowResize);
-    window.removeEventListener('robot-emote', onRobotEmote);
-    if (renderer) {
-        renderer.dispose();
-    }
-  });
 </script>
 
 <style>
-  #robot-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* Sit behind the cards (z-index: 10) but above the background */
-    pointer-events: auto; /* Allow clicks on the robot */
-  }
+  #robot-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  #robot-bubble { position: absolute; bottom: 72%; right: 25%; background: transparent; border: 3px solid #DA9F5F; padding: 1rem 1.5rem; max-width: 280px; color: #EC753A; font-family: 'Fira Code', monospace; font-size: 0.9rem; z-index: 20; transition: opacity 0.3s; }
+  #robot-bubble.hidden { opacity: 0; }
+  .bubble-arrow { position: absolute; bottom: -13px; right: 40px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid #DA9F5F; }
 </style>

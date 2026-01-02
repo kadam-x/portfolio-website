@@ -1,384 +1,208 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import RobotCurator from '../components/RobotCurator.astro';
+
+// We'll define the projects here so we can map over them and apply the delays
+const projects = [
+  { id: 'project-1', title: 'Project One', desc: 'Your custom description for project 1 goes here.' },
+  { id: 'project-2', title: 'Project Two', desc: 'Your custom description for project 2 goes here.' },
+  { id: 'project-3', title: 'Project Three', desc: 'Description for project 3.' },
+  { id: 'project-4', title: 'Project Four', desc: 'Description for project 4.' },
+  { id: 'project-5', title: 'Project Five', desc: 'Description for project 5.' },
+  { id: 'project-6', title: 'Project Six', desc: 'Description for project 6.' },
+  { id: 'project-7', title: 'Project Seven', desc: 'Description for project 7.' },
+  { id: 'project-8', title: 'Project Eight', desc: 'Description for project 8.' },
+];
 ---
 
 <Layout title="Projects" backgroundColor="#412E20">
   <RobotCurator />
 
   <main class="projects-container">
-    <div class="nav-buttons" id="navButtons">
+    <div class="nav-buttons">
       <a href="/" class="back-link" id="homeLink">
         <span class="arrow">←</span>
         <span>take me home</span>
       </a>
-      
-      <button class="projects-toggle" id="projectsToggle">
-        <span class="button-text">projects</span>
-      </button>
     </div>
     
-    <div class="projects-sidebar" id="projectsSidebar">
-      <div class="projects-grid" id="projectsGrid">
-        <a href="/projects/project-1" class="project-card col-1" data-emote="Yes" transition:name="project-1">
-          <div class="project-header">
-            <h2>Project Name</h2>
-            <span class="tag">React</span>
+    <div class="projects-sidebar active">
+      <div class="projects-grid">
+        
+        {projects.map((project, index) => (
+          <div 
+            class="project-card" 
+            data-id={project.id} 
+            style={`animation-delay: ${index * 0.1}s;`} 
+          >
+            <div class="project-header"><h2>{project.title}</h2></div>
+            <p class="project-desc">{project.desc}</p>
+            
+            <div class="card-actions">
+              <button class="info-btn-ui" data-info-trigger aria-label="Project Info">?</button>
+              <a href={`/projects/${project.id}`} class="expand-btn-ui" aria-label="Expand Project">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </a>
+            </div>
           </div>
-          <p class="project-desc">
-            A brief description of what this project does and the problem it solves.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
+        ))}
 
-        <a href="/projects/project-2" class="project-card col-2" data-emote="ThumbsUp" transition:name="project-2">
-          <div class="project-header">
-            <h2>Another Project</h2>
-            <span class="tag">TypeScript</span>
-          </div>
-          <p class="project-desc">
-            Another cool project description goes here.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-3" class="project-card col-1" data-emote="Dance" transition:name="project-3">
-          <div class="project-header">
-            <h2>Third Project</h2>
-            <span class="tag">Astro</span>
-          </div>
-          <p class="project-desc">
-            Yet another project that showcases your skills.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-4" class="project-card col-2" data-emote="Jump" transition:name="project-4">
-          <div class="project-header">
-            <h2>Fourth Project</h2>
-            <span class="tag">Node.js</span>
-          </div>
-          <p class="project-desc">
-            A backend project showcasing server-side skills.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-5" class="project-card col-1" data-emote="ThumbsUp" transition:name="project-5">
-          <div class="project-header">
-            <h2>Fifth Project</h2>
-            <span class="tag">Next.js</span>
-          </div>
-          <p class="project-desc">
-            A full-stack application with modern features.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-6" class="project-card col-2" data-emote="Dance" transition:name="project-6">
-          <div class="project-header">
-            <h2>Sixth Project</h2>
-            <span class="tag">Vue.js</span>
-          </div>
-          <p class="project-desc">
-            An interactive dashboard with real-time data.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-7" class="project-card col-1" data-emote="Wave" transition:name="project-7">
-          <div class="project-header">
-            <h2>Seventh Project</h2>
-            <span class="tag">Python</span>
-          </div>
-          <p class="project-desc">
-            Data analysis and visualization project.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        <a href="/projects/project-8" class="project-card col-2" data-emote="Yes" transition:name="project-8">
-          <div class="project-header">
-            <h2>Eighth Project</h2>
-            <span class="tag">Docker</span>
-          </div>
-          <p class="project-desc">
-            Infrastructure and deployment automation.
-          </p>
-          <div class="expand-btn-ui">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-            </svg>
-          </div>
-        </a>
-
-        </div>
+      </div>
     </div>
   </main>
 </Layout>
 
 <script is:inline>
   (function() {
-    // Persistent state
-    if (!window._projectsState) {
-      window._projectsState = { isOpen: false };
-    }
-    
-    let isProjectsOpen = window._projectsState.isOpen;
+    const DIALOGUE_CONFIG = {
+      landing: "System online. Archives decrypted. Click '?' for data insights.",
+      goHome: "Thanks for stopping by, Adam. Catch you later!",
+      projects: {
+        'project-1': "This one used React! My first major component library build.",
+        'project-2': "Fully typed with TypeScript. No 'any' allowed here!",
+        'project-3': "Astro is fast. This site is actually built with it!",
+        'project-4': "Node.js backend with full CRUD. Intense stuff.",
+        'project-5': "Next.js App Router. The bleeding edge of web dev.",
+        'project-6': "Real-time data streams. Everything updates instantly!",
+        'project-7': "Python scripts for data crunching. Numbers don't lie.",
+        'project-8': "Dockerized infrastructure. Scale it to the moon!"
+      }
+    };
 
-    // Helper to trigger Robot Animations
-    function robotReact(emoteName) {
+    function robotReact(emoteName, dialogueText = null) {
       window.dispatchEvent(new CustomEvent('robot-emote', { 
-        detail: { name: emoteName } 
+        detail: { name: emoteName, text: dialogueText } 
       }));
     }
 
-    function initProjectsToggle() {
-      const projectsToggle = document.getElementById('projectsToggle');
-      const projectsSidebar = document.getElementById('projectsSidebar');
+    function initPage() {
       const homeLink = document.getElementById('homeLink');
       
-      if (projectsToggle && projectsSidebar && homeLink) {
-        const newToggle = projectsToggle.cloneNode(true);
-        projectsToggle.parentNode.replaceChild(newToggle, projectsToggle);
-        
-        const newButtonText = newToggle.querySelector('.button-text');
-        
-        // Initial setup based on state
-        if (isProjectsOpen) {
-          if (newButtonText) newButtonText.textContent = '<-back';
-          homeLink.classList.add('hidden');
-          projectsSidebar.classList.add('active');
-        }
-        
-        newToggle.addEventListener('click', function() {
-          if (!isProjectsOpen) {
-            isProjectsOpen = true;
-            window._projectsState.isOpen = true;
-            if (newButtonText) newButtonText.textContent = '<-back';
-            homeLink.classList.add('hidden');
-            projectsSidebar.classList.remove('closing');
-            projectsSidebar.classList.add('active');
-            
-            // Robot says hello!
-            robotReact('Wave');
-          } else {
-            isProjectsOpen = false;
-            window._projectsState.isOpen = false;
-            projectsSidebar.classList.add('closing');
-            if (newButtonText) newButtonText.textContent = 'projects';
-            homeLink.classList.remove('hidden');
-            
-            // Robot takes a break
-            robotReact('Idle');
-            
-            setTimeout(function() {
-              projectsSidebar.classList.remove('active', 'closing');
-            }, 400);
-          }
-        });
+      // Greet user shortly after cards begin cascading
+      setTimeout(() => robotReact('Wave', DIALOGUE_CONFIG.landing), 1000);
+
+      if (homeLink) {
+        homeLink.addEventListener('mouseenter', () => robotReact('Wave', DIALOGUE_CONFIG.goHome));
       }
 
-      // Hook up Card Hovers to Robot
-      const cards = document.querySelectorAll('.project-card');
-      cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-          const emote = card.getAttribute('data-emote') || 'Standing';
-          robotReact(emote);
+      // Available animations and expressions
+      const EMOTES = ['Jump', 'Yes', 'No', 'Wave', 'ThumbsUp'];
+      const STATES = ['Dance'];
+      const EXPRESSIONS = ['Surprised', 'Sad'];
+      
+      // Combine for random selection
+      const ALL_ANIMATIONS = [...EMOTES, ...STATES];
+
+      document.querySelectorAll('[data-info-trigger]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = btn.closest('.project-card');
+          const id = card.getAttribute('data-id');
+          
+          // Pick random animation and expression
+          const randomEmote = ALL_ANIMATIONS[Math.floor(Math.random() * ALL_ANIMATIONS.length)];
+          const randomExpression = EXPRESSIONS[Math.floor(Math.random() * EXPRESSIONS.length)];
+          
+          // Dispatch with expression data
+          window.dispatchEvent(new CustomEvent('robot-emote', { 
+            detail: { 
+              name: randomEmote, 
+              text: DIALOGUE_CONFIG.projects[id],
+              expression: randomExpression
+            } 
+          }));
         });
       });
     }
 
-    function init() {
-      const referrer = document.referrer;
-      const fromProjectDetail = referrer && referrer.includes('/projects/project-');
-      const fromIndex = referrer && (new URL(referrer).pathname === '/');
-      
-      if (fromIndex) {
-        isProjectsOpen = false;
-        window._projectsState.isOpen = false;
-      } else if (fromProjectDetail) {
-        isProjectsOpen = window._projectsState.isOpen;
-      }
-      
-      initProjectsToggle();
-    }
-
-    // Astro lifecycle hooks
-    init();
-    document.addEventListener('astro:page-load', init);
-    
-    document.addEventListener('click', function(e) {
-      const link = e.target.closest('a');
-      if (link && (new URL(link.href, location.origin).pathname === '/')) {
-        window._projectsState.isOpen = false;
-      }
-    });
+    initPage();
+    document.addEventListener('astro:page-load', initPage);
   })();
 </script>
 
 <style>
-  .projects-container {
-    position: relative;
-    z-index: 10; /* Above robot and vanta */
-    min-height: 100vh;
-  }
-
-  .nav-buttons {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    z-index: 20;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  /* Navigation Links */
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #FFE4AF;
-    font-size: 1rem;
-    text-decoration: none;
-    font-family: 'Fira Code', monospace;
+  .projects-container { position: relative; z-index: 10; min-height: 100vh; }
+  .nav-buttons { position: fixed; top: 2rem; left: 2rem; z-index: 20; }
+  
+  /* Consistency Update: Orange Hover for "take me home" */
+  .back-link { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    color: #FFE4AF; 
+    text-decoration: none; 
+    font-family: 'Fira Code', monospace; 
+    opacity: 0; 
     animation: slideInFromRight 0.5s ease forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
+    transition: all 0.3s ease;
   }
 
-  .back-link.hidden {
-    opacity: 0 !important;
-    pointer-events: none;
+  .back-link:hover {
+    color: #EC753A;
+    transform: scale(1.05);
+  }
+  
+  .projects-sidebar { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; padding: 4rem 2rem; overflow-y: auto; z-index: 15; }
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 380px); gap: 2rem; padding-top: 6rem; padding-left: 2rem; }
+  
+  /* Staggered Entrance Animation */
+  .project-card { 
+    background: rgba(65, 46, 32, 0.9); 
+    border: 3px solid #DA9F5F; 
+    padding: 1.8rem 2rem; 
+    color: inherit; 
+    position: relative; 
+    display: block; 
+    opacity: 0; /* Start hidden */
+    animation: slideInFromLeft 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
   }
 
-  .projects-toggle {
-    color: #D73F24;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Fira Code', monospace;
-    font-weight: 700;
-    text-align: left;
-    animation: slideInFromRight 0.5s ease forwards;
-    animation-delay: 0.35s;
-    opacity: 0;
+  .project-card:hover { 
+    border-color: #EC753A; 
+    transform: translateX(8px); 
+    transition: all 0.3s ease;
+    box-shadow: -5px 0 15px rgba(236, 117, 58, 0.2);
   }
 
-  .projects-toggle:hover { color: #EC753A; }
+  .card-actions { position: absolute; top: 0.75rem; right: 0.75rem; display: flex; gap: 0.5rem; align-items: center; z-index: 5; }
 
-  /* Sidebar and Grid */
-  .projects-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    padding: 4rem 2rem;
-    overflow-y: auto;
-    z-index: 15;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+  .info-btn-ui, .expand-btn-ui { 
+    background: transparent; 
+    border: 2px solid #DA9F5F; 
+    color: #DA9F5F; 
+    border-radius: 50%; 
+    width: 28px; 
+    height: 28px; 
+    font-family: 'Fira Code', monospace; 
+    font-weight: bold; 
+    font-size: 0.9rem; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s; 
+    text-decoration: none; 
+  }
+  
+  .info-btn-ui:hover, .expand-btn-ui:hover { background: #EC753A; border-color: #EC753A; color: #342331; }
+  .expand-btn-ui svg { width: 14px; height: 14px; stroke: currentColor; }
+  .expand-btn-ui:hover svg { stroke: #342331; }
+
+  .project-header h2 { font-size: 1.3rem; color: #FFE4AF; margin: 0; padding-right: 50px; }
+  .project-desc { color: #DA9F5F; font-size: 0.95rem; line-height: 1.5; margin-top: 0.8rem; }
+
+  @keyframes slideInFromLeft { 
+    from { transform: translateX(-50px); opacity: 0; } 
+    to { transform: translateX(0); opacity: 1; } 
   }
 
-  .projects-sidebar.active {
-    opacity: 1;
-    pointer-events: all;
+  @keyframes slideInFromRight { 
+    from { transform: translateX(50px); opacity: 0; } 
+    to { transform: translateX(0); opacity: 1; } 
   }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 260px);
-    gap: 1rem;
-    padding-top: 6rem;
-    padding-left: 2rem;
-    width: fit-content;
-  }
-
-  /* Project Cards */
-  .project-card {
-    background: rgba(65, 46, 32, 0.9); /* Slight transparency to show robot behind */
-    border: 3px solid #DA9F5F;
-    padding: 1rem 1.25rem;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(-100vw);
-    display: block;
-  }
-
-  .projects-sidebar.active .project-card {
-    animation: slideInFromLeft 0.4s ease both;
-  }
-
-  .project-card:hover {
-    border-color: #EC753A;
-    transform: translateX(8px);
-    box-shadow: 0 0 20px rgba(236, 117, 58, 0.4);
-  }
-
-  /* Expand Button UI (No longer a <button> to allow nesting) */
-  .expand-btn-ui {
-    position: absolute;
-    bottom: 0.75rem;
-    right: 0.75rem;
-    width: 28px;
-    height: 28px;
-    border: 2px solid #DA9F5F;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-  }
-
-  .expand-btn-ui svg { color: #DA9F5F; width: 100%; height: 100%; }
-  .project-card:hover .expand-btn-ui { background: #EC753A; border-color: #EC753A; }
-  .project-card:hover .expand-btn-ui svg { color: #342331; }
-
-  /* Text Styles */
-  .project-header h2 { font-size: 1.2rem; color: #FFE4AF; margin: 0; }
-  .tag { background: #DA9F5F; color: #342331; padding: 0.1rem 0.5rem; font-size: 0.75rem; border: 1px solid #EC753A; }
-  .project-desc { color: #DA9F5F; font-size: 0.85rem; line-height: 1.4; margin-top: 0.5rem; }
-
-  /* Animations */
-  @keyframes slideInFromLeft { from { transform: translateX(-100vw); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  @keyframes slideInFromRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  .projects-sidebar.closing .project-card { animation: slideOutToLeft 0.4s ease both; }
-  @keyframes slideOutToLeft { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100vw); opacity: 0; } }
 
   @media (max-width: 768px) {
-    .projects-grid { grid-template-columns: 1fr; width: 100%; padding-left: 1rem; }
+    .projects-grid { grid-template-columns: 1fr; width: 100%; padding-left: 0; justify-items: center; }
   }
 </style>
