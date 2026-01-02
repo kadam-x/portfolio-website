@@ -3,29 +3,35 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Contact" backgroundColor="#412E20">
-  <main class="contact-container">
+  <main class="contact-container" id="page-wrapper">
     <div class="terminal-nav">
-      <span class="prompt">guest@kovacsadam.dev:~$</span>
-      <a href="/" class="back-link">cd ~</a>
+      <a href="/" class="back-link">
+        <span class="arrow">←</span>
+        <span>take me home</span>
+      </a>
     </div>
     
     <div class="contact-box">
       <div class="social-links">
-        <a href="mailto:your@email.com" class="social-link">email</a>
-        <a href="https://github.com/yourusername" target="_blank" class="social-link">github</a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">linkedin</a>
+        <button id="copy-email" class="social-link" data-email="koi.adam022@gmail.com">
+          <span class="btn-text">copy email</span>
+        </button>
+        <a href="https://github.com/snezzz0" target="_blank" class="social-link">github</a>
+        <a href="https://www.linkedin.com/in/kvcs-adam-s/" target="_blank" class="social-link">linkedin</a>
       </div>
     </div>
 
-    <div class="floating-console">
+    <div class="floating-console" id="main-console">
       <div class="console-border-top">
-        <span class="console-label">TERMINAL_PROMPT_V1.0</span>
+        <span class="console-label">TERMINAL_V2.0.exp</span>
       </div>
-      <div id="terminal-history">
-        </div>
+      <div id="terminal-history"></div>
       <div class="input-line">
         <span class="prompt">></span>
-        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
+        <div class="input-wrapper">
+          <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus />
+          <span id="custom-cursor"></span>
+        </div>
       </div>
     </div>
   </main>
@@ -35,26 +41,46 @@ import Layout from '../layouts/Layout.astro';
   const initTerminal = () => {
     const input = document.getElementById('terminal-input') as HTMLInputElement;
     const history = document.getElementById('terminal-history');
+    const consoleElem = document.getElementById('main-console');
+    const wrapper = document.getElementById('page-wrapper');
+    const cursor = document.getElementById('custom-cursor');
+    const emailBtn = document.getElementById('copy-email');
     
-    if (!input || !history || input.dataset.initialized) return;
+    if (!input || !history || !consoleElem || !wrapper || !cursor || input.dataset.initialized) return;
+
+    // Email Copy Logic
+    emailBtn?.addEventListener('click', () => {
+      const email = emailBtn.getAttribute('data-email') || "";
+      navigator.clipboard.writeText(email).then(() => {
+        const btnText = emailBtn.querySelector('.btn-text');
+        if (btnText) {
+          btnText.textContent = "copied!";
+          setTimeout(() => { btnText.textContent = "copy email"; }, 2000);
+        }
+      });
+    });
+
+    // Cursor Tracking logic
+    const updateCursor = () => {
+      cursor.style.setProperty('--char-count', input.value.length.toString());
+    };
 
     const COMMANDS = {
-      'help': 'Available: whoami, cd ~, ls, coffee, jarvis, clear',
-      'whoami': 'Genius, billionaire, playboy, philanthropist. (Working on the middle two.)',
-      'ls': 'about/  projects/  contact/  mark_85_schematics.pdf',
-      'coffee': '☕ [System] Error 418: I\'m a teapot. Just kidding, I just need a refill.',
-      'jarvis': 'Systems at 100%. All arc reactor levels nominal. Welcome home, Mr. Kovacs.',
-      'sudo': 'Access Denied. You are not authorized to access the Stark Industries mainframe.',
+      'help': 'Available commands: neofetch, matrix, ls, ping, clear',
+      'ls': 'about.md  projects.bin  contact.sh  secret_plans.txt',
+      'ping': '64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.042 ms',
+      'matrix': 'Wake up, Neo... The matrix has you.',
+      'sudo': 'Nice try. This incident will be reported.',
       'cd ~': 'Redirecting to root...',
       'cd ..': 'Redirecting to root...',
     };
 
-    // The Typewriter Function
-    const typeWriter = (text, element, speed = 30) => {
+    const typeWriter = (text, element, speed = 15) => {
       let i = 0;
+      if (text.includes('\n')) element.style.whiteSpace = 'pre';
       const interval = setInterval(() => {
         if (i < text.length) {
-          element.textContent += text.charAt(i);
+          element.innerHTML += text.charAt(i);
           i++;
           history.scrollTop = history.scrollHeight;
         } else {
@@ -63,10 +89,28 @@ import Layout from '../layouts/Layout.astro';
       }, speed);
     };
 
-    // Initial Login Sequence
+    const runFullMatrixMode = () => {
+      history.innerHTML = '';
+      wrapper.classList.add('global-matrix-mode');
+      const wakeUpText = "WAKE UP. ".repeat(60);
+      const response = document.createElement('p');
+      response.className = 'matrix-text-flood';
+      history.appendChild(response);
+      typeWriter(wakeUpText, response, 5);
+
+      setTimeout(() => {
+        wrapper.classList.remove('global-matrix-mode');
+        history.innerHTML = '';
+        const p = document.createElement('p');
+        p.className = 'sys-msg';
+        p.textContent = 'Connection restored. Buffer cleared.';
+        history.appendChild(p);
+      }, 5000);
+    };
+
     const welcomeMsgs = [
-      'Establishing secure connection...',
-      'Login successful: GUEST_01',
+      'Initializing experimental_environment...',
+      'Secure socket established.',
       'Type "help" for available commands.'
     ];
 
@@ -75,39 +119,55 @@ import Layout from '../layouts/Layout.astro';
         const p = document.createElement('p');
         p.className = 'sys-msg';
         history.appendChild(p);
-        typeWriter(msg, p, 20);
-      }, i * 600);
+        typeWriter(msg, p, 10);
+      }, i * 500);
     });
 
+    input.addEventListener('input', updateCursor);
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const val = input.value.toLowerCase().trim();
-        
         const line = document.createElement('div');
-        line.innerHTML = `<span style="color: #EC753A">> ${val}</span>`;
+        line.innerHTML = `<span class="user-input">> ${val}</span>`;
         history.appendChild(line);
 
         if (val === 'clear') {
           history.innerHTML = '';
-        } else if (val === 'cd ~' || val === 'cd ..') {
-          setTimeout(() => window.location.href = '/', 500);
+        } else if (val === 'matrix') {
+          runFullMatrixMode();
+        } else if (val === 'neofetch') {
+          const neoDiv = document.createElement('div');
+          neoDiv.className = 'cmd-response';
+          neoDiv.style.whiteSpace = 'pre';
+          neoDiv.innerHTML = `
+<span style="color: #EC753A; font-weight: bold;">snezzz@experimental</span>
+------------------
+<span style="color: #DA9F5F;">WHOAMI:</span> Genius, billionaire, playboy, philanthropist.
+<span style="color: #DA9F5F;">DOTFILES:</span> <a href="https://github.com/snezzz0/dotfiles" target="_blank" class="term-link">github.com/snezzz0/dotfiles</a>
+<span style="color: #DA9F5F;">OS (NIX):</span> <a href="https://github.com/snezzz0/nixos-btw" target="_blank" class="term-link">github.com/snezzz0/nixos-btw</a>
+<span style="color: #DA9F5F;">EDITOR</span> NeoVim 
+<span style="color: #DA9F5F;">SHELL:</span> Zsh
+<span style="color: #DA9F5F;">UPTIME:</span> 13h 37m
+          `;
+          history.appendChild(neoDiv);
+          history.scrollTop = history.scrollHeight;
         } else if (COMMANDS[val]) {
           const response = document.createElement('p');
-          response.style.color = '#DA9F5F';
+          response.className = 'cmd-response';
           history.appendChild(response);
           typeWriter(COMMANDS[val], response);
         } else if (val !== "") {
           const err = document.createElement('p');
           history.appendChild(err);
-          typeWriter(`sh: command not found: ${val}`, err);
+          typeWriter(`zsh: command not found: ${val}`, err);
         }
 
         input.value = '';
+        updateCursor();
       }
     });
 
-    setTimeout(() => input.focus(), 800);
-    document.querySelector('.floating-console')?.addEventListener('click', () => input.focus());
+    consoleElem.addEventListener('click', () => input.focus());
     input.dataset.initialized = "true";
   };
 
@@ -116,127 +176,81 @@ import Layout from '../layouts/Layout.astro';
 </script>
 
 <style>
-  /* Container Setup */
   .contact-container {
     min-height: 100vh;
     padding: 4rem 2rem;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: 'Fira Code', monospace;
   }
 
-  /* Navigation */
-  .terminal-nav { 
-    margin-bottom: 5rem; 
-  }
-  .prompt { 
-    color: #EC753A; 
-    margin-right: 0.5rem; 
-  }
-  .back-link { 
-    color: #FFE4AF; 
-    text-decoration: none; 
-    border-bottom: 1px dashed;
-    font-size: 0.9rem;
-  }
-  .back-link:hover {
-    color: #EC753A;
-    border-bottom-style: solid;
-  }
+  .terminal-nav { margin-bottom: 5rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #FFE4AF; text-decoration: none; font-size: 1rem; }
+  .back-link:hover { color: #EC753A; }
 
-  /* Social Links Grid */
-  .social-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 6rem;
-  }
+  .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 6rem; }
+  
   .social-link {
     padding: 0.8rem 2.2rem;
     border: 2px solid #FFE4AF;
     color: #FFE4AF;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
     text-decoration: none;
-    transition: all 0.2s ease;
     text-transform: lowercase;
-    min-width: 140px;
+    min-width: 160px;
     text-align: center;
+    transition: all 0.2s;
   }
-  .social-link:hover { 
-    background: #FFE4AF; 
-    color: #412E20; 
-  }
+  
+  .social-link:hover { background: #FFE4AF; color: #412E20; }
 
-  /* Flat Terminal Window */
   .floating-console {
     background: #342331; 
     border: 2px solid #DA9F5F;
     width: 100%;
-    max-width: 550px;
+    max-width: 750px;
     margin: 0 auto;
     position: relative;
+    transition: all 0.5s ease;
   }
 
-  .console-border-top {
-    background: rgba(218, 159, 95, 0.1);
-    padding: 0.5rem;
-    border-bottom: 2px solid #DA9F5F;
-    text-align: center;
+  .console-border-top { background: rgba(218, 159, 95, 0.1); padding: 0.6rem 1.2rem; border-bottom: 2px solid #DA9F5F; }
+  .console-label { font-size: 0.7rem; color: #DA9F5F; letter-spacing: 1px; font-weight: bold; }
+
+  #terminal-history { height: 380px; padding: 1.5rem; overflow-y: auto; font-size: 0.95rem; color: #FFE4AF; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .input-line { padding: 0 1.5rem 1.5rem 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .input-wrapper { position: relative; display: flex; flex-grow: 1; align-items: center; }
+  
+  #terminal-input { 
+    background: transparent; border: none; outline: none; color: #FFE4AF; 
+    font-family: inherit; font-size: 1rem; width: 100%; caret-color: transparent; 
+  }
+  
+  #custom-cursor {
+    position: absolute; left: 0; width: 1ch; height: 1.2rem; background: #EC753A;
+    animation: blink 1s step-end infinite; transform: translateX(calc(var(--char-count, 0) * 1ch));
   }
 
-  .console-label {
-    font-size: 0.65rem;
-    color: #DA9F5F;
-    letter-spacing: 3px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+  @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
 
-  #terminal-history {
-    height: 220px;
-    padding: 1.2rem;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    color: #FFE4AF;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
+  .prompt { color: #EC753A; }
+  .user-input { color: #EC753A; }
+  .cmd-response { color: #DA9F5F; line-height: 1.6; }
+  .sys-msg { color: #DA9F5F; font-style: italic; opacity: 0.8; }
+  .term-link { color: #FFE4AF; text-decoration: underline; text-underline-offset: 4px; }
 
-  .input-line {
-    padding: 0 1.2rem 1.2rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+  /* Matrix Mode */
+  .global-matrix-mode { background-color: #000000 !important; }
+  .global-matrix-mode .social-links, .global-matrix-mode .back-link { opacity: 0; pointer-events: none; }
+  .global-matrix-mode .floating-console { max-width: 900px; border-color: #00FF41; background: #000; box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
+  .global-matrix-mode .console-border-top { border-color: #00FF41; }
+  .global-matrix-mode .console-label, .global-matrix-mode .prompt, .global-matrix-mode .user-input, .global-matrix-mode #terminal-input, .global-matrix-mode #terminal-history { color: #00FF41 !important; }
+  .global-matrix-mode #custom-cursor { background: #00FF41 !important; }
+  .matrix-text-flood { color: #00FF41; font-weight: bold; word-break: break-all; }
 
-  #terminal-input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #FFE4AF;
-    font-family: inherit;
-    font-size: 0.95rem;
-    width: 100%;
-  }
-
-  .sys-msg { 
-    color: #DA9F5F; 
-    font-style: italic; 
-    opacity: 0.9;
-  }
-
-  /* Scrollbar Styling */
-  #terminal-history::-webkit-scrollbar {
-    width: 4px;
-  }
-  #terminal-history::-webkit-scrollbar-thumb {
-    background: #DA9F5F;
-  }
-
-  @media (max-width: 640px) {
-    .social-links { gap: 1rem; }
-    .social-link { width: 100%; }
-    .floating-console { max-width: 100%; }
-  }
+  @media (max-width: 768px) { .floating-console { max-width: 100%; } .social-link { width: 100%; } }
 </style>
