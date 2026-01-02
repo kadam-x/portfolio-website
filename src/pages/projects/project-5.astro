@@ -5,12 +5,11 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Fifth Project" backgroundColor="#412E20">
   <main class="project-detail-container">
-    <a href="/projects" class="back-link">
-      <span class="arrow">←</span>
-      <span>back to projects</span>
-    </a>
-
     <article class="project-detail" transition:name="project-5">
+      <a href="/projects" class="back-link">
+        <span class="arrow">←</span>
+        <span>back to projects</span>
+      </a>
       <div class="project-header">
         <h1>Fifth Project</h1>
         <span class="tag">Python</span>
@@ -82,9 +81,9 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   .back-link {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
+    position: absolute;
+    top: -3rem;
+    left: 0;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -93,6 +92,7 @@ import Layout from '../../layouts/Layout.astro';
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
     transition: color 0.2s;
     z-index: 10;
+    text-decoration: none;
   }
 
   .back-link:hover {
@@ -110,6 +110,7 @@ import Layout from '../../layouts/Layout.astro';
     max-width: 800px;
     width: 100%;
     margin-top: 3rem;
+    position: relative;
   }
 
   .project-header {
@@ -223,8 +224,7 @@ import Layout from '../../layouts/Layout.astro';
     }
 
     .back-link {
-      top: 1rem;
-      left: 1rem;
+      top: -2.5rem;
       font-size: 0.9rem;
     }
 
