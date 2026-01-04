@@ -1,65 +1,81 @@
+
 ---
-// src/pages/projects/project-1.astro
+// src/pages/projects/copybot.astro
 import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="Project Name" backgroundColor="#412E20">
+<Layout title="CopyBot - Solana Wallet & PNL Tracker" backgroundColor="#412E20">
   <main class="project-detail-container">
-    <article class="project-detail" transition:name="project-1">
+    <article class="project-detail" transition:name="copybot">
       <a href="/projects" class="back-link">
         <span class="arrow">←</span>
         <span>back to projects</span>
       </a>
 
       <div class="project-header">
-        <h1>Project Name</h1>
-        <span class="tag">React</span>
+        <h1>CopyBot</h1>
+        <span class="tag">Python · Blockchain · Data</span>
       </div>
-      
+
       <p class="project-intro">
-        A brief description of what this project does and the problem it solves.
+        A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets
+        using real-time on-chain data and post-trade performance tracking.
       </p>
 
       <div class="project-content">
         <h2>Overview</h2>
         <p>
-          This is a comprehensive React application that demonstrates advanced state management, 
-          custom hooks, and modern UI patterns. Built with performance and accessibility in mind.
+          CopyBot is a multi-service Solana analytics tool designed to evaluate the effectiveness of
+          copy-trading strategies. It ingests real-time wallet activity via webhooks, enriches trades
+          with market and risk data, and tracks post-purchase token performance using delayed OHLCV
+          analysis.
+        </p>
+        <p>
+          Based on historical performance, the system periodically identifies underperforming or
+          inactive wallets and replaces them with higher-performing candidates sourced from on-chain
+          analytics platforms. The project emphasizes automation, asynchronous execution, and
+          data-driven decision-making. The current version is under active rewrite, with core logic
+          being refactored for robustness and scalability.
         </p>
 
         <h2>Technologies Used</h2>
         <div class="project-tech">
-          <span>React 18</span>
-          <span>Redux Toolkit</span>
-          <span>Styled Components</span>
-          <span>TypeScript</span>
-          <span>Jest</span>
-          <span>React Testing Library</span>
+          <span>Python 3</span>
+          <span>Asyncio</span>
+          <span>Discord.py</span>
+          <span>Pandas</span>
+          <span>Selenium</span>
+          <span>Helius API</span>
+          <span>Bitquery</span>
+          <span>Dune Analytics</span>
+          <span>Alchemy</span>
+          <span>Jupiter API</span>
+          <span>DexScreener</span>
         </div>
 
         <h2>Key Features</h2>
         <ul>
-          <li>Advanced state management with Redux Toolkit</li>
-          <li>Custom hooks for reusable logic</li>
-          <li>Responsive design that works on all devices</li>
-          <li>Comprehensive test coverage</li>
-          <li>Optimized performance with code splitting</li>
-          <li>Accessibility-first approach</li>
+          <li>Real-time Solana wallet monitoring via Helius webhooks</li>
+          <li>Trade parsing and enrichment with pricing, metadata, and risk scores</li>
+          <li>Delayed OHLCV-based PNL tracking for first-holder entries</li>
+          <li>Automated wallet performance evaluation and replacement logic</li>
+          <li>Discord-based alerts and reporting pipeline</li>
+          <li>Modular, scheduled async bot architecture</li>
         </ul>
 
         <h2>Challenges & Solutions</h2>
         <p>
-          One of the main challenges was optimizing rendering performance for large data sets.
-          We solved this by implementing virtualization with react-window and memoization strategies
-          to prevent unnecessary re-renders.
+          The main challenge was coordinating multiple data sources with different latency and rate
+          limits while maintaining consistent state across services. This was addressed by
+          decoupling ingestion, analysis, and optimization into independent bots orchestrated through
+          an asynchronous scheduler and lightweight local data stores.
         </p>
 
         <div class="project-links">
-          <a href="#" class="project-link-btn primary">
-            <span>Live Demo</span>
-            <span class="arrow">→</span>
-          </a>
-          <a href="#" class="project-link-btn">
+          <a 
+             href="https://github.com/snezzz0/solana-wallet-tracker-old/" class="project-link-btn"
+             target="_blank"
+             rel="noopener noreferrer">
             <span>View Code</span>
             <span class="arrow">→</span>
           </a>
@@ -70,7 +86,6 @@ import Layout from '../../layouts/Layout.astro';
 </Layout>
 
 <style>
-
   .project-detail-container {
     position: relative;
     z-index: 1;
@@ -90,7 +105,7 @@ import Layout from '../../layouts/Layout.astro';
     gap: 0.5rem;
     color: #FFE4AF;
     font-size: 1rem;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: 'Fira Code', monospace;
     transition: color 0.2s;
     z-index: 10;
     text-decoration: none;
@@ -198,13 +213,9 @@ import Layout from '../../layouts/Layout.astro';
     border: 2px solid #EC753A;
     padding: 1rem 1.75rem;
     transition: all 0.2s;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 1rem;
-  }
-
-  .project-link-btn.primary {
-    background: #EC753A;
-    color: #342331;
+    text-decoration: none;
   }
 
   .project-link-btn:hover {
@@ -212,11 +223,6 @@ import Layout from '../../layouts/Layout.astro';
     color: #342331;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(236, 117, 58, 0.3);
-  }
-
-  .project-link-btn.primary:hover {
-    background: #DA9F5F;
-    border-color: #DA9F5F;
   }
 
   @media (max-width: 768px) {
@@ -253,3 +259,4 @@ import Layout from '../../layouts/Layout.astro';
     }
   }
 </style>
+
