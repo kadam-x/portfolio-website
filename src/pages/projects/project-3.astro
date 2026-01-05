@@ -3,7 +3,7 @@
 import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="Third Project" backgroundColor="#412E20">
+<Layout title="Siege X Guide" backgroundColor="#412E20">
   <main class="project-detail-container">
     <article class="project-detail" transition:name="project-3">
       <a href="/projects" class="back-link">
@@ -11,54 +11,66 @@ import Layout from '../../layouts/Layout.astro';
         <span>back to projects</span>
       </a>
       <div class="project-header">
-        <h1>Third Project</h1>
-        <span class="tag">Astro</span>
+        <h1>Siege X Guide</h1>
+        <span class="tag">Next.js</span>
       </div>
       
       <p class="project-intro">
-        Yet another project that showcases your skills.
+        Interactive Rainbow Six Siege tactical guide featuring comprehensive map callouts, operator strategies, and gameplay tips for competitive players.
       </p>
 
       <div class="project-content">
         <h2>Overview</h2>
         <p>
-          This is an Astro-powered static site that demonstrates modern web development 
-          with islands architecture, optimal performance, and seamless user experience.
+          Siege X Guide is a modern web application designed to help Rainbow Six Siege players improve their tactical gameplay. The app provides detailed interactive maps, operator guides, and strategic information for 15+ competitive maps. Built with Next.js 15 and featuring smooth animations with Framer Motion, it offers an intuitive interface for accessing over 200 strategies across 60+ operators.
         </p>
 
         <h2>Technologies Used</h2>
         <div class="project-tech">
-          <span>Astro</span>
+          <span>Next.js 15</span>
+          <span>React 19</span>
           <span>TypeScript</span>
-          <span>Tailwind CSS</span>
-          <span>MDX</span>
-          <span>Vite</span>
-          <span>View Transitions</span>
+          <span>Tailwind CSS 4</span>
+          <span>Framer Motion</span>
+          <span>Zustand</span>
+          <span>Radix UI</span>
+          <span>Vercel</span>
         </div>
 
         <h2>Key Features</h2>
         <ul>
-          <li>Islands architecture for optimal performance</li>
-          <li>Zero JavaScript by default</li>
-          <li>Content collections with MDX</li>
-          <li>View Transitions API integration</li>
-          <li>SEO optimized</li>
-          <li>Fast build times</li>
+          <li>Interactive map viewer with 15+ Rainbow Six Siege competitive maps</li>
+          <li>Comprehensive operator guides covering 60+ operators</li>
+          <li>200+ tactical strategies including callouts and lineups</li>
+          <li>Smooth animations and transitions with Framer Motion</li>
+          <li>State management with Zustand for optimal performance</li>
+          <li>Accessible UI components built with Radix UI primitives</li>
+          <li>Responsive design optimized for desktop and mobile gameplay reference</li>
+          <li>Analytics integration for usage insights</li>
         </ul>
+
+        <h2>Technical Highlights</h2>
+        <p>
+          The application leverages Next.js 15's latest features including the App Router for optimal performance and SEO. State management is handled efficiently with Zustand, providing a lightweight alternative to Redux while maintaining excellent developer experience. The UI is built with Radix UI components for accessibility compliance, styled with Tailwind CSS 4 for rapid development, and enhanced with Framer Motion for fluid animations that don't compromise performance.
+        </p>
 
         <h2>Challenges & Solutions</h2>
         <p>
-          One of the main challenges was implementing smooth page transitions while 
-          maintaining performance. We solved this by using Astro's View Transitions 
-          API and optimizing asset loading.
+          One of the main challenges was managing the large amount of tactical data while maintaining fast load times and smooth interactions. This was solved by implementing efficient state management with Zustand, lazy loading map images, and using Next.js's image optimization. The interactive map viewer required careful consideration of touch and mouse events to work seamlessly across devices, which was achieved through custom event handlers and Framer Motion's gesture recognition.
         </p>
 
         <div class="project-links">
-          <a href="#" class="project-link-btn primary">
+          <a href="https://siege-x-guide.vercel.app/" 
+             class="project-link-btn primary"
+             target="_blank"
+             rel="noopener noreferrer">
             <span>Live Demo</span>
             <span class="arrow">→</span>
           </a>
-          <a href="#" class="project-link-btn">
+          <a href="https://github.com/snezzz0/siegexguide" 
+             class="project-link-btn"
+             target="_blank"
+             rel="noopener noreferrer">
             <span>View Code</span>
             <span class="arrow">→</span>
           </a>
@@ -199,6 +211,7 @@ import Layout from '../../layouts/Layout.astro';
     transition: all 0.2s;
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
     font-size: 1rem;
+    text-decoration: none;
   }
 
   .project-link-btn.primary {
@@ -209,6 +222,8 @@ import Layout from '../../layouts/Layout.astro';
   .project-link-btn:hover {
     background: #EC753A;
     color: #342331;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 117, 58, 0.3);
   }
 
   .project-link-btn.primary:hover {
@@ -250,4 +265,3 @@ import Layout from '../../layouts/Layout.astro';
     }
   }
 </style>
-
