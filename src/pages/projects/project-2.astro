@@ -3,7 +3,7 @@
 import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="Another Project" backgroundColor="#412E20">
+<Layout title="Obscuratee™" backgroundColor="#412E20">
   <main class="project-detail-container">
     <article class="project-detail" transition:name="project-2">
       <a href="/projects" class="back-link">
@@ -11,55 +11,56 @@ import Layout from '../../layouts/Layout.astro';
         <span>back to projects</span>
       </a>
       <div class="project-header">
-        <h1>Another Project</h1>
-        <span class="tag">TypeScript</span>
+        <h1>Obscuratee™</h1>
+        <span class="tag">Python</span>
       </div>
       
       <p class="project-intro">
-        Another cool project description goes here.
+        A whimsical terminal application that brings colorful ASCII manatees to your command line, delivering marine-inspired wisdom with questionable accuracy. Because sometimes your terminal needs more manatees.
       </p>
 
       <div class="project-content">
         <h2>Overview</h2>
         <p>
-          This is a TypeScript-based application that demonstrates type safety, 
-          modern JavaScript features, and robust development practices. Built with 
-          performance and maintainability in mind.
+          At the intersection of marine biology and questionable priorities, Obscuratee emerges as the premier platform for delivering factually ambiguous aquatic knowledge directly to your terminal. It's like if cowsay and pokemon-colorscripts had a child... just worse... and with a manatee. Featuring multiple display modes including legacy ASCII art, vibrant color modes, and special curse effects that make your terminal truly shine.
         </p>
 
         <h2>Technologies Used</h2>
         <div class="project-tech">
-          <span>TypeScript</span>
-          <span>Node.js</span>
-          <span>Express</span>
-          <span>PostgreSQL</span>
-          <span>Jest</span>
-          <span>ESLint</span>
+          <span>Python</span>
+          <span>ASCII Art</span>
+          <span>ANSI Colors</span>
+          <span>Terminal UI</span>
+          <span>PyPI</span>
+          <span>CLI Development</span>
         </div>
 
         <h2>Key Features</h2>
         <ul>
-          <li>Full type safety with TypeScript</li>
-          <li>RESTful API design</li>
-          <li>Database integration with PostgreSQL</li>
-          <li>Comprehensive error handling</li>
-          <li>Unit and integration tests</li>
-          <li>Code quality with ESLint and Prettier</li>
+          <li>Full color ASCII manatees with vibrant terminal output</li>
+          <li>Multiple display modes: default color, legacy ASCII, and vibe mode</li>
+          <li>Curse mode for terminal glow-up with special effects</li>
+          <li>Marine-inspired factoids with questionable accuracy</li>
+          <li>Simple pip installation and command-line interface</li>
+          <li>Published on PyPI for easy distribution</li>
         </ul>
+
+        <h2>Display Modes</h2>
+        <p>
+          Version 1.1.1 introduced full color ASCII manatees as the default experience. Users can still access the classic monochrome art with the --legacy flag, or combine it with --vibe for the original enhanced mode. The new --curse mode adds terminal effects for those seeking maximum visual impact.
+        </p>
 
         <h2>Challenges & Solutions</h2>
         <p>
-          One of the main challenges was implementing complex type definitions for 
-          nested data structures. We solved this by using TypeScript's advanced types 
-          and creating reusable type utilities.
+          One of the main challenges was designing ASCII art that looks good both in legacy monochrome and modern color modes while maintaining terminal compatibility across different systems. The solution involved creating modular display modes with fallback options and ANSI color support for enhanced visual appeal without breaking older terminal emulators.
         </p>
 
         <div class="project-links">
-          <a href="#" class="project-link-btn primary">
-            <span>Live Demo</span>
+          <a href="https://pypi.org/project/obscuratee/" class="project-link-btn primary" target="_blank" rel="noopener noreferrer">
+            <span>PyPI Package</span>
             <span class="arrow">→</span>
           </a>
-          <a href="#" class="project-link-btn">
+          <a href="https://github.com/snezzz0/obscuratee" class="project-link-btn" target="_blank" rel="noopener noreferrer">
             <span>View Code</span>
             <span class="arrow">→</span>
           </a>
@@ -200,6 +201,7 @@ import Layout from '../../layouts/Layout.astro';
     transition: all 0.2s;
     font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
     font-size: 1rem;
+    text-decoration: none;
   }
 
   .project-link-btn.primary {
@@ -210,8 +212,6 @@ import Layout from '../../layouts/Layout.astro';
   .project-link-btn:hover {
     background: #EC753A;
     color: #342331;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(236, 117, 58, 0.3);
   }
 
   .project-link-btn.primary:hover {
@@ -253,4 +253,3 @@ import Layout from '../../layouts/Layout.astro';
     }
   }
 </style>
-
