@@ -56,7 +56,8 @@ import Layout from "../layouts/Layout.astro";
         transition: all 0.2s;
         margin-bottom: 3rem;
         font-family: "Fira Code", monospace;
-        opacity: 0.8;
+        opacity: 0;
+        animation: slideInFromTop 0.4s ease forwards;
     }
 
     .back-link:hover {
@@ -75,8 +76,18 @@ import Layout from "../layouts/Layout.astro";
         font-size: 1.15rem;
         line-height: 1.7;
         color: #FFE4AF;
-        letter-spacing: 0.015em; 
+        letter-spacing: 0.015em;
+        opacity: 0;
+        animation: slideInFromTop 0.4s ease forwards;
     }
+
+    /* Stagger the paragraphs for a cascading effect */
+    .about-content p:nth-child(1) { animation-delay: 0.1s; }
+    .about-content p:nth-child(2) { animation-delay: 0.15s; }
+    .about-content p:nth-child(3) { animation-delay: 0.2s; }
+    .about-content p:nth-child(4) { animation-delay: 0.25s; }
+    .about-content p:nth-child(5) { animation-delay: 0.3s; }
+    .about-content p:nth-child(6) { animation-delay: 0.35s; }
 
     .internal-link {
         color: #FFE4AF;
@@ -89,6 +100,17 @@ import Layout from "../layouts/Layout.astro";
     .internal-link:hover {
         color: #ec753a;
         cursor: help;
+    }
+
+    @keyframes slideInFromTop {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     @media (max-width: 640px) {

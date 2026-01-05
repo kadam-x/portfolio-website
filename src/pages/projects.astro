@@ -33,7 +33,7 @@ const projects = [
           <div 
             class="project-card" 
             data-id={project.id} 
-            style={`animation-delay: ${index * 0.1}s;`} 
+            style={`animation-delay: ${index * 0.05}s;`} 
           >
             <div class="project-header"><h2>{project.title}</h2></div>
             <p class="project-desc">{project.desc}</p>
@@ -134,7 +134,7 @@ const projects = [
     text-decoration: none; 
     font-family: 'Fira Code', monospace; 
     opacity: 0; 
-    animation: slideInFromRight 0.5s ease forwards;
+    animation: slideInFromRight 0.3s ease forwards;
     transition: all 0.3s ease;
   }
 
@@ -155,7 +155,7 @@ const projects = [
     position: relative; 
     display: block; 
     opacity: 0; /* Start hidden */
-    animation: slideInFromLeft 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+    animation: slideInFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
   }
 
   .project-card:hover { 
