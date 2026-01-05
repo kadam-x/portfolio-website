@@ -1,10 +1,9 @@
-
 ---
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About" backgroundColor="#FFE4AF">
-    <main class="about-container">
+<Layout title="About" backgroundColor="#412E20">
+    <main class="about-container" transition:animate="slide">
         <a href="/" class="back-link">
             <span class="arrow">←</span>
             <span>take me home</span>
@@ -16,7 +15,7 @@ import Layout from "../layouts/Layout.astro";
             </p>
 
             <p>
-                I have been obsessed with CLI tools for a long time - exploring new technologies, stripping away unnecessary bloat, and focusing on mastering the basics. I am constantly refining my workflow through automation, scripting, and well-structured pipelines that remove friction and make ideas easier to test.
+                I have been obsessed with CLI tools for a long time — exploring new technologies, stripping away unnecessary bloat, and focusing on mastering the basics. I am constantly refining my workflow through automation, scripting, and well-structured pipelines that remove friction and make ideas easier to test.
             </p>
 
             <p>
@@ -28,11 +27,11 @@ import Layout from "../layouts/Layout.astro";
             </p>
 
             <p>
-                This site is my workspace made public - small experiments, side projects, notes, and ideas that reflect what I am currently curious about.
+                This site is my workspace made public — small experiments, side projects, notes, and ideas that reflect what I am currently curious about.
             </p>
 
             <p>
-                If you are looking for book recommendations, try poking around. There might be a few hidden in plain sight.
+                If you are looking for book recommendations, try <a href="/books" class="internal-link">poking around</a>. There might be a few hidden in plain sight.
             </p>
         </div>
     </main>
@@ -42,46 +41,59 @@ import Layout from "../layouts/Layout.astro";
     .about-container {
         min-height: 100vh;
         padding: 4rem 2rem;
-        max-width: 900px;
+        max-width: 800px;
         margin: 0 auto;
+        color: #FFE4AF;
     }
 
     .back-link {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        color: #412e20;
-        font-size: 1rem;
+        color: #FFE4AF;
+        font-size: 0.9rem;
+        text-decoration: none;
         transition: all 0.2s;
         margin-bottom: 3rem;
-        font-family: "Fira Code", "FiraCode Nerd Font", monospace;
+        font-family: "Fira Code", monospace;
+        opacity: 0.8;
     }
 
     .back-link:hover {
         color: #ec753a;
-    }
-
-    .arrow {
-        font-size: 1.5rem;
+        opacity: 1;
+        transform: translateX(-4px);
     }
 
     .about-content {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.8rem;
     }
 
     .about-content p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: #412e20;
-        letter-spacing: 0.1em;
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: #FFE4AF;
+        letter-spacing: 0.015em; 
+    }
+
+    .internal-link {
+        color: #FFE4AF;
+        text-decoration: underline;
+        text-decoration-style: dashed;
+        text-underline-offset: 6px;
+        transition: color 0.2s;
+    }
+
+    .internal-link:hover {
+        color: #ec753a;
+        cursor: help;
     }
 
     @media (max-width: 640px) {
         .about-container {
-            padding: 2rem 1rem;
+            padding: 2rem 1.5rem;
         }
     }
 </style>
-
