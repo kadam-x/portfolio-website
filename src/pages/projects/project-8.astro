@@ -1,32 +1,35 @@
 ---
 // src/pages/projects/project-8.astro
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
 
 const miniProjects = [
   {
     title: "Sales Data Analysis",
-    description: "Analyzed retail sales data using Python and pandas to uncover trends in seasonality, customer behavior, and product performance. Identified top-performing cities, peak buying hours, and product bundling opportunities. Delivered actionable insights for marketing, pricing, and inventory pslanning.",
-    link: "https://github.com/snezzz0/sales-data-analysis"
+    description:
+      "Analyzed retail sales data using Python and pandas to uncover trends in seasonality, customer behavior, and product performance. Identified top-performing cities, peak buying hours, and product bundling opportunities. Delivered actionable insights for marketing, pricing, and inventory pslanning.",
+    link: "https://github.com/snezzz0/sales-data-analysis",
   },
   {
     title: "Arbitrage Bot",
-    description: "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
-    link: "https://github.com/snezzz0/crypto-arbitrage-test"
+    description:
+      "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
+    link: "https://github.com/snezzz0/crypto-arbitrage-test",
   },
   {
     title: "Churn Prediction",
-    description: "End-to-end customer churn prediction pipeline using SQL Server, Python, and Power BI to flag at-risk customers. The project involved visualizing churn risk across different customer segments and recommending personalized retention offers, which enabled proactive, CRM-driven engagement and improved customer retention.",
-    link: "https://github.com/snezzz0/churn-pred"
+    description:
+      "End-to-end customer churn prediction pipeline using SQL Server, Python, and Power BI to flag at-risk customers. The project involved visualizing churn risk across different customer segments and recommending personalized retention offers, which enabled proactive, CRM-driven engagement and improved customer retention.",
+    link: "https://github.com/snezzz0/churn-pred",
   },
   {
     title: "UI Component",
     description: "A standalone card component with hover effects.",
-    link: "https://github.com/snezzz0/real-estate-ad-churn"
-  }
+    link: "https://github.com/snezzz0/real-estate-ad-churn",
+  },
 ];
 ---
 
-<Layout title="Learning Projects" backgroundColor="#412E20">
+<Layout title="Learning Projects" backgroundColor="#1d1c19">
   <main class="project-detail-container">
     <article class="project-detail" transition:name="project-8">
       <a href="/projects" class="back-link">
@@ -37,24 +40,29 @@ const miniProjects = [
         <h1>Learning Projects</h1>
         <span class="tag">Collection</span>
       </div>
-      
+
       <p class="project-intro">
         A collection of smaller projects, experiments, and learning exercises.
       </p>
 
       <div class="mini-projects-grid">
-        {miniProjects.map(project => (
-          <div class="mini-project-card">
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-            <a href={project.link}   
+        {
+          miniProjects.map((project) => (
+            <div class="mini-project-card">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <a
+                href={project.link}
                 target="_blank"
-                rel="noopener noreferrer"class="mini-link">
-              <span>View Project</span>
-              <span class="arrow">→</span>
-            </a>
-          </div>
-        ))}
+                rel="noopener noreferrer"
+                class="mini-link"
+              >
+                <span>View Project</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          ))
+        }
       </div>
     </article>
   </main>
@@ -78,16 +86,18 @@ const miniProjects = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     font-size: 1rem;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: "Fira Code", "FiraCode Nerd Font", monospace;
     transition: color 0.2s;
     z-index: 10;
     text-decoration: none;
   }
 
   .back-link:hover {
-    color: #EC753A;
+    /* color: #EC753A; */
+    color: #8ba4b0;
   }
 
   .arrow {
@@ -95,8 +105,10 @@ const miniProjects = [
   }
 
   .project-detail {
-    background: #412E20;
-    border: 3px solid #DA9F5F;
+    /* background: #412E20; */
+    background: #1d1c19;
+    /* border: 3px solid #DA9F5F; */
+    border: 3px solid #8ba4b0;
     padding: 2.5rem 2rem;
     max-width: 800px;
     width: 100%;
@@ -114,21 +126,26 @@ const miniProjects = [
 
   .project-header h1 {
     font-size: 2rem;
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     margin: 0;
   }
 
   .tag {
-    background: #DA9F5F;
-    color: #342331;
+    /* background: #DA9F5F; */
+    background: #8ba4b0;
+    /* color: #342331; */
+    color: #0f0f14;
     padding: 0.4rem 1rem;
     font-size: 0.9rem;
-    border: 1px solid #EC753A;
+    /* border: 1px solid #EC753A; */
+    border: 1px solid #8ba4b0;
     white-space: nowrap;
   }
 
   .project-intro {
-    color: #DA9F5F;
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
@@ -143,8 +160,10 @@ const miniProjects = [
   }
 
   .mini-project-card {
-    background: rgba(218, 159, 95, 0.05);
-    border: 1px solid #DA9F5F;
+    /* background: rgba(218, 159, 95, 0.05); */
+    background: rgba(139, 164, 176, 0.05);
+    /* border: 1px solid #DA9F5F; */
+    border: 1px solid #8ba4b0;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -153,19 +172,23 @@ const miniProjects = [
   }
 
   .mini-project-card:hover {
-    border-color: #EC753A;
-    background: rgba(218, 159, 95, 0.1);
+    /* border-color: #EC753A; */
+    border-color: #8ba4b0;
+    /* background: rgba(218, 159, 95, 0.1); */
+    background: rgba(139, 164, 176, 0.1);
   }
 
   .mini-project-card h3 {
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     font-size: 1.25rem;
     margin: 0;
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
   }
 
   .mini-project-card p {
-    color: #DA9F5F;
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0;
@@ -176,16 +199,18 @@ const miniProjects = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #EC753A;
+    /* color: #EC753A; */
+    color: #8ba4b0;
     text-decoration: none;
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-size: 0.9rem;
     margin-top: auto;
     width: fit-content;
   }
 
   .mini-link:hover {
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
   }
 
   @media (max-width: 768px) {
@@ -211,7 +236,7 @@ const miniProjects = [
     .project-header h1 {
       font-size: 1.5rem;
     }
-    
+
     .mini-projects-grid {
       grid-template-columns: 1fr;
     }

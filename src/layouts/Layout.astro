@@ -1,25 +1,32 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import '../styles/global.css';
+import { ViewTransitions } from "astro:transitions";
+import "../styles/global.css";
 
 interface Props {
   title: string;
   backgroundColor?: string;
 }
 
-const { title, backgroundColor = '#FFE4AF' } = Astro.props;
+const { title, backgroundColor = "#0f0f14" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Portfolio" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.9" />
+    <meta name="description" content="kovacsadam.dev" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.9"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Iosevka:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
     <title>{title}</title>
@@ -32,61 +39,65 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
         window._transitionHandlersSet = true;
 
         function getTransitionType(fromPath, toPath) {
-          var from = fromPath.replace(/\/$/, '') || '/';
-          var to = toPath.replace(/\/$/, '') || '/';
-          
-          var isProjectDetail = function(path) {
-            return path.startsWith('/projects/project-');
+          var from = fromPath.replace(/\/$/, "") || "/";
+          var to = toPath.replace(/\/$/, "") || "/";
+
+          var isProjectDetail = function (path) {
+            return path.startsWith("/projects/project-");
           };
-          
+
           var fromIsProject = isProjectDetail(from);
           var toIsProject = isProjectDetail(to);
-          
+
           if (fromIsProject || toIsProject) {
-            if (to === '/projects' && fromIsProject) return 'fade';
-            if (from === '/projects' && toIsProject) return 'fade';
-            if (fromIsProject && toIsProject) return 'fade';
-            if (toIsProject) return 'fade';
-            if (fromIsProject && to !== '/projects') return 'fade';
+            if (to === "/projects" && fromIsProject) return "fade";
+            if (from === "/projects" && toIsProject) return "fade";
+            if (fromIsProject && toIsProject) return "fade";
+            if (toIsProject) return "fade";
+            if (fromIsProject && to !== "/projects") return "fade";
           }
-          
-          if (to === '/' && from === '/about') return 'back-top';
-          if (to === '/' && from === '/contact') return 'back-bottom';
-          if (to === '/' && from === '/projects') return 'back-right';
-          if (to === '/' && from !== '/') return 'back';
-          if (to === '/about') return 'slide-top';
-          if (to === '/contact') return 'slide-bottom';
-          return 'swipe';
+
+          if (to === "/" && from === "/about") return "back-top";
+          if (to === "/" && from === "/contact") return "back-bottom";
+          if (to === "/" && from === "/projects") return "back-right";
+          if (to === "/" && from !== "/") return "back";
+          if (to === "/about") return "slide-top";
+          if (to === "/contact") return "slide-bottom";
+          return "swipe";
         }
 
-        document.addEventListener('click', function(e) {
-          var link = e.target.closest('a');
-          if (!link || !link.href) return;
-          
-          try {
-            var url = new URL(link.href, location.origin);
-            if (url.origin !== location.origin) return;
-            
-            var type = getTransitionType(location.pathname, url.pathname);
-            document.documentElement.setAttribute('data-transition', type);
-          } catch(err) {}
-        }, true);
+        document.addEventListener(
+          "click",
+          function (e) {
+            var link = e.target.closest("a");
+            if (!link || !link.href) return;
 
-        document.addEventListener('astro:before-preparation', function(e) {
+            try {
+              var url = new URL(link.href, location.origin);
+              if (url.origin !== location.origin) return;
+
+              var type = getTransitionType(location.pathname, url.pathname);
+              document.documentElement.setAttribute("data-transition", type);
+            } catch (err) {}
+          },
+          true,
+        );
+
+        document.addEventListener("astro:before-preparation", function (e) {
           var type = getTransitionType(e.from.pathname, e.to.pathname);
-          document.documentElement.setAttribute('data-transition', type);
+          document.documentElement.setAttribute("data-transition", type);
         });
 
-        document.addEventListener('astro:before-swap', function(e) {
-          var type = document.documentElement.getAttribute('data-transition');
+        document.addEventListener("astro:before-swap", function (e) {
+          var type = document.documentElement.getAttribute("data-transition");
           if (type) {
-            e.newDocument.documentElement.setAttribute('data-transition', type);
+            e.newDocument.documentElement.setAttribute("data-transition", type);
           }
         });
 
-        document.addEventListener('astro:page-load', function() {
-          setTimeout(function() {
-            document.documentElement.removeAttribute('data-transition');
+        document.addEventListener("astro:page-load", function () {
+          setTimeout(function () {
+            document.documentElement.removeAttribute("data-transition");
           }, 500);
         });
       }
@@ -102,11 +113,11 @@ const { title, backgroundColor = '#FFE4AF' } = Astro.props;
   }
 
   html {
-    background-color: #412E20;
+    background-color: #0f0f14;
   }
 
   body {
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: "JetBrains Mono", monospace;
     overflow-x: hidden;
   }
 

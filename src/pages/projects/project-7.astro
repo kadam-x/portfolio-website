@@ -1,9 +1,9 @@
 ---
 // src/pages/projects/project-7.astro
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="Seventh Project" backgroundColor="#412E20">
+<Layout title="Seventh Project" backgroundColor="#1d1c19">
   <main class="project-detail-container">
     <article class="project-detail" transition:name="project-7">
       <a href="/projects" class="back-link">
@@ -14,16 +14,15 @@ import Layout from '../../layouts/Layout.astro';
         <h1>Seventh Project</h1>
         <span class="tag">Rust</span>
       </div>
-      
-      <p class="project-intro">
-        A high-performance systems project.
-      </p>
+
+      <p class="project-intro">A high-performance systems project.</p>
 
       <div class="project-content">
         <h2>Overview</h2>
         <p>
-          This is a Rust systems application that demonstrates memory safety, 
-          concurrency, performance optimization, and low-level system programming.
+          This is a Rust systems application that demonstrates memory safety,
+          concurrency, performance optimization, and low-level system
+          programming.
         </p>
 
         <h2>Technologies Used</h2>
@@ -48,8 +47,8 @@ import Layout from '../../layouts/Layout.astro';
 
         <h2>Challenges & Solutions</h2>
         <p>
-          One of the main challenges was managing ownership and borrowing in 
-          complex data structures. We solved this by using smart pointers like 
+          One of the main challenges was managing ownership and borrowing in
+          complex data structures. We solved this by using smart pointers like
           Rc and Arc, and carefully designing the data flow to minimize clones.
         </p>
 
@@ -69,7 +68,6 @@ import Layout from '../../layouts/Layout.astro';
 </Layout>
 
 <style>
-
   .project-detail-container {
     position: relative;
     z-index: 1;
@@ -87,16 +85,18 @@ import Layout from '../../layouts/Layout.astro';
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     font-size: 1rem;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: "Fira Code", "FiraCode Nerd Font", monospace;
     transition: color 0.2s;
     z-index: 10;
     text-decoration: none;
   }
 
   .back-link:hover {
-    color: #EC753A;
+    /* color: #EC753A; */
+    color: #8ba4b0;
   }
 
   .arrow {
@@ -104,8 +104,10 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   .project-detail {
-    background: #412E20;
-    border: 3px solid #DA9F5F;
+    /* background: #412E20; */
+    background: #1d1c19;
+    /* border: 3px solid #DA9F5F; */
+    border: 3px solid #8ba4b0;
     padding: 2.5rem 2rem;
     max-width: 800px;
     width: 100%;
@@ -123,35 +125,42 @@ import Layout from '../../layouts/Layout.astro';
 
   .project-header h1 {
     font-size: 2rem;
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     margin: 0;
   }
 
   .tag {
-    background: #DA9F5F;
-    color: #342331;
+    /* background: #DA9F5F; */
+    background: #8ba4b0;
+    /* color: #342331; */
+    color: #0f0f14;
     padding: 0.4rem 1rem;
     font-size: 0.9rem;
-    border: 1px solid #EC753A;
+    /* border: 1px solid #EC753A; */
+    border: 1px solid #8ba4b0;
     white-space: nowrap;
   }
 
   .project-intro {
-    color: #DA9F5F;
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
   }
 
   .project-content h2 {
-    color: #FFE4AF;
+    /* color: #FFE4AF; */
+    color: #c5c9c5;
     font-size: 1.4rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
 
   .project-content p {
-    color: #DA9F5F;
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     line-height: 1.7;
     margin-bottom: 1.5rem;
   }
@@ -164,15 +173,19 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   .project-tech span {
-    background: rgba(218, 159, 95, 0.2);
-    color: #DA9F5F;
+    /* background: rgba(218, 159, 95, 0.2); */
+    background: rgba(139, 164, 176, 0.2);
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
-    border: 1px solid #DA9F5F;
+    /* border: 1px solid #DA9F5F; */
+    border: 1px solid #8ba4b0;
   }
 
   .project-content ul {
-    color: #DA9F5F;
+    /* color: #DA9F5F; */
+    color: #8ba4b0;
     line-height: 1.8;
     margin-bottom: 2rem;
     padding-left: 1.5rem;
@@ -193,27 +206,35 @@ import Layout from '../../layouts/Layout.astro';
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    color: #EC753A;
-    border: 2px solid #EC753A;
+    /* color: #EC753A; */
+    color: #8ba4b0;
+    /* border: 2px solid #EC753A; */
+    border: 2px solid #8ba4b0;
     padding: 1rem 1.75rem;
     transition: all 0.2s;
-    font-family: 'Fira Code', 'FiraCode Nerd Font', monospace;
+    font-family: "Fira Code", "FiraCode Nerd Font", monospace;
     font-size: 1rem;
   }
 
   .project-link-btn.primary {
-    background: #EC753A;
-    color: #342331;
+    /* background: #EC753A; */
+    background: #8ba4b0;
+    /* color: #342331; */
+    color: #0f0f14;
   }
 
   .project-link-btn:hover {
-    background: #EC753A;
-    color: #342331;
+    /* background: #EC753A; */
+    background: #8ba4b0;
+    /* color: #342331; */
+    color: #0f0f14;
   }
 
   .project-link-btn.primary:hover {
-    background: #DA9F5F;
-    border-color: #DA9F5F;
+    /* background: #DA9F5F; */
+    background: #8ba4b0;
+    /* border-color: #DA9F5F; */
+    border-color: #8ba4b0;
   }
 
   @media (max-width: 768px) {
@@ -250,4 +271,3 @@ import Layout from '../../layouts/Layout.astro';
     }
   }
 </style>
-

@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 ---
-<Layout title="About" backgroundColor="#412E20">
+
+<Layout title="About" backgroundColor="#0f0f14">
     <main class="about-container">
         <a href="/" class="back-link">
             <span class="arrow">←</span>
@@ -9,19 +10,34 @@ import Layout from "../layouts/Layout.astro";
         </a>
         <div class="about-content">
             <p>
-                I am a 23-year-old finance student and self-taught developer, learning by building, breaking, and iterating.
+                I am a 23-year-old finance student and self-taught developer,
+                learning by building, breaking, and iterating.
             </p>
             <p>
-                I have been obsessed with CLI tools for a long time — exploring new technologies, stripping away unnecessary bloat, and focusing on mastering the basics. I am constantly refining my workflow through automation, scripting, and well-structured pipelines that remove friction and make ideas easier to test.
+                I have been obsessed with CLI tools for a long time — exploring
+                new technologies, stripping away unnecessary bloat, and focusing
+                on mastering the basics. I am constantly refining my workflow
+                through automation, scripting, and well-structured pipelines
+                that remove friction and make ideas easier to test.
             </p>
             <p>
-                I specialize in Python, primarily building backtesting systems for all kinds of trading strategies. My main interest lies in quantitative research, systematic trading, and turning financial theory into code that can be tested, measured, and broken. I am currently learning C++, with a focus on performance, low-level control, and writing faster research tooling.
+                I specialize in Python, primarily building backtesting systems
+                for all kinds of trading strategies. My main interest lies in
+                quantitative research, systematic trading, and turning financial
+                theory into code that can be tested, measured, and broken. I am
+                currently learning C++, with a focus on performance, low-level
+                control, and writing faster research tooling.
             </p>
             <p>
-                I enjoy tinkering with my setup, often breaking things I probably should not. NixOS makes that survivable. Over time this has turned into a habit of overconfiguring, experimenting, and rebuilding until the system feels intentional.
+                I enjoy tinkering with my setup, often breaking things I
+                probably should not. NixOS makes that survivable. Over time this
+                has turned into a habit of overconfiguring, experimenting, and
+                rebuilding until the system feels intentional.
             </p>
             <p>
-                This site is my workspace made public — small experiments, side projects, notes, and ideas that reflect what I am currently curious about.
+                This site is my workspace made public — small experiments, side
+                projects, notes, and ideas that reflect what I am currently
+                curious about.
             </p>
             <!-- <p> -->
             <!--     If you are looking for book recommendations, try <a href="/books" class="internal-link">poking around</a>. There might be a few hidden in plain sight. -->
@@ -35,21 +51,21 @@ import Layout from "../layouts/Layout.astro";
         padding: 4rem 2rem;
         max-width: 800px;
         margin: 0 auto;
-        color: #FFE4AF;
+        color: #c5c9c5;
     }
     .back-link {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        color: #FFE4AF;
-        font-size: 0.9rem;
+        color: #727169;
+        font-size: 1rem;
         text-decoration: none;
         transition: all 0.2s;
         margin-bottom: 3rem;
         font-family: "Fira Code", monospace;
     }
     .back-link:hover {
-        color: #ec753a;
+        color: #8ba4b0;
         transform: translateX(-4px);
     }
     .about-content {
@@ -60,11 +76,11 @@ import Layout from "../layouts/Layout.astro";
     .about-content p {
         font-size: 1.15rem;
         line-height: 1.7;
-        color: #FFE4AF;
+        color: #c5c9c5;
         letter-spacing: 0.015em;
     }
     .internal-link {
-        color: #FFE4AF;
+        color: #c5c9c5;
         text-decoration: underline;
         text-decoration-style: dashed;
         text-underline-offset: 6px;

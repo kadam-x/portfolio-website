@@ -1,21 +1,41 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import RobotCurator from '../components/RobotCurator.astro';
+import Layout from "../layouts/Layout.astro";
+import RobotCurator from "../components/RobotCurator.astro";
 
 // We'll define the projects here so we can map over them and apply the delays
 const projects = [
-  { id: 'project-1', title: 'CopyBot', desc: 'Automated analysis and optimization of Solana copy-trading wallets.' },
-  { id: 'project-2', title: 'Obscuratee', desc: 'A colorful ASCII terminal tool that was inspired by cowsay, modernized by me, in the form of a manatee' },
-  { id: 'project-3', title: 'Siege X Guide', desc: 'Interactive Rainbow Six Siege tactical guide for maps and operators.' },
-  { id: 'project-4', title: 'Energy Market Volatility Analysis', desc: 'Description for project 4.' },
+  {
+    id: "project-1",
+    title: "CopyBot",
+    desc: "Automated analysis and optimization of Solana copy-trading wallets.",
+  },
+  {
+    id: "project-2",
+    title: "Obscuratee",
+    desc: "A colorful ASCII terminal tool that was inspired by cowsay, modernized by me, in the form of a manatee",
+  },
+  {
+    id: "project-3",
+    title: "Siege X Guide",
+    desc: "Interactive Rainbow Six Siege tactical guide for maps and operators.",
+  },
+  {
+    id: "project-4",
+    title: "Energy Market Volatility Analysis",
+    desc: "Description for project 4.",
+  },
   // { id: 'project-5', title: 'Project Five', desc: 'Description for project 5.' },
   // { id: 'project-6', title: 'Project Six', desc: 'Description for project 6.' },
   // { id: 'project-7', title: 'Project Seven', desc: 'Description for project 7.' },
-  { id: 'project-8', title: 'Learning Projects', desc: 'A collection of smaller projects, experiments, and learning exercises.' },
+  {
+    id: "project-8",
+    title: "Learning Projects",
+    desc: "A collection of smaller projects, experiments, and learning exercises.",
+  },
 ];
 ---
 
-<Layout title="Projects" backgroundColor="#412E20">
+<Layout title="Projects" backgroundColor="#0f0f14">
   <RobotCurator />
 
   <main class="projects-container">
@@ -25,183 +45,284 @@ const projects = [
         <span>take me home</span>
       </a>
     </div>
-    
+
     <div class="projects-sidebar active">
       <div class="projects-grid">
-        
-        {projects.map((project, index) => (
-          <div 
-            class="project-card" 
-            data-id={project.id} 
-            style={`animation-delay: ${index * 0.05}s;`} 
-          >
-            <div class="project-header"><h2>{project.title}</h2></div>
-            <p class="project-desc">{project.desc}</p>
-            
-            <div class="card-actions">
-              <button class="info-btn-ui" data-info-trigger aria-label="Project Info">?</button>
-              <a href={`/projects/${project.id}`} class="expand-btn-ui" aria-label="Expand Project">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        ))}
+        {
+          projects.map((project, index) => (
+            <div
+              class="project-card"
+              data-id={project.id}
+              style={`animation-delay: ${index * 0.05}s;`}
+            >
+              <div class="project-header">
+                <h2>{project.title}</h2>
+              </div>
+              <p class="project-desc">{project.desc}</p>
 
+              <div class="card-actions">
+                <button
+                  class="info-btn-ui"
+                  data-info-trigger
+                  aria-label="Project Info"
+                >
+                  ?
+                </button>
+                <a
+                  href={`/projects/${project.id}`}
+                  class="expand-btn-ui"
+                  aria-label="Expand Project"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </main>
 </Layout>
 
 <script is:inline>
-  (function() {
+  (function () {
     const DIALOGUE_CONFIG = {
-      landing: "System online. Archives decrypted. Click '?' for data insights.",
+      landing:
+        "System online. Archives decrypted. Click '?' for data insights.",
       goHome: "Thanks for stopping by, Adam. Catch you later!",
       projects: {
-        'project-1': "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
-        'project-2': "Fully typed with TypeScript. No 'any' allowed here!",
-        'project-3': "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
-        'project-4': "Node.js backend with full CRUD. Intense stuff.",
-        'project-5': "Next.js App Router. The bleeding edge of web dev.",
-        'project-6': "Real-time data streams. Everything updates instantly!",
-        'project-7': "Python scripts for data crunching. Numbers don't lie.",
-        'project-8': "What I cannot create, I do not understand - Richard Feynman",
-      }
+        "project-1":
+          "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
+        "project-2": "Fully typed with TypeScript. No 'any' allowed here!",
+        "project-3":
+          "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
+        "project-4": "Node.js backend with full CRUD. Intense stuff.",
+        "project-5": "Next.js App Router. The bleeding edge of web dev.",
+        "project-6": "Real-time data streams. Everything updates instantly!",
+        "project-7": "Python scripts for data crunching. Numbers don't lie.",
+        "project-8":
+          "What I cannot create, I do not understand - Richard Feynman",
+      },
     };
 
     function robotReact(emoteName, dialogueText = null) {
-      window.dispatchEvent(new CustomEvent('robot-emote', { 
-        detail: { name: emoteName, text: dialogueText } 
-      }));
+      window.dispatchEvent(
+        new CustomEvent("robot-emote", {
+          detail: { name: emoteName, text: dialogueText },
+        }),
+      );
     }
 
     function initPage() {
-      const homeLink = document.getElementById('homeLink');
-      
+      const homeLink = document.getElementById("homeLink");
+
       // Greet user shortly after cards begin cascading
-      setTimeout(() => robotReact('Wave', DIALOGUE_CONFIG.landing), 1000);
+      setTimeout(() => robotReact("Wave", DIALOGUE_CONFIG.landing), 1000);
 
       if (homeLink) {
-        homeLink.addEventListener('mouseenter', () => robotReact('Wave', DIALOGUE_CONFIG.goHome));
+        homeLink.addEventListener("mouseenter", () =>
+          robotReact("Wave", DIALOGUE_CONFIG.goHome),
+        );
       }
 
       // Available animations and expressions
-      const EMOTES = ['Jump', 'Yes', 'No', 'Wave', 'ThumbsUp'];
-      const STATES = ['Dance'];
-      const EXPRESSIONS = ['Surprised', 'Sad'];
-      
+      const EMOTES = ["Jump", "Yes", "No", "Wave", "ThumbsUp"];
+      const STATES = ["Dance"];
+      const EXPRESSIONS = ["Surprised", "Sad"];
+
       // Combine for random selection
       const ALL_ANIMATIONS = [...EMOTES, ...STATES];
 
-      document.querySelectorAll('[data-info-trigger]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const card = btn.closest('.project-card');
-          const id = card.getAttribute('data-id');
-          
+      document.querySelectorAll("[data-info-trigger]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const card = btn.closest(".project-card");
+          const id = card.getAttribute("data-id");
+
           // Pick random animation and expression
-          const randomEmote = ALL_ANIMATIONS[Math.floor(Math.random() * ALL_ANIMATIONS.length)];
-          const randomExpression = EXPRESSIONS[Math.floor(Math.random() * EXPRESSIONS.length)];
-          
+          const randomEmote =
+            ALL_ANIMATIONS[Math.floor(Math.random() * ALL_ANIMATIONS.length)];
+          const randomExpression =
+            EXPRESSIONS[Math.floor(Math.random() * EXPRESSIONS.length)];
+
           // Dispatch with expression data
-          window.dispatchEvent(new CustomEvent('robot-emote', { 
-            detail: { 
-              name: randomEmote, 
-              text: DIALOGUE_CONFIG.projects[id],
-              expression: randomExpression
-            } 
-          }));
+          window.dispatchEvent(
+            new CustomEvent("robot-emote", {
+              detail: {
+                name: randomEmote,
+                text: DIALOGUE_CONFIG.projects[id],
+                expression: randomExpression,
+              },
+            }),
+          );
         });
       });
     }
 
     initPage();
-    document.addEventListener('astro:page-load', initPage);
+    document.addEventListener("astro:page-load", initPage);
   })();
 </script>
 
 <style>
-  .projects-container { position: relative; z-index: 10; min-height: 100vh; }
-  .nav-buttons { position: fixed; top: 2rem; left: 2rem; z-index: 20; }
-  
+  .projects-container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+  }
+  .nav-buttons {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 20;
+  }
+
   /* Consistency Update: Orange Hover for "take me home" */
-  .back-link { 
-    display: inline-flex; 
-    align-items: center; 
-    gap: 0.5rem; 
-    color: #FFE4AF; 
-    text-decoration: none; 
-    font-family: 'Fira Code', monospace; 
-    opacity: 0; 
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #727169;
+    text-decoration: none;
+    font-family: "Fira Code", monospace;
+    opacity: 0;
     animation: slideInFromRight 0.3s ease forwards;
     transition: all 0.3s ease;
   }
 
   .back-link:hover {
-    color: #EC753A;
+    color: #8ba4b0;
     transform: scale(1.05);
   }
-  
-  .projects-sidebar { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; padding: 4rem 2rem; overflow-y: auto; z-index: 15; }
-  .projects-grid { display: grid; grid-template-columns: repeat(2, 320px); gap: 1.75rem; padding-top: 6rem; padding-left: 2rem; }
-  
-  /* Staggered Entrance Animation */
-  .project-card { 
-    background: rgba(65, 46, 32, 0.9); 
-    border: 3px solid #DA9F5F; 
-    padding: 1.4rem 1.6rem; 
-    color: inherit; 
-    position: relative; 
-    display: block; 
-    opacity: 0; /* Start hidden */
-    animation: slideInFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+
+  .projects-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 4rem 2rem;
+    overflow-y: auto;
+    z-index: 15;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 320px);
+    gap: 1.75rem;
+    padding-top: 6rem;
+    padding-left: 2rem;
   }
 
-  .project-card:hover { 
-    border-color: #EC753A; 
-    transform: translateX(8px); 
+  /* Staggered Entrance Animation */
+  .project-card {
+    background: #1d1c19;
+    border: 3px solid #c5c9c5;
+    padding: 1.4rem 1.6rem;
+    color: inherit;
+    position: relative;
+    display: block;
+    opacity: 0; /* Start hidden */
+    animation: slideInFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      forwards;
+  }
+
+  .project-card:hover {
+    border-color: #8ba4b0;
+    transform: translateX(8px);
     transition: all 0.3s ease;
   }
 
-  .card-actions { position: absolute; top: 0.75rem; right: 0.75rem; display: flex; gap: 0.5rem; align-items: center; z-index: 5; }
-
-  .info-btn-ui, .expand-btn-ui { 
-    background: transparent; 
-    border: 2px solid #DA9F5F; 
-    color: #DA9F5F; 
-    border-radius: 50%; 
-    width: 26px; 
-    height: 26px; 
-    font-family: 'Fira Code', monospace; 
-    font-weight: bold; 
-    font-size: 0.85rem; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    transition: all 0.2s; 
-    text-decoration: none; 
-  }
-  
-  .info-btn-ui:hover, .expand-btn-ui:hover { background: #EC753A; border-color: #EC753A; color: #342331; }
-  .expand-btn-ui svg { width: 14px; height: 14px; stroke: currentColor; }
-  .expand-btn-ui:hover svg { stroke: #342331; }
-
-  .project-header h2 { font-size: 1.15rem; color: #FFE4AF; margin: 0; padding-right: 45px; }
-  .project-desc { color: #DA9F5F; font-size: 0.88rem; line-height: 1.45; margin-top: 0.7rem; }
-
-  @keyframes slideInFromLeft { 
-    from { transform: translateX(-50px); opacity: 0; } 
-    to { transform: translateX(0); opacity: 1; } 
+  .card-actions {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    z-index: 5;
   }
 
-  @keyframes slideInFromRight { 
-    from { transform: translateX(50px); opacity: 0; } 
-    to { transform: translateX(0); opacity: 1; } 
+  .info-btn-ui,
+  .expand-btn-ui {
+    background: transparent;
+    border: 2px solid #c5c9c5;
+    color: #c5c9c5;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    font-family: "Fira Code", monospace;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .info-btn-ui:hover,
+  .expand-btn-ui:hover {
+    background: #8ba4b0;
+    border-color: #8ba4b0;
+    color: #342331;
+  }
+  .expand-btn-ui svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+  }
+  .expand-btn-ui:hover svg {
+    stroke: #342331;
+  }
+
+  .project-header h2 {
+    font-size: 1.15rem;
+    color: #8ba4b0;
+    margin: 0;
+    padding-right: 45px;
+  }
+  .project-desc {
+    color: #c5c9c5;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-top: 0.7rem;
+  }
+
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 
   @media (max-width: 768px) {
-    .projects-grid { grid-template-columns: 1fr; width: 100%; padding-left: 0; justify-items: center; }
+    .projects-grid {
+      grid-template-columns: 1fr;
+      width: 100%;
+      padding-left: 0;
+      justify-items: center;
+    }
   }
 </style>

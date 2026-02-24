@@ -1,2 +1,0 @@
-- add click to kill to robot
-- add books 
