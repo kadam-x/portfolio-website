@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Portfolio" backgroundColor="#0f0f14">
+<Layout title="Portfolio" backgroundColor="#0f0f0d">
   <main class="hero-container">
     <div class="center-box">
       <div class="welcome-header">
@@ -16,16 +16,16 @@ import Layout from "../layouts/Layout.astro";
       </nav>
 
       <div class="color-palette">
-        <div class="color-square" style="background-color: #0f0f14;"></div>
-        <!-- Main background (Dark blue) -->
-        <div class="color-square" style="background-color: #1d1c19;"></div>
-        <!-- Surface / cards (Darkest Grey)-->
-        <div class="color-square" style="background-color: #727169;"></div>
-        <!-- Muted / secondary text (Lighter Grey)-->
-        <div class="color-square" style="background-color: #c5c9c5;"></div>
-        <!-- Primary text (Lightest grey)-->
-        <div class="color-square" style="background-color: #8ba4b0;"></div>
-        <!-- Accent (light blue) -->
+        <div class="color-square" data-color="#0f0f0d" style="background-color: #0f0f0d;"></div>
+        <!-- Main background (Near black warm) -->
+        <div class="color-square" data-color="#1d1c19" style="background-color: #1d1c19;"></div>
+        <!-- Surface / cards (Dark warm grey) -->
+        <div class="color-square" data-color="#727169" style="background-color: #727169;"></div>
+        <!-- Muted / secondary text (Stone grey) -->
+        <div class="color-square" data-color="#c5c9c5" style="background-color: #c5c9c5;"></div>
+        <!-- Primary text (Warm white) -->
+        <div class="color-square" data-color="#9c8d7e" style="background-color: #9c8d7e;"></div>
+        <!-- Accent (Sediment) -->
       </div>
     </div>
   </main>
@@ -53,11 +53,11 @@ import Layout from "../layouts/Layout.astro";
       margin: 0 auto;
       margin-bottom: 0rem;
       /* border: 2px solid #da9f5f; */
-      border: 2px solid #8ba4b0;
+      border: 2px solid #9c8d7e;
       padding: 1.2rem 9.2rem;
       /* background: #412e20; */
       /* background: #1d1c19; */
-      background: #0f0f14;
+      background: #0f0f0d;
       display: inline-block;
     }
 
@@ -77,7 +77,7 @@ import Layout from "../layouts/Layout.astro";
       margin: 0 auto;
       /* background: #412e20; */
       /* background: #1d1c19; */
-      background: #0f0f14;
+      background: #0f0f0d;
       /* border: 20px solid #ffe4af; */ /* The full box */
       border: 20px solid #c5c9c5; /* The full box */
       position: relative; /* Keeps the "covers" attached to this box */
@@ -91,7 +91,7 @@ import Layout from "../layouts/Layout.astro";
       left: 15%; /* Adjust this to make brackets wider or thinner */
       right: 15%; /* Adjust this to match the left value */
       /* background: #412e20; */ /* Matches your background color exactly */
-      background: #0f0f14;
+      background: #0f0f0d;
       height: 20px; /* Matches your border thickness exactly */
     }
 
@@ -118,13 +118,13 @@ import Layout from "../layouts/Layout.astro";
 
     .nav-link:hover {
       /* color: #ec753a; */
-      color: #8ba4b0;
+      color: #9c8d7e;
     }
 
     .color-palette {
       margin: 0 auto;
       /* border: 2px solid #da9f5f; */
-      border: 2px solid #8ba4b0;
+      border: 2px solid #9c8d7e;
       /* background: #412e20; */
       background: #1d1c19;
       display: inline-flex;
@@ -139,6 +139,29 @@ import Layout from "../layouts/Layout.astro";
       height: 5.15em;
       /* border: 0px solid rgba(255, 228, 175, 0.3); */
       border: 0px solid rgba(197, 201, 197, 0.3);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .color-square::after {
+      content: attr(data-color);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1d1c19;
+      border: 1px solid #727169;
+      color: #c5c9c5;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-family: "Fira Code", monospace;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .color-square:hover::after {
+      opacity: 1;
     }
 
     @media (max-width: 640px) {
