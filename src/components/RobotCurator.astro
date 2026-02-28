@@ -6,29 +6,33 @@
 </div>
 
 <script>
-  import * as THREE from 'three';
-  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+  import * as THREE from "three";
+  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
   let scene, camera, renderer, mixer, model, face;
   let actions = {};
-  let animationId, clock, activeAction = null, timeoutId = null, bubbleTimeout = null;
+  let animationId,
+    clock,
+    activeAction = null,
+    timeoutId = null,
+    bubbleTimeout = null;
   let currentTypeId = 0;
 
   function showDialogue(text) {
-    const bubble = document.getElementById('robot-bubble');
-    const content = bubble?.querySelector('.bubble-content');
+    const bubble = document.getElementById("robot-bubble");
+    const content = bubble?.querySelector(".bubble-content");
     if (!bubble || !content) return;
 
     clearTimeout(bubbleTimeout);
-    bubble.classList.remove('hidden');
-    content.textContent = '';
-    
-    const typeId = ++currentTypeId; 
+    bubble.classList.remove("hidden");
+    content.textContent = "";
+
+    const typeId = ++currentTypeId;
     let i = 0;
     const speed = 15;
 
     function type() {
-      if (typeId !== currentTypeId) return; 
+      if (typeId !== currentTypeId) return;
       if (i < text.length) {
         content.textContent += text.charAt(i);
         i++;
@@ -38,18 +42,23 @@
     type();
 
     bubbleTimeout = setTimeout(() => {
-      if (typeId === currentTypeId) bubble.classList.add('hidden');
+      if (typeId === currentTypeId) bubble.classList.add("hidden");
     }, 5500);
   }
 
   function init() {
-    const container = document.getElementById('robot-container');
+    const container = document.getElementById("robot-container");
     if (!container) return;
-    
+
     scene = new THREE.Scene();
     clock = new THREE.Clock();
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 100);
-    camera.position.set(5, 2, 8); 
+    camera = new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth / window.innerHeight,
+      0.25,
+      100,
+    );
+    camera.position.set(5, 2, 8);
     camera.lookAt(0, 1, 0);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -59,40 +68,49 @@
     scene.add(dirLight);
 
     const loader = new GLTFLoader();
-    loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
-      model = gltf.scene;
-      model.position.set(2, -2, 0); 
-      
-      model.traverse((child) => {
-        if (child.isMesh) {
-          if (!child.name.match(/_\d+$/)) child.material.color.setHex(0x9c8d7e);
-          // Find the face mesh for morph targets
-          if (child.morphTargetDictionary && child.morphTargetInfluences) face = child;
-        }
-      });
+    loader.load(
+      "https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb",
+      (gltf) => {
+        model = gltf.scene;
+        model.position.set(2, -2, 0);
 
-      scene.add(model);
-      mixer = new THREE.AnimationMixer(model);
+        model.traverse((child) => {
+          if (child.isMesh) {
+            if (!child.name.match(/_\d+$/))
+              child.material.color.setHex(0x9c8d7e);
+            // Find the face mesh for morph targets
+            if (child.morphTargetDictionary && child.morphTargetInfluences)
+              face = child;
+          }
+        });
 
-      gltf.animations.forEach((clip) => {
-        const action = mixer.clipAction(clip);
-        actions[clip.name] = action;
-        // Non-looping animations
-        if (!['Idle', 'Walking', 'Running', 'Standing', 'Sitting'].includes(clip.name)) {
+        scene.add(model);
+        mixer = new THREE.AnimationMixer(model);
+
+        gltf.animations.forEach((clip) => {
+          const action = mixer.clipAction(clip);
+          actions[clip.name] = action;
+          // Non-looping animations
+          if (
+            !["Idle", "Walking", "Running", "Standing", "Sitting"].includes(
+              clip.name,
+            )
+          ) {
             action.clampWhenFinished = true;
             action.loop = THREE.LoopOnce;
-        }
-      });
+          }
+        });
 
-      if (actions['Idle']) actions['Idle'].play();
-      animate();
-    });
+        if (actions["Idle"]) actions["Idle"].play();
+        animate();
+      },
+    );
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth * 0.25, window.innerHeight * 0.25);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-    window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener("resize", onWindowResize, false);
   }
 
   function onWindowResize() {
@@ -109,20 +127,24 @@
 
   // Updated Expression handler (0 to 1 values)
   function setExpression(name, value, duration = 0.3) {
-      if (!face) return;
-      const index = face.morphTargetDictionary[name];
-      if (index === undefined) return;
+    if (!face) return;
+    const index = face.morphTargetDictionary[name];
+    if (index === undefined) return;
 
-      const startValue = face.morphTargetInfluences[index];
-      const startTime = performance.now();
+    const startValue = face.morphTargetInfluences[index];
+    const startTime = performance.now();
 
-      function update() {
-          const elapsed = (performance.now() - startTime) / 1000;
-          const t = Math.min(elapsed / duration, 1);
-          face.morphTargetInfluences[index] = THREE.MathUtils.lerp(startValue, value, t);
-          if (t < 1) requestAnimationFrame(update);
-      }
-      update();
+    function update() {
+      const elapsed = (performance.now() - startTime) / 1000;
+      const t = Math.min(elapsed / duration, 1);
+      face.morphTargetInfluences[index] = THREE.MathUtils.lerp(
+        startValue,
+        value,
+        t,
+      );
+      if (t < 1) requestAnimationFrame(update);
+    }
+    update();
   }
 
   function onRobotEmote(e) {
@@ -130,48 +152,82 @@
     const text = e.detail.text;
     const expression = e.detail.expression;
     const newAction = actions[emote];
-    
+
     if (text) showDialogue(text);
 
     if (newAction && newAction !== activeAction) {
-        if (timeoutId) clearTimeout(timeoutId);
-        
-        // Crossfade logic
-        const fromAction = activeAction || actions['Idle'];
-        if (fromAction) fromAction.fadeOut(0.2);
+      if (timeoutId) clearTimeout(timeoutId);
 
-        newAction.reset().fadeIn(0.2).play();
-        activeAction = newAction;
+      // Crossfade logic
+      const fromAction = activeAction || actions["Idle"];
+      if (fromAction) fromAction.fadeOut(0.2);
 
-        // Use passed expression or map emotes to expressions
-        if (expression) {
-            setExpression(expression, 1);
-        } else {
-            // Fallback mapping
-            if (emote === 'No') setExpression('Sad', 1);
-            else if (emote === 'Jump' || emote === 'Dance') setExpression('Surprised', 1);
-        }
+      newAction.reset().fadeIn(0.2).play();
+      activeAction = newAction;
 
-        const duration = newAction.getClip().duration;
-        timeoutId = setTimeout(() => {
-            newAction.fadeOut(0.2);
-            // Reset expressions to 0
-            ['Angry', 'Surprised', 'Sad'].forEach(exp => setExpression(exp, 0));
-            if (actions['Idle']) actions['Idle'].reset().fadeIn(0.2).play();
-            activeAction = null;
-        }, duration * 1000); 
+      // Use passed expression or map emotes to expressions
+      if (expression) {
+        setExpression(expression, 1);
+      } else {
+        // Fallback mapping
+        if (emote === "No") setExpression("Sad", 1);
+        else if (emote === "Jump" || emote === "Dance")
+          setExpression("Surprised", 1);
+      }
+
+      const duration = newAction.getClip().duration;
+      timeoutId = setTimeout(() => {
+        newAction.fadeOut(0.2);
+        // Reset expressions to 0
+        ["Angry", "Surprised", "Sad"].forEach((exp) => setExpression(exp, 0));
+        if (actions["Idle"]) actions["Idle"].reset().fadeIn(0.2).play();
+        activeAction = null;
+      }, duration * 1000);
     }
   }
 
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     init();
-    window.addEventListener('robot-emote', onRobotEmote);
+    window.addEventListener("robot-emote", onRobotEmote);
   });
 </script>
 
 <style>
-  #robot-container { position: fixed; bottom: 2rem; right: 2rem; width: 25%; height: 25%; z-index: 1; pointer-events: none; }
-  #robot-bubble { position: absolute; bottom: 110%; right: 10%; background: transparent; border: 3px solid #9c8d7e; padding: 1rem 1.5rem; max-width: 280px; color: #c5c9c5; font-family: 'Fira Code', monospace; font-size: 0.9rem; z-index: 20; transition: opacity 0.3s; }
-  #robot-bubble.hidden { opacity: 0; }
-  .bubble-arrow { position: absolute; bottom: -13px; right: 30px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid #9c8d7e; }
+  #robot-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 25%;
+    height: 25%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  #robot-bubble {
+    position: absolute;
+    bottom: 30%;
+    left: 0px;
+    right: auto;
+    background: transparent;
+    border: 3px solid #9c8d7e;
+    padding: 1rem 1.5rem;
+    max-width: 280px;
+    color: #c5c9c5;
+    font-family: "Fira Code", monospace;
+    font-size: 0.9rem;
+    z-index: 20;
+    transition: opacity 0.3s;
+  }
+  #robot-bubble.hidden {
+    opacity: 0;
+  }
+  .bubble-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: -13px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #9c8d7e;
+  }
 </style>
