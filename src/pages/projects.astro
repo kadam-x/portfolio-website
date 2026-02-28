@@ -111,7 +111,6 @@ const projects = [
             <div
               class="project-card"
               data-id={project.id}
-              style={`animation-delay: ${index * 0.05}s;`}
             >
               <div class="card-header">
                 <h2>{project.title}</h2>
@@ -186,28 +185,10 @@ const projects = [
 
 <script is:inline>
   (function () {
-    const DIALOGUE_CONFIG = {
-      landing:
-        "System online. Archives decrypted. Click '?' for data insights.",
-      goHome: "Thanks for stopping by. Catch you later!",
-      projects: {
-        "project-1":
-          "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
-        "project-2": "Fully typed with TypeScript. No 'any' allowed here!",
-        "project-3":
-          "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
-        "project-4":
-          "What I cannot create, I do not understand - Richard Feynman",
-        // "project-5": "Next.js App Router. The bleeding edge of web dev.",
-        // "project-6": "Real-time data streams. Everything updates instantly!",
-        // "project-7": "Python scripts for data crunching. Numbers don't lie.",
-      },
-    };
-
-    function robotReact(emoteName, dialogueText = null) {
+    function robotReact(emoteName) {
       window.dispatchEvent(
         new CustomEvent("robot-emote", {
-          detail: { name: emoteName, text: dialogueText },
+          detail: { name: emoteName },
         }),
       );
     }
@@ -215,17 +196,24 @@ const projects = [
     function initPage() {
       const homeLink = document.getElementById("homeLink");
 
-      setTimeout(() => robotReact("Wave", DIALOGUE_CONFIG.landing), 1000);
-
       if (homeLink) {
         homeLink.addEventListener("mouseenter", () =>
-          robotReact("Wave", DIALOGUE_CONFIG.goHome),
+          robotReact("Wave"),
         );
       }
 
       const EMOTES = ["Jump", "Yes", "No", "Wave", "ThumbsUp"];
       const STATES = ["Dance"];
       const EXPRESSIONS = ["Surprised", "Sad"];
+      const PROJECT_DIALOGUES = {
+        "project-1":
+          "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
+        "project-2": "Fully typed with TypeScript. No 'any' allowed here!",
+        "project-3":
+          "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
+        "project-4":
+          "What I cannot create, I do not understand - Richard Feynman",
+      };
 
       const ALL_ANIMATIONS = [...EMOTES, ...STATES];
 
@@ -243,7 +231,7 @@ const projects = [
             new CustomEvent("robot-emote", {
               detail: {
                 name: randomEmote,
-                text: DIALOGUE_CONFIG.projects[id],
+                text: PROJECT_DIALOGUES[id],
                 expression: randomExpression,
               },
             }),
@@ -277,9 +265,6 @@ const projects = [
     color: #727169;
     text-decoration: none;
     font-family: "Fira Code", monospace;
-    opacity: 0;
-    animation: slideInFromRight 0.3s ease forwards;
-    transition: all 0.3s ease;
   }
 
   .back-link:hover {
@@ -324,15 +309,10 @@ const projects = [
     flex-shrink: 0;
     height: 780px;
     overflow-y: auto;
-    opacity: 0;
-    animation: slideInFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-      forwards;
   }
 
   .project-card:hover {
     border-color: #9c8d7e;
-    transform: translateY(-4px);
-    transition: all 0.3s ease;
   }
 
   .card-header {
@@ -516,28 +496,6 @@ const projects = [
   .link-btn:hover {
     background: #9c8d7e;
     color: #0f0f0d;
-  }
-
-  @keyframes slideInFromLeft {
-    from {
-      transform: translateX(-50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideInFromRight {
-    from {
-      transform: translateX(50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
   }
 
   @media (max-width: 768px) {
