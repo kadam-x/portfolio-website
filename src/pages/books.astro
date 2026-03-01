@@ -2,14 +2,34 @@
 import Layout from "../layouts/Layout.astro";
 
 const books = [
-  { title: "The Intelligent Investor", author: "Benjamin Graham", status: "Completed", note: "The foundation of value investing." },
-  { title: "A Philosophy of Software Design", author: "John Ousterhout", status: "Reading", note: "Essential for complexity management." },
-  { title: "Antifragile", author: "Nassim Taleb", status: "Completed", note: "Probability and systems thinking." },
-  { title: "Effective C++", author: "Scott Meyers", status: "Reading", note: "Deep dive into performance and control." },
+  {
+    title: "The Intelligent Investor",
+    author: "Benjamin Graham",
+    status: "Completed",
+    note: "The foundation of value investing.",
+  },
+  {
+    title: "A Philosophy of Software Design",
+    author: "John Ousterhout",
+    status: "Reading",
+    note: "Essential for complexity management.",
+  },
+  {
+    title: "Antifragile",
+    author: "Nassim Taleb",
+    status: "Completed",
+    note: "Probability and systems thinking.",
+  },
+  {
+    title: "Effective C++",
+    author: "Scott Meyers",
+    status: "Reading",
+    note: "Deep dive into performance and control.",
+  },
 ];
 ---
 
-<Layout title="Bookshelf" backgroundColor="#412E20">
+<Layout title="Kovacs Adam :: Books" backgroundColor="#412E20">
   <main class="books-container" transition:animate="slide">
     <a href="/about" class="back-link">
       <span class="arrow">←</span>
@@ -28,16 +48,20 @@ const books = [
         <span class="col-status">Status</span>
       </div>
 
-      {books.map((book) => (
-        <div class="book-row">
-          <div class="main-info">
-            <span class="title">{book.title}</span>
-            <span class="author">{book.author}</span>
-            <span class={`status-tag ${book.status.toLowerCase()}`}>{book.status}</span>
+      {
+        books.map((book) => (
+          <div class="book-row">
+            <div class="main-info">
+              <span class="title">{book.title}</span>
+              <span class="author">{book.author}</span>
+              <span class={`status-tag ${book.status.toLowerCase()}`}>
+                {book.status}
+              </span>
+            </div>
+            {book.note && <p class="note">{book.note}</p>}
           </div>
-          {book.note && <p class="note">{book.note}</p>}
-        </div>
-      ))}
+        ))
+      }
     </div>
   </main>
 </Layout>
@@ -49,7 +73,7 @@ const books = [
     max-width: 800px;
     margin: 0 auto;
     font-family: "Fira Code", monospace;
-    color: #FFE4AF; /* Cream text */
+    color: #ffe4af; /* Cream text */
   }
 
   .back-link {
@@ -72,12 +96,12 @@ const books = [
 
   .page-header h1 {
     font-size: 2.2rem;
-    color: #FFE4AF;
+    color: #ffe4af;
     margin-bottom: 0.5rem;
   }
 
   .page-header p {
-    color: #FFE4AF;
+    color: #ffe4af;
     opacity: 0.8;
     margin-bottom: 4rem;
   }
@@ -107,20 +131,20 @@ const books = [
 
   .title {
     font-size: 1.1rem;
-    color: #FFE4AF;
+    color: #ffe4af;
     font-weight: 600;
   }
 
   .author {
     font-size: 0.95rem;
-    color: #FFE4AF;
+    color: #ffe4af;
     opacity: 0.8;
   }
 
   .status-tag {
     font-size: 0.65rem;
     padding: 2px 8px;
-    border: 1px solid #FFE4AF;
+    border: 1px solid #ffe4af;
     text-align: center;
     border-radius: 4px;
     text-transform: uppercase;
@@ -128,20 +152,26 @@ const books = [
 
   .status-tag.reading {
     background: #ec753a;
-    color: #412E20; /* Dark text on orange background */
+    color: #412e20; /* Dark text on orange background */
     border-color: #ec753a;
   }
 
   .note {
     margin-top: 0.6rem;
     font-size: 0.9rem;
-    color: #FFE4AF;
+    color: #ffe4af;
     font-style: italic;
     opacity: 0.6;
   }
 
   @media (max-width: 640px) {
-    .table-header { display: none; }
-    .main-info { display: flex; flex-direction: column; gap: 0.5rem; }
+    .table-header {
+      display: none;
+    }
+    .main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 </style>

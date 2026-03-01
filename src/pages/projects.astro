@@ -93,7 +93,7 @@ const projects = [
 ];
 ---
 
-<Layout title="Projects" backgroundColor="#0f0f0d">
+<Layout title="Kovacs Adam :: Projects" backgroundColor="#0f0f0d">
   <RobotCurator />
 
   <main class="projects-container">
@@ -108,10 +108,7 @@ const projects = [
       <div class="projects-grid">
         {
           projects.map((project, index) => (
-            <div
-              class="project-card"
-              data-id={project.id}
-            >
+            <div class="project-card" data-id={project.id}>
               <div class="card-header">
                 <h2>{project.title}</h2>
                 <button
@@ -197,9 +194,7 @@ const projects = [
       const homeLink = document.getElementById("homeLink");
 
       if (homeLink) {
-        homeLink.addEventListener("mouseenter", () =>
-          robotReact("Wave"),
-        );
+        homeLink.addEventListener("mouseenter", () => robotReact("Wave"));
       }
 
       const EMOTES = ["Jump", "Yes", "No", "Wave", "ThumbsUp"];
