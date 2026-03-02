@@ -22,7 +22,7 @@ import Layout from "../layouts/Layout.astro";
           >
             kadamx [at] proton [dot] com
           </button>
-          <span class="row-action">(click to copy)</span>
+          <span class="row-action" id="copy-hint">(click to copy)</span>
         </div>
         <div class="contact-row">
           <span class="row-label">github</span>
@@ -32,7 +32,7 @@ import Layout from "../layouts/Layout.astro";
             target="_blank"
             class="clickable"
           >
-            snezzz0
+            kadam-x
           </a>
         </div>
         <div class="contact-row">
@@ -44,6 +44,17 @@ import Layout from "../layouts/Layout.astro";
             class="clickable"
           >
             Adam Kovacs
+          </a>
+        </div>
+        <div class="contact-row">
+          <span class="row-label">leetcode</span>
+          <span class="row-text">@</span>
+          <a
+            href="https://leetcode.com/u/kadam-x/"
+            target="_blank"
+            class="clickable"
+          >
+            kadam-x
           </a>
         </div>
       </div>
@@ -79,6 +90,7 @@ import Layout from "../layouts/Layout.astro";
     const wrapper = document.getElementById("page-wrapper");
     const cursor = document.getElementById("custom-cursor");
     const emailBtn = document.getElementById("copy-email");
+    const copyHint = document.getElementById("copy-hint");
 
     if (
       !input ||
@@ -86,21 +98,18 @@ import Layout from "../layouts/Layout.astro";
       !consoleElem ||
       !wrapper ||
       !cursor ||
+      !emailBtn ||
       input.dataset.initialized
     )
       return;
 
-    // Email Copy Logic
-    emailBtn?.addEventListener("click", () => {
+    emailBtn.addEventListener("click", () => {
       const email = emailBtn.getAttribute("data-email") || "";
       navigator.clipboard.writeText(email).then(() => {
-        const btnText = emailBtn.querySelector(".btn-text");
-        if (btnText) {
-          btnText.textContent = "copied!";
-          setTimeout(() => {
-            btnText.textContent = "copy email";
-          }, 2000);
-        }
+        copyHint.textContent = "(copied!)";
+        setTimeout(() => {
+          copyHint.textContent = "(click to copy)";
+        }, 2000);
       });
     });
 
