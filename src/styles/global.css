@@ -3,7 +3,7 @@
   display: none;
 }
 
-::view-transition-new(root) {
+:view-transition-new(root) {
   display: block;
   animation: none;
 }

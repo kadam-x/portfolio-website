@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
@@ -34,7 +34,7 @@ const { title, backgroundColor = "#0f0f0d" } = Astro.props;
       rel="stylesheet"
     />
     <meta name="generator" content={Astro.generator} />
-    <ViewTransitions />
+    <ClientRouter />
     <title>{title}</title>
   </head>
   <body style={`background-color: ${backgroundColor}`}>
