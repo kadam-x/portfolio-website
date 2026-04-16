@@ -109,6 +109,17 @@ const { title, backgroundColor = "#030210" } = Astro.props;
         });
       }
     </script>
+
+    <script is:inline>
+      document.addEventListener('astro:page-load', function () {
+        const fireflies = document.querySelectorAll('.firefly');
+        fireflies.forEach(firefly => {
+          firefly.style.display = 'none';
+          firefly.offsetHeight;
+          firefly.style.display = 'block';
+        });
+      });
+    </script>
   </body>
 </html>
 
