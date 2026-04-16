@@ -29,7 +29,7 @@ const books = [
 ];
 ---
 
-<Layout title="Kovacs Adam :: Books" backgroundColor="#412E20">
+<Layout title="Kovacs Adam :: Books" backgroundColor="#030210">
   <main class="books-container" transition:animate="slide">
     <a href="/about" class="back-link">
       <span class="arrow">←</span>
@@ -67,20 +67,20 @@ const books = [
 </Layout>
 
 <style>
-  .books-container {
+.books-container {
     min-height: 100vh;
     padding: 4rem 2rem;
     max-width: 800px;
     margin: 0 auto;
     font-family: "Fira Code", monospace;
-    color: #ffe4af; /* Cream text */
+    color: #a1cd5e;
   }
 
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #c5c9c5;
+    color: #a1cd5e;
     font-size: 1rem;
     text-decoration: none;
     margin-bottom: 3rem;
@@ -89,19 +89,19 @@ const books = [
   }
 
   .back-link:hover {
-    color: #9c8d7e;
+    color: #80a0ff;
     opacity: 1;
     transform: translateX(-4px);
   }
 
   .page-header h1 {
     font-size: 2.2rem;
-    color: #ffe4af;
+    color: #80a0ff;
     margin-bottom: 0.5rem;
   }
 
   .page-header p {
-    color: #ffe4af;
+    color: #a1cd5e;
     opacity: 0.8;
     margin-bottom: 4rem;
   }
@@ -110,16 +110,16 @@ const books = [
     display: grid;
     grid-template-columns: 2fr 1.2fr 100px;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 228, 175, 0.2);
+    border-bottom: 1px solid #323437;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #ec753a;
+    color: #a1cd5e;
     font-weight: bold;
   }
 
   .book-row {
     padding: 1.5rem 0;
-    border-bottom: 1px dashed rgba(255, 228, 175, 0.1);
+    border-bottom: 1px dashed #323437;
   }
 
   .main-info {
@@ -131,35 +131,35 @@ const books = [
 
   .title {
     font-size: 1.1rem;
-    color: #ffe4af;
+    color: #a1cd5e;
     font-weight: 600;
   }
 
   .author {
     font-size: 0.95rem;
-    color: #ffe4af;
+    color: #a1cd5e;
     opacity: 0.8;
   }
 
   .status-tag {
     font-size: 0.65rem;
     padding: 2px 8px;
-    border: 1px solid #ffe4af;
+    border: 1px solid #323437;
     text-align: center;
     border-radius: 4px;
     text-transform: uppercase;
   }
 
   .status-tag.reading {
-    background: #ec753a;
-    color: #412e20; /* Dark text on orange background */
-    border-color: #ec753a;
+    background: #80a0ff;
+    color: #030210;
+    border-color: #80a0ff;
   }
 
   .note {
     margin-top: 0.6rem;
     font-size: 0.9rem;
-    color: #ffe4af;
+    color: #a1cd5e;
     font-style: italic;
     opacity: 0.6;
   }

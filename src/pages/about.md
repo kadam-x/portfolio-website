@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
 title: "Kovacs Adam :: About"
-backgroundColor: "#0f0f0d"
+backgroundColor: "#030210"
 ---
 
 # Self-taught Dev | Finance & CS Student

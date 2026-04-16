@@ -11,8 +11,8 @@ const projects = [
     techStack: [
       { name: "Python", color: "#3776AB" },
       { name: "Solana", color: "#9945FF" },
-      { name: "Webhooks", color: "#9c8d7e" },
-      { name: "Async", color: "#727169" },
+      { name: "Webhooks", color: "#a1cd5e" },
+      { name: "Async", color: "#a1cd5e" },
     ],
     links: [
       {
@@ -29,7 +29,7 @@ const projects = [
     techStack: [
       { name: "Python", color: "#3776AB" },
       { name: "PyPI", color: "#F7B731" },
-      { name: "ANSI", color: "#9c8d7e" },
+      { name: "ANSI", color: "#a1cd5e" },
     ],
     links: [
       { label: "PyPI Package", url: "https://pypi.org/project/obscuratee/" },
@@ -57,7 +57,7 @@ const projects = [
     title: "Learning Projects",
     description:
       "A collection of smaller projects, experiments, and learning exercises.",
-    techStack: [{ name: "Various", color: "#9c8d7e" }],
+    techStack: [{ name: "Various", color: "#a1cd5e" }],
     links: [],
     isLearning: true,
     miniProjects: [
@@ -93,7 +93,7 @@ const projects = [
 ];
 ---
 
-<Layout title="Kovacs Adam :: Projects" backgroundColor="#0f0f0d">
+<Layout title="Kovacs Adam :: Projects" backgroundColor="#030210">
   <RobotCurator />
 
   <main class="projects-container">
@@ -257,14 +257,14 @@ const projects = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #727169;
+    color: #a1cd5e;
     text-decoration: none;
     font-family: "Fira Code", monospace;
     font-size: 1rem;
   }
 
   .back-link:hover {
-    color: #9c8d7e;
+    color: #a1cd5e;
   }
 
   .projects-sidebar {
@@ -293,8 +293,8 @@ const projects = [
   }
 
   .project-card {
-    background: #1d1c19;
-    border: 3px solid #c5c9c5;
+    background: #323437;
+    border: 3px solid #323437;
     padding: 2rem 1.5rem;
     color: inherit;
     position: relative;
@@ -307,7 +307,7 @@ const projects = [
   }
 
   .project-card:hover {
-    border-color: #9c8d7e;
+    border-color: #a1cd5e;
   }
 
   .card-header {
@@ -320,13 +320,13 @@ const projects = [
   .video-placeholder {
     width: 100%;
     height: 120px;
-    background: #0f0f0d;
-    border: 2px dashed #9c8d7e40;
+    background: #030210;
+    border: 2px dashed #323437;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    color: #727169;
+    color: #a1cd5e;
     font-family: "Fira Code", monospace;
     font-size: 0.8rem;
     text-transform: uppercase;
@@ -335,13 +335,13 @@ const projects = [
 
   .card-header h2 {
     font-size: 1.5rem;
-    color: #9c8d7e;
+    color: #a1cd5e;
     margin: 0;
     line-height: 1.3;
   }
 
   .project-description {
-    color: #c5c9c5;
+    color: #a1cd5e;
     font-size: 1rem;
     line-height: 1.6;
     margin: 0 0 1rem 0;
@@ -361,8 +361,8 @@ const projects = [
   .link-btn {
     font-size: 0.75rem;
     padding: 0.4rem 0.7rem;
-    border: 1px solid #9c8d7e;
-    color: #9c8d7e;
+    border: 1px solid #a1cd5e;
+    color: #a1cd5e;
     text-decoration: none;
     font-family: "Fira Code", monospace;
     transition: all 0.2s;
@@ -370,8 +370,8 @@ const projects = [
 
   .info-btn-ui {
     background: transparent;
-    border: 2px solid #c5c9c5;
-    color: #c5c9c5;
+    border: 2px solid #323437;
+    color: #a1cd5e;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -387,13 +387,13 @@ const projects = [
   }
 
   .info-btn-ui:hover {
-    background: #9c8d7e;
-    border-color: #9c8d7e;
-    color: #342331;
+    background: #323437;
+    border-color: #a1cd5e;
+    color: #a1cd5e;
   }
 
   .project-description {
-    color: #c5c9c5;
+    color: #a1cd5e;
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0 0 1rem 0;
@@ -405,8 +405,8 @@ const projects = [
     flex-direction: column;
     gap: 0.4rem;
     margin-bottom: 1rem;
-    border-top: 1px solid #9c8d7e40;
-    border-bottom: 1px solid #9c8d7e40;
+    border-top: 1px solid #323437;
+    border-bottom: 1px solid #323437;
     padding: 0.6rem 0;
   }
 
@@ -415,7 +415,7 @@ const projects = [
     justify-content: space-between;
     align-items: flex-start;
     text-decoration: none;
-    color: #727169;
+    color: #a1cd5e;
     font-size: 0.8rem;
     padding: 0.6rem 0;
     transition: color 0.2s;
@@ -423,7 +423,7 @@ const projects = [
   }
 
   .mini-project-item:hover {
-    color: #9c8d7e;
+    color: #a1cd5e;
   }
 
   .mini-project-content {
@@ -435,13 +435,14 @@ const projects = [
 
   .mini-title {
     font-family: "Fira Code", monospace;
-    color: #c5c9c5;
+    color: #a1cd5e;
   }
 
   .mini-description {
     font-size: 0.75rem;
     line-height: 1.4;
-    color: #727169;
+    color: #a1cd5e;
+    opacity: 0.7;
   }
 
   .mini-arrow {
@@ -481,16 +482,16 @@ const projects = [
   .link-btn {
     font-size: 0.7rem;
     padding: 0.35rem 0.6rem;
-    border: 1px solid #9c8d7e;
-    color: #9c8d7e;
+    border: 1px solid #a1cd5e;
+    color: #a1cd5e;
     text-decoration: none;
     font-family: "Fira Code", monospace;
     transition: all 0.2s;
   }
 
   .link-btn:hover {
-    background: #9c8d7e;
-    color: #0f0f0d;
+    background: #a1cd5e;
+    color: #030210;
   }
 
   @media (max-width: 768px) {

@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Kovacs Adam :: Portfolio" backgroundColor="#0f0f0d">
+<Layout title="Kovacs Adam :: Portfolio" backgroundColor="#030210">
   <main class="hero-container">
     <div class="center-box">
       <div class="welcome-header">
@@ -18,39 +18,28 @@ import Layout from "../layouts/Layout.astro";
       <div class="color-palette">
         <div
           class="color-square"
-          data-color="#0f0f0d"
-          style="background-color: #0f0f0d;"
+          data-color="#030210"
+          style="background-color: #030210;"
         >
         </div>
-        <!-- Main background (Near black warm) -->
         <div
           class="color-square"
-          data-color="#1d1c19"
-          style="background-color: #1d1c19;"
+          data-color="#323437"
+          style="background-color: #323437;"
         >
         </div>
-        <!-- Surface / cards (Dark warm grey) -->
         <div
           class="color-square"
-          data-color="#727169"
-          style="background-color: #727169;"
+          data-color="#80a0ff"
+          style="background-color: #80a0ff;"
         >
         </div>
-        <!-- Muted / secondary text (Stone grey) -->
         <div
           class="color-square"
-          data-color="#c5c9c5"
-          style="background-color: #c5c9c5;"
+          data-color="#a1cd5e"
+          style="background-color: #a1cd5e;"
         >
         </div>
-        <!-- Primary text (Warm white) -->
-        <div
-          class="color-square"
-          data-color="#9c8d7e"
-          style="background-color: #9c8d7e;"
-        >
-        </div>
-        <!-- Accent (Sediment) -->
       </div>
     </div>
   </main>
@@ -77,20 +66,16 @@ import Layout from "../layouts/Layout.astro";
       text-align: center;
       margin: 0 auto;
       margin-bottom: 0rem;
-      /* border: 2px solid #da9f5f; */
-      border: 2px solid #9c8d7e;
+      border: 2px solid #323437;
       padding: 1.2rem 9.2rem;
-      /* background: #412e20; */
-      /* background: #1d1c19; */
-      background: #0f0f0d;
+      background: #030210;
       display: inline-block;
     }
 
     .welcome-text {
       font-size: 1.5rem;
       font-weight: 700;
-      /* color: #ffe4af; */
-      color: #c5c9c5;
+      color: #80a0ff;
       letter-spacing: 0.1em;
     }
 
@@ -100,24 +85,19 @@ import Layout from "../layouts/Layout.astro";
       gap: 1.5rem;
       padding: 2rem 4.9rem;
       margin: 0 auto;
-      /* background: #412e20; */
-      /* background: #1d1c19; */
-      background: #0f0f0d;
-      /* border: 20px solid #ffe4af; */ /* The full box */
-      border: 20px solid #c5c9c5; /* The full box */
-      position: relative; /* Keeps the "covers" attached to this box */
+      background: #030210;
+      border: 20px solid #a1cd5e;
+      position: relative;
     }
 
-    /* These are the "Erasers" that create the bracket look */
     .nav-links::before,
     .nav-links::after {
       content: "";
       position: absolute;
-      left: 15%; /* Adjust this to make brackets wider or thinner */
-      right: 15%; /* Adjust this to match the left value */
-      /* background: #412e20; */ /* Matches your background color exactly */
-      background: #0f0f0d;
-      height: 20px; /* Matches your border thickness exactly */
+      left: 15%;
+      right: 15%;
+      background: #030210;
+      height: 20px;
     }
 
     /* Position the top eraser over the top border */
@@ -132,26 +112,22 @@ import Layout from "../layouts/Layout.astro";
 
     .nav-link {
       font-size: 1.8rem;
-      /* color: #ffe4af; */
-      color: #c5c9c5;
+      color: #a1cd5e;
       text-align: center;
       transition: all 0.2s;
       padding: 0.5rem;
       font-family: "Fira Code", "FiraCode Nerd Font", monospace;
-      z-index: 1; /* Ensures text stays "above" the erasers if they overlap */
+      z-index: 1;
     }
 
     .nav-link:hover {
-      /* color: #ec753a; */
-      color: #9c8d7e;
+      color: #80a0ff;
     }
 
     .color-palette {
       margin: 0 auto;
-      /* border: 2px solid #da9f5f; */
-      border: 2px solid #9c8d7e;
-      /* background: #412e20; */
-      background: #1d1c19;
+      border: 2px solid #323437;
+      background: #323437;
       display: inline-flex;
       gap: 0rem;
       justify-content: center;
@@ -162,8 +138,7 @@ import Layout from "../layouts/Layout.astro";
     .color-square {
       width: 5.15rem;
       height: 5.15em;
-      /* border: 0px solid rgba(255, 228, 175, 0.3); */
-      border: 0px solid rgba(197, 201, 197, 0.3);
+      border: 0px solid rgba(161, 205, 94, 0.3);
       position: relative;
       cursor: pointer;
     }
@@ -174,9 +149,9 @@ import Layout from "../layouts/Layout.astro";
       bottom: calc(100% + 8px);
       left: 50%;
       transform: translateX(-50%);
-      background: #1d1c19;
-      border: 1px solid #727169;
-      color: #c5c9c5;
+      background: #323437;
+      border: 1px solid #80a0ff;
+      color: #a1cd5e;
       padding: 4px 8px;
       font-size: 0.75rem;
       font-family: "Fira Code", monospace;

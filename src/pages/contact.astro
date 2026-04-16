@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Kovacs Adam :: Contact" backgroundColor="#0f0f0d">
+<Layout title="Kovacs Adam :: Contact" backgroundColor="#030210">
   <main class="contact-container" id="page-wrapper">
     <div class="terminal-nav">
       <a href="/" class="back-link">
@@ -194,13 +194,13 @@ import Layout from "../layouts/Layout.astro";
           const neoDiv = document.createElement("div");
           neoDiv.className = "cmd-response";
           neoDiv.style.whiteSpace = "pre";
-          neoDiv.innerHTML = `<span style="color: #9c8d7e; font-weight: bold;">snezzz@experimental</span>
+          neoDiv.innerHTML = `<span style="color: #a1cd5e; font-weight: bold;">snezzz@moonfly</span>
 ------------------
-<span style="color: #9c8d7e;">WHOAMI:</span> Genius, billionaire, playboy, philanthropist.
-<span style="color: #9c8d7e;">DOTFILES:</span> <a href="https://github.com/kadam-x/dots-nixos" target="_blank" class="term-link">https://github.com/kadam-x/dots-nixos</a>
-<span style="color: #9c8d7e;">EDITOR</span> nvim 
-<span style="color: #9c8d7e;">SHELL:</span> zsh
-<span style="color: #9c8d7e;">UPTIME:</span> 13h 37m`;
+<span style="color: #a1cd5e;">WHOAMI:</span> Developer, builder, learner.
+<span style="color: #a1cd5e;">DOTFILES:</span> <a href="https://github.com/kadam-x/dots-nixos" target="_blank" class="term-link">https://github.com/kadam-x/dots-nixos</a>
+<span style="color: #a1cd5e;">EDITOR</span> nvim 
+<span style="color: #a1cd5e;">SHELL:</span> zsh
+<span style="color: #a1cd5e;">UPTIME:</span> 13h 37m`;
           history.appendChild(neoDiv);
           history.scrollTop = history.scrollHeight;
         } else if (COMMANDS[val]) {
@@ -242,14 +242,13 @@ import Layout from "../layouts/Layout.astro";
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem; /* color: #FFE4AF; */
-    color: #727169;
+    gap: 0.5rem;
+    color: #a1cd5e;
     text-decoration: none;
     font-size: 1rem;
   }
   .back-link:hover {
-    /* color: #EC753A; */
-    color: #9c8d7e;
+    color: #80a0ff;
   }
 
   .social-links {
@@ -268,21 +267,21 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .row-label {
-    color: #727169;
+    color: #a1cd5e;
     min-width: 60px;
   }
 
   .row-text {
-    color: #727169;
+    color: #a1cd5e;
   }
 
   .row-action {
-    color: #727169;
+    color: #a1cd5e;
     font-size: 0.85rem;
   }
 
   .clickable {
-    color: #9c8d7e;
+    color: #80a0ff;
     text-decoration: none;
     transition: color 0.2s;
     cursor: pointer;
@@ -294,15 +293,13 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .clickable:hover {
-    color: #c5c9c5;
+    color: #a1cd5e;
     text-decoration: underline;
   }
 
   .floating-console {
-    /* background: #342331; */
-    background: #1d1c19;
-    /* border: 2px solid #DA9F5F; */
-    border: 2px solid #9c8d7e;
+    background: #323437;
+    border: 2px solid #a1cd5e;
     width: 100%;
     max-width: 750px;
     margin: 0 auto;
@@ -311,14 +308,13 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .console-border-top {
-    /* background: rgba(218, 159, 95, 0.1); */
-    background: rgba(139, 164, 176, 0.1);
-    padding: 0.6rem 1.2rem; /* border-bottom: 2px solid #DA9F5F; */
-    border-bottom: 2px solid #9c8d7e;
+    background: rgba(50, 52, 55, 0.3);
+    padding: 0.6rem 1.2rem;
+    border-bottom: 2px solid #323437;
   }
   .console-label {
-    font-size: 0.7rem; /* color: #DA9F5F; */
-    color: #9c8d7e;
+    font-size: 0.7rem;
+    color: #a1cd5e;
     letter-spacing: 1px;
     font-weight: bold;
   }
@@ -327,8 +323,8 @@ import Layout from "../layouts/Layout.astro";
     height: 380px;
     padding: 1.5rem;
     overflow-y: auto;
-    font-size: 0.95rem; /* color: #FFE4AF; */
-    color: #c5c9c5;
+    font-size: 0.95rem;
+    color: #a1cd5e;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -350,8 +346,8 @@ import Layout from "../layouts/Layout.astro";
   #terminal-input {
     background: transparent;
     border: none;
-    outline: none; /* color: #FFE4AF; */
-    color: #c5c9c5;
+    outline: none;
+    color: #a1cd5e;
     font-family: inherit;
     font-size: 1rem;
     width: 100%;
@@ -363,7 +359,7 @@ import Layout from "../layouts/Layout.astro";
     left: 0;
     width: 1ch;
     height: 1.2rem;
-    background: #c5c9c5;
+    background: #a1cd5e;
     animation: blink 1s step-end infinite;
     transform: translateX(calc(var(--char-count, 0) * 1ch));
   }
@@ -379,27 +375,22 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .prompt {
-    /* color: #EC753A; */
-    color: #9c8d7e;
+    color: #a1cd5e;
   }
   .user-input {
-    /* color: #EC753A; */
-    color: #9c8d7e;
+    color: #a1cd5e;
   }
   .cmd-response {
-    /* color: #DA9F5F; */
-    color: #9c8d7e;
+    color: #a1cd5e;
     line-height: 1.6;
   }
   .sys-msg {
-    /* color: #DA9F5F; */
-    color: #9c8d7e;
+    color: #a1cd5e;
     font-style: italic;
     opacity: 0.8;
   }
   .term-link {
-    /* color: #FFE4AF; */
-    color: #c5c9c5;
+    color: #a1cd5e;
     text-decoration: underline;
     text-underline-offset: 4px;
   }

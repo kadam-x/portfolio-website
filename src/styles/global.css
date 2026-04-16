@@ -19,9 +19,9 @@
 /* Keep background colors */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  background-color: #0f0f0d !important;
+  background-color: #030210 !important;
 }
 
 html {
-  background-color: #0f0f0d;
+  background-color: #030210;
 }
