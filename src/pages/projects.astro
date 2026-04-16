@@ -54,36 +54,28 @@ const projects = [
   },
   {
     id: "project-4",
-    title: "Learning Projects",
+    title: "Sales Data Analysis",
     description:
-      "A collection of smaller projects, experiments, and learning exercises.",
-    techStack: [{ name: "Various", color: "#a1cd5e" }],
-    links: [],
-    isLearning: true,
-    miniProjects: [
-      {
-        title: "Sales Data Analysis",
-        description:
-          "Analyzed retail sales data using Python and pandas to uncover trends in seasonality, customer behavior, and product performance.",
-        link: "https://github.com/snezzz0/sales-data-analysis",
-      },
-      {
-        title: "Arbitrage Bot",
-        description:
-          "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
-        link: "https://github.com/snezzz0/crypto-arbitrage-test",
-      },
-      {
-        title: "Churn Prediction",
-        description:
-          "End-to-end customer churn prediction pipeline using SQL Server, Python, and Power BI to flag at-risk customers.",
-        link: "https://github.com/snezzz0/churn-pred",
-      },
-      {
-        title: "UI Component",
-        description: "A standalone card component with hover effects.",
-        link: "https://github.com/snezzz0/real-estate-ad-churn",
-      },
+      "Analyzed retail sales data using Python and pandas to uncover trends in seasonality, customer behavior, and product performance.",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "Pandas", color: "#150458" },
+    ],
+    links: [
+      { label: "View Code", url: "https://github.com/snezzz0/sales-data-analysis" },
+    ],
+  },
+  {
+    id: "project-5",
+    title: "Arbitrage Bot",
+    description:
+      "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "API", color: "#F7B731" },
+    ],
+    links: [
+      { label: "View Code", url: "https://github.com/snezzz0/crypto-arbitrage-test" },
     ],
   },
   // { id: 'project-5', title: 'Project Five', description: 'Description for project 5.', techStack: [], links: [] },
@@ -127,25 +119,6 @@ const projects = [
               )}
 
               <p class="project-description">{project.description}</p>
-
-              {project.isLearning && project.miniProjects && (
-                <div class="mini-projects">
-                  {project.miniProjects.map((mp) => (
-                    <a
-                      href={mp.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="mini-project-item"
-                    >
-                      <div class="mini-project-content">
-                        <span class="mini-title">{mp.title}</span>
-                        <span class="mini-description">{mp.description}</span>
-                      </div>
-                      <span class="mini-arrow">→</span>
-                    </a>
-                  ))}
-                </div>
-              )}
 
               <div class="card-footer">
                 <div class="tech-stack">
@@ -206,8 +179,8 @@ const projects = [
         "project-2": "Fully typed with TypeScript. No 'any' allowed here!",
         "project-3":
           "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
-        "project-4":
-          "What I cannot create, I do not understand - Richard Feynman",
+        "project-4": "Analyzed retail sales data using Python and pandas to uncover trends in seasonality.",
+        "project-5": "A crypto arbitrage bot using CoinGecko and Binance APIs.",
       };
 
       const ALL_ANIMATIONS = [...EMOTES, ...STATES];
@@ -264,7 +237,7 @@ const projects = [
   }
 
   .back-link:hover {
-    color: #a1cd5e;
+    color: #ff5454;
   }
 
   .projects-sidebar {
@@ -293,8 +266,8 @@ const projects = [
   }
 
   .project-card {
-    background: #323437;
-    border: 3px solid #323437;
+    background: #0c0e14;
+    border: 3px solid #0c0e14;
     padding: 2rem 1.5rem;
     color: inherit;
     position: relative;
@@ -307,7 +280,7 @@ const projects = [
   }
 
   .project-card:hover {
-    border-color: #a1cd5e;
+    border-color: #80a0ff;
   }
 
   .card-header {
@@ -321,12 +294,12 @@ const projects = [
     width: 100%;
     height: 120px;
     background: #030210;
-    border: 2px dashed #323437;
+    border: 2px dashed #0c0e14;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    color: #a1cd5e;
+    color: #626467;
     font-family: "Fira Code", monospace;
     font-size: 0.8rem;
     text-transform: uppercase;
@@ -335,13 +308,13 @@ const projects = [
 
   .card-header h2 {
     font-size: 1.5rem;
-    color: #a1cd5e;
+    color: #80a0ff;
     margin: 0;
     line-height: 1.3;
   }
 
   .project-description {
-    color: #a1cd5e;
+    color: #bdbdbd;
     font-size: 1rem;
     line-height: 1.6;
     margin: 0 0 1rem 0;
@@ -361,8 +334,8 @@ const projects = [
   .link-btn {
     font-size: 0.75rem;
     padding: 0.4rem 0.7rem;
-    border: 1px solid #a1cd5e;
-    color: #a1cd5e;
+    border: 1px solid #80a0ff;
+    color: #80a0ff;
     text-decoration: none;
     font-family: "Fira Code", monospace;
     transition: all 0.2s;
@@ -370,8 +343,8 @@ const projects = [
 
   .info-btn-ui {
     background: transparent;
-    border: 2px solid #323437;
-    color: #a1cd5e;
+    border: 2px solid #0c0e14;
+    color: #626467;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -387,67 +360,17 @@ const projects = [
   }
 
   .info-btn-ui:hover {
-    background: #323437;
-    border-color: #a1cd5e;
-    color: #a1cd5e;
+    background: #0c0e14;
+    border-color: #ff5454;
+    color: #ff5454;
   }
 
   .project-description {
-    color: #a1cd5e;
+    color: #bdbdbd;
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0 0 1rem 0;
     flex-grow: 0;
-  }
-
-  .mini-projects {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-    border-top: 1px solid #323437;
-    border-bottom: 1px solid #323437;
-    padding: 0.6rem 0;
-  }
-
-  .mini-project-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    text-decoration: none;
-    color: #a1cd5e;
-    font-size: 0.8rem;
-    padding: 0.6rem 0;
-    transition: color 0.2s;
-    gap: 0.5rem;
-  }
-
-  .mini-project-item:hover {
-    color: #a1cd5e;
-  }
-
-  .mini-project-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    flex: 1;
-  }
-
-  .mini-title {
-    font-family: "Fira Code", monospace;
-    color: #a1cd5e;
-  }
-
-  .mini-description {
-    font-size: 0.75rem;
-    line-height: 1.4;
-    color: #a1cd5e;
-    opacity: 0.7;
-  }
-
-  .mini-arrow {
-    font-size: 0.9rem;
-    flex-shrink: 0;
   }
 
   .card-footer {
@@ -482,15 +405,15 @@ const projects = [
   .link-btn {
     font-size: 0.7rem;
     padding: 0.35rem 0.6rem;
-    border: 1px solid #a1cd5e;
-    color: #a1cd5e;
+    border: 1px solid #80a0ff;
+    color: #80a0ff;
     text-decoration: none;
     font-family: "Fira Code", monospace;
     transition: all 0.2s;
   }
 
   .link-btn:hover {
-    background: #a1cd5e;
+    background: #80a0ff;
     color: #030210;
   }
 
