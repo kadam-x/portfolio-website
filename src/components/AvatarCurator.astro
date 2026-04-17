@@ -61,7 +61,14 @@
     }, 180);
   }
 
+  function stopBlinking() {
+    clearInterval(blinkInterval);
+    clearTimeout(blinkInterval);
+    blinkInterval = null;
+  }
+
   function startBlinking() {
+    stopBlinking();
     blinkInterval = setInterval(() => {
       triggerBlink();
       const nextBlink = 2500 + Math.random() * 3000;
@@ -87,6 +94,7 @@
   }
 
   function init() {
+    stopBlinking();
     startBlinking();
     window.addEventListener("robot-emote", onRobotEmote);
   }
