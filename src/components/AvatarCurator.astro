@@ -1,0 +1,180 @@
+<div id="avatar-container">
+  <div id="avatar-bubble" class="hidden">
+    <div class="bubble-content"></div>
+    <div class="bubble-arrow"></div>
+  </div>
+  <div id="avatar-wrap">
+    <img id="avatar-base" src="/avatar/idle.png" alt="avatar" />
+    <img id="avatar-blink" src="/avatar/eyes-closed.png" alt="" aria-hidden="true" />
+    <img id="avatar-talking" src="/avatar/talking.png" alt="" aria-hidden="true" />
+  </div>
+</div>
+
+<script>
+  let bubbleTimeout = null;
+  let currentTypeId = 0;
+  let blinkInterval = null;
+  let isEmoting = false;
+
+  function showDialogue(text) {
+    const bubble = document.getElementById("avatar-bubble");
+    const content = bubble?.querySelector(".bubble-content");
+    if (!bubble || !content) return;
+
+    clearTimeout(bubbleTimeout);
+    bubble.classList.remove("hidden");
+    content.textContent = "";
+
+    const typeId = ++currentTypeId;
+    let i = 0;
+
+    function type() {
+      if (typeId !== currentTypeId) return;
+      if (i < text.length) {
+        content.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 7);
+      }
+    }
+    type();
+
+    bubbleTimeout = setTimeout(() => {
+      if (typeId === currentTypeId) bubble.classList.add("hidden");
+    }, 5500);
+  }
+
+  function setExpression(name) {
+    const blink = document.getElementById("avatar-blink");
+    const talking = document.getElementById("avatar-talking");
+    if (!blink || !talking) return;
+    blink.classList.remove("visible");
+    talking.classList.remove("visible");
+    if (name === "blink") blink.classList.add("visible");
+    if (name === "talking") talking.classList.add("visible");
+  }
+
+  function triggerBlink() {
+    if (isEmoting) return;
+    setExpression("blink");
+    setTimeout(() => {
+      if (!isEmoting) setExpression("none");
+    }, 180);
+  }
+
+  function startBlinking() {
+    blinkInterval = setInterval(() => {
+      triggerBlink();
+      const nextBlink = 2500 + Math.random() * 3000;
+      clearInterval(blinkInterval);
+      blinkInterval = setTimeout(startBlinking, nextBlink);
+    }, 3000 + Math.random() * 2000);
+  }
+
+  function onRobotEmote(e) {
+    const { name, text, expression } = e.detail;
+    const wrap = document.getElementById("avatar-wrap");
+    if (!wrap) return;
+
+    if (text) showDialogue(text);
+
+    isEmoting = true;
+    setExpression(expression === "talking" ? "talking" : "none");
+
+    setTimeout(() => {
+      setExpression("none");
+      isEmoting = false;
+    }, 1200);
+  }
+
+  function init() {
+    startBlinking();
+    window.addEventListener("robot-emote", onRobotEmote);
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>
+
+<style>
+  #avatar-container {
+    position: fixed;
+    bottom: -0.5rem;
+    left: -1rem;
+    width: 240px;
+    height: 300px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #avatar-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+    height: 240px;
+    animation: float 3.5s ease-in-out infinite;
+  }
+
+  #avatar-base {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #avatar-blink,
+  #avatar-talking {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.05s;
+  }
+
+  #avatar-blink.visible,
+  #avatar-talking.visible {
+    opacity: 1;
+  }
+
+  #avatar-bubble {
+    position: absolute;
+    bottom: 60px;
+    left: 260px;
+    background: transparent;
+    border: 3px solid #0c0e14;
+    padding: 1rem 1.5rem;
+    max-width: 280px;
+    min-width: 220px;
+    color: #a1cd5e;
+    font-family: "Fira Code", monospace;
+    font-size: 0.85rem;
+    z-index: 20;
+    transition: opacity 0.3s;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  #avatar-bubble.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bubble-arrow {
+    position: absolute;
+    bottom: 20px;
+    left: -13px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #0c0e14;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-8px) rotate(0.5deg); }
+    66% { transform: translateY(-4px) rotate(-0.5deg); }
+  }
+</style>

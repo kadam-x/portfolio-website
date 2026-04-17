@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import RobotCurator from "../components/RobotCurator.astro";
+import AvatarCurator from "../components/AvatarCurator.astro"
 
 const projects = [
   {
@@ -86,7 +86,7 @@ const projects = [
 ---
 
 <Layout title="Kovacs Adam :: Projects" backgroundColor="#030210">
-  <RobotCurator />
+  <AvatarCurator />
 
   <main class="projects-container">
     <div class="nav-buttons">
@@ -172,7 +172,7 @@ const projects = [
 
       const EMOTES = ["Jump", "Yes", "No", "Wave", "ThumbsUp"];
       const STATES = ["Dance"];
-      const EXPRESSIONS = ["Surprised", "Sad"];
+      const EXPRESSIONS = ["talking"];
       const PROJECT_DIALOGUES = {
         "project-1":
           "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
@@ -261,7 +261,7 @@ const projects = [
     gap: 1.75rem;
     padding-top: 3rem;
     padding-bottom: 3rem;
-    padding-left: 2rem;
+    padding-left: 16rem;
     width: max-content;
   }
 
