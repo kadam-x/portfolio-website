@@ -6,12 +6,12 @@ const backgroundColor = "#030210";
 ---
 
 <Layout title={title} backgroundColor={backgroundColor}>
-  <main class="about-container">
-    <a href="/" class="back-link">
-      &lt; take me home
-    </a>
+  <main class="hero-container">
     <div class="page-box">
       <div class="box-header">[*] ABOUT_ME</div>
+      <nav class="nav-links">
+        <a href="/" class="nav-link">&lt; take me home</a>
+      </nav>
       <div class="page-content">
         <h1>Self-taught Dev | Finance & CS Student</h1>
 
@@ -29,46 +29,59 @@ const backgroundColor = "#030210";
 </Layout>
 
 <style>
-  .about-container {
+  .hero-container {
     min-height: 100vh;
-    padding: 2rem 1rem;
-    max-width: 900px;
-    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    color: #cde6a8;
-    font-size: 16px;
-    margin-bottom: 1.5rem;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  .back-link:hover {
-    color: #ff0000;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .page-box {
-    min-width: 700px;
+    display: flex;
+    flex-direction: column;
+    background: #d8d9ed;
     border: 1px solid #000000;
     border-top: 2px solid #000000;
-    padding: 0;
-    background: #d8d9ed;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    width: 100%;
+    width: 750px;
+    min-height: 100vh;
+    height: 100vh;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .box-header {
     background: #cde6a8;
     color: #0c0e14;
     padding: 0.5rem 1rem;
+    width: 100%;
+    border-bottom: 1px solid #000000;
     font-size: 14px;
     text-align: left;
+  }
+
+  .nav-links {
+    display: flex;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    color: #0000FF;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+
+  .nav-link:hover {
+    color: #ff0000;
+  }
+
+  .page-content {
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
   .page-box h1 {
@@ -77,11 +90,7 @@ const backgroundColor = "#030210";
     margin: 0;
     text-align: left;
     line-height: 1.5;
-    padding: 1rem;
-  }
-
-  .page-content {
-    padding: 1rem;
+    padding-bottom: 1rem;
   }
 
   .page-box p {
@@ -97,11 +106,10 @@ const backgroundColor = "#030210";
   }
 
   @media (max-width: 640px) {
-    .about-container {
-      padding: 2rem 1rem;
-    }
     .page-box {
-      padding: 1rem;
+      width: 100%;
+      left: 0;
+      transform: none;
     }
   }
 </style>

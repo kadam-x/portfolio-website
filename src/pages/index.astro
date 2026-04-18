@@ -4,52 +4,67 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="kovacsadam.dev" backgroundColor="#030210">
   <main class="hero-container">
-    <div class="center-box">
-      <div class="menu-box" id="welcome-header">
-        <div class="menu-header">[*] INDEX</div>
-        <h1 class="site-title">kovacsadam.dev</h1>
-        <nav class="nav-links">
-          <a href="/about" class="nav-link">&gt; about</a>
-          <a href="/projects" class="nav-link">&gt; my projects</a>
-          <a href="/contact" class="nav-link">&gt; contact me</a>
-        </nav>
+    <div class="menu-box" id="welcome-header">
+      <div class="menu-header">[*] INDEX</div>
+      <nav class="nav-links">
+        <a href="/about" class="nav-link">&gt; about</a>
+        <a href="/projects" class="nav-link">&gt; my projects</a>
+      </nav>
+      <div class="contact-section">
+        <div class="contact-links">
+          <div class="email-row">
+            <span id="copy-email" class="contact-link">kadamx [at] proton [dot] com</span>
+            <span id="copy-hint" class="copy-hint">(click to copy)</span>
+          </div>
+          <a href="https://github.com/kadam-x" target="_blank" class="contact-link">github @kadam-x</a>
+          <a href="https://www.linkedin.com/in/kvcs-adam-s/" target="_blank" class="contact-link">linkedin @Adam Kovacs</a>
+          <a href="https://leetcode.com/u/kadam-x/" target="_blank" class="contact-link">leetcode @kadam-x</a>
+        </div>
       </div>
     </div>
   </main>
 
-  
+  <script>
+    const emailBtn = document.getElementById("copy-email");
+    const copyHint = document.getElementById("copy-hint");
+
+    if (emailBtn && copyHint) {
+      emailBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText("kadamx@proton.com");
+          copyHint.textContent = "(copied!)";
+          setTimeout(() => {
+            copyHint.textContent = "(click to copy)";
+          }, 2000);
+        } catch (err) {
+          console.error("Failed to copy:", err);
+        }
+      });
+    }
+  </script>
 
   <style>
     .hero-container {
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 2rem;
       position: relative;
       z-index: 1;
-    }
-
-    .center-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-      position: relative;
     }
 
     .menu-box {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 2rem;
       background: #d8d9ed;
       border: 1px solid #000000;
       border-top: 2px solid #000000;
-      padding-bottom: 1rem;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 16px;
-      min-width: 500px;
+      width: 350px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .menu-header {
@@ -62,39 +77,65 @@ import Layout from "../layouts/Layout.astro";
       text-align: left;
     }
 
-    .site-title {
-      font-size: 1.4rem;
-      color: #000000;
-      margin: 0;
-      padding: 0 1rem;
-    }
-
     .nav-links {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      padding: 0 1rem 2rem;
+      gap: 1rem;
+      padding: 1rem;
       width: 100%;
+      justify-content: center;
     }
 
     .nav-link {
       color: #0000FF;
       text-decoration: underline;
-      padding: 0.25rem 0.5rem;
+      padding: 0.5rem 1rem;
       display: inline-block;
-      font-size: 16px;
+      font-size: 24px;
     }
 
     .nav-link:hover {
-      background: transparent;
       color: #ff0000;
     }
 
+    .contact-section {
+      border-top: 1px solid #000000;
+      padding: 1rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .email-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-link {
+      color: #0000FF;
+      text-decoration: underline;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .contact-link:hover {
+      color: #ff0000;
+    }
+
+    .copy-hint {
+      font-size: 12px;
+      color: #666;
+      margin-left: 0.5rem;
+    }
+
     @media (max-width: 640px) {
-      .center-box {
-        min-width: unset;
+      .menu-box {
         width: 100%;
-        padding: 2rem;
+        left: 0;
+        transform: none;
       }
     }
   </style>
