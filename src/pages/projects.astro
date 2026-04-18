@@ -240,17 +240,20 @@ const projects = [
   .projects-grid {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 1rem;
     justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 1rem;
   }
 
   .project-card {
     border: 1px solid #000000;
     border-top: 2px solid #000000;
     padding: 0;
-    width: 420px;
-    min-height: 550px;
+    width: 315px;
+    min-height: 650px;
+    flex-shrink: 0;
     background: #d8d9ed;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -338,11 +341,11 @@ const projects = [
 
   @media (max-width: 768px) {
     .projects-grid {
-      flex-direction: column;
-      width: 100%;
+      flex-wrap: nowrap;
+      overflow-x: auto;
     }
     .project-card {
-      width: 100%;
+      width: 280px;
     }
   }
 </style>
