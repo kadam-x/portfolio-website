@@ -90,9 +90,7 @@ const projects = [
 
   <main class="projects-container">
     <a href="/" class="back-link" id="homeLink">
-      <span class="arrow">[<</span>
-      <span>take me home</span>
-      <span class="arrow">]</span>
+      &lt; take me home
     </a>
 
     <div class="projects-sidebar active">
@@ -218,7 +216,7 @@ const projects = [
     position: relative;
     z-index: 10;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 4rem 2rem;
     padding-left: 15rem;
     display: flex;
     flex-direction: column;
@@ -228,20 +226,15 @@ const projects = [
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #a1cd5e;
-    text-decoration: none;
+    color: #cde6a8;
+    text-decoration: underline;
     font-size: 16px;
     margin-bottom: 1.5rem;
     font-family: Arial, Helvetica, sans-serif;
   }
 
   .back-link:hover {
-    color: #ff5454;
-  }
-
-  .arrow {
-    color: #a1cd5e;
+    color: #ff0000;
   }
 
   .projects-grid {
@@ -257,21 +250,18 @@ const projects = [
     border-top: 2px solid #000000;
     padding: 0;
     width: 420px;
-    min-height: 420px;
+    min-height: 550px;
     background: #d8d9ed;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-  }
-
-  .project-card:hover {
-    background: #d0d1dc;
+    display: flex;
+    flex-direction: column;
   }
 
   .card-header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 0.75rem;
     padding: 0.5rem 1rem;
     background: #cde6a8;
     gap: 0.5rem;
@@ -287,6 +277,21 @@ const projects = [
     color: #0c0e14;
     margin: 0;
     font-weight: normal;
+    flex-grow: 1;
+  }
+
+  .info-btn-ui {
+    background: none;
+    border: none;
+    color: #0000FF;
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+.info-btn-ui:hover {
+    color: #ff0000;
   }
 
   .project-description {
@@ -295,6 +300,7 @@ const projects = [
     line-height: 1.5;
     margin: 0;
     padding: 1rem;
+    flex-grow: 1;
   }
 
 .tech-tag {
@@ -312,6 +318,14 @@ const projects = [
     text-decoration: underline;
   }
 
+  .card-footer {
+    padding: 1rem;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
   .card-links {
     display: flex;
     gap: 0.5rem;
@@ -319,7 +333,7 @@ const projects = [
   }
 
   .link-btn:hover {
-    color: #0000aa;
+    color: #ff0000;
   }
 
   @media (max-width: 768px) {

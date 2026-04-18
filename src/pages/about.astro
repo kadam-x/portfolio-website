@@ -8,9 +8,7 @@ const backgroundColor = "#030210";
 <Layout title={title} backgroundColor={backgroundColor}>
   <main class="about-container">
     <a href="/" class="back-link">
-      <span class="arrow">[<</span>
-      <span>take me home</span>
-      <span class="arrow">]</span>
+      &lt; take me home
     </a>
     <div class="page-box">
       <div class="box-header">[*] ABOUT_ME</div>
@@ -38,26 +36,20 @@ const backgroundColor = "#030210";
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #a1cd5e;
-    text-decoration: none;
+    color: #cde6a8;
     font-size: 16px;
     margin-bottom: 1.5rem;
     font-family: Arial, Helvetica, sans-serif;
   }
 
   .back-link:hover {
-    color: #ff5454;
-  }
-
-  .arrow {
-    color: #a1cd5e;
+    color: #ff0000;
   }
 
   .page-box {

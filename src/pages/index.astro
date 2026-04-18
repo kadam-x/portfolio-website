@@ -9,15 +9,9 @@ import Layout from "../layouts/Layout.astro";
         <div class="menu-header">[*] INDEX</div>
         <h1 class="site-title">kovacsadam.dev</h1>
         <nav class="nav-links">
-          <a href="/about" class="nav-link">
-            <span class="link-prefix">&gt;</span><span class="link-text">about</span>
-          </a>
-          <a href="/projects" class="nav-link">
-            <span class="link-prefix">&gt;</span><span class="link-text">my projects</span>
-          </a>
-          <a href="/contact" class="nav-link">
-            <span class="link-prefix">&gt;</span><span class="link-text">contact me</span>
-          </a>
+          <a href="/about" class="nav-link">&gt; about</a>
+          <a href="/projects" class="nav-link">&gt; my projects</a>
+          <a href="/contact" class="nav-link">&gt; contact me</a>
         </nav>
       </div>
     </div>
@@ -84,26 +78,16 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .nav-link {
-      color: #000000;
+      color: #0000FF;
+      text-decoration: underline;
       padding: 0.25rem 0.5rem;
       display: inline-block;
       font-size: 16px;
     }
 
     .nav-link:hover {
-      background: #cde6a8;
-      color: #000000;
-    }
-
-    .link-prefix {
-      color: #0000FF;
-      margin-right: 0.25rem;
-      font-weight: bold;
-    }
-
-    .link-text {
-      color: #0000FF;
-      text-decoration: underline;
+      background: transparent;
+      color: #ff0000;
     }
 
     @media (max-width: 640px) {

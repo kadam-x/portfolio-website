@@ -5,9 +5,7 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="Kovacs Adam :: Contact" backgroundColor="#030210">
   <main class="contact-container" id="page-wrapper">
     <a href="/" class="back-link">
-      <span class="arrow">[<</span>
-      <span>take me home</span>
-      <span class="arrow">]</span>
+      &lt; take me home
     </a>
 
     <div class="contact-box">
@@ -72,26 +70,20 @@ import Layout from "../layouts/Layout.astro";
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #a1cd5e;
-    text-decoration: none;
+    color: #cde6a8;
     font-size: 16px;
     margin-bottom: 1.5rem;
     font-family: Arial, Helvetica, sans-serif;
   }
 
   .back-link:hover {
-    color: #ff5454;
-  }
-
-  .arrow {
-    color: #a1cd5e;
+    color: #ff0000;
   }
 
   .contact-box {
@@ -155,7 +147,7 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .clickable:hover {
-    color: #0000aa;
+    color: #ff0000;
   }
 
   .copy-hint {
