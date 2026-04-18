@@ -25,3 +25,24 @@
 html {
   background-color: #030210;
 }
+
+/* Pixel borders */
+.pixel-box {
+  border: 4px solid #a1cd5e;
+  box-shadow:
+    -4px 0 0 0 #a1cd5e,
+    4px 0 0 0 #a1cd5e,
+    0 -4px 0 0 #a1cd5e,
+    0 4px 0 0 #a1cd5e;
+}
+
+/* Pixel button base */
+.pixel-btn {
+  font-family: "Press Start 2P", monospace;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+}

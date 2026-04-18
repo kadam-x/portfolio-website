@@ -4,78 +4,42 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Kovacs Adam :: Contact" backgroundColor="#030210">
   <main class="contact-container" id="page-wrapper">
-    <div class="terminal-nav">
-      <a href="/" class="back-link">
-        <span class="arrow">←</span>
-        <span>take me home</span>
-      </a>
-    </div>
+    <a href="/" class="back-link">
+      <span class="arrow">[<</span>
+      <span>take me home</span>
+      <span class="arrow">]</span>
+    </a>
 
     <div class="contact-box">
+      <div class="box-header">[*] CONTACT_MENU</div>
       <div class="social-links">
         <div class="contact-row">
-          <span class="row-label">email</span>
-          <button
-            id="copy-email"
-            class="clickable"
-            data-email="kadamx@proton.com"
-          >
+          <span class="row-label">[01]</span>
+          <span class="row-text">email</span>
+          <button id="copy-email" class="clickable" data-email="kadamx@proton.com">
             kadamx [at] proton [dot] com
           </button>
-          <span class="row-action" id="copy-hint">(click to copy)</span>
         </div>
         <div class="contact-row">
-          <span class="row-label">github</span>
-          <span class="row-text">@</span>
-          <a
-            href="https://github.com/kadam-x"
-            target="_blank"
-            class="clickable"
-          >
-            kadam-x
+          <span class="row-label">[02]</span>
+          <span class="row-text">github</span>
+          <a href="https://github.com/kadam-x" target="_blank" class="clickable">
+            @kadam-x
           </a>
         </div>
         <div class="contact-row">
-          <span class="row-label">linkedin</span>
-          <span class="row-text">@</span>
-          <a
-            href="https://www.linkedin.com/in/kvcs-adam-s/"
-            target="_blank"
-            class="clickable"
-          >
-            Adam Kovacs
+          <span class="row-label">[03]</span>
+          <span class="row-text">linkedin</span>
+          <a href="https://www.linkedin.com/in/kvcs-adam-s/" target="_blank" class="clickable">
+            @Adam Kovacs
           </a>
         </div>
         <div class="contact-row">
-          <span class="row-label">leetcode</span>
-          <span class="row-text">@</span>
-          <a
-            href="https://leetcode.com/u/kadam-x/"
-            target="_blank"
-            class="clickable"
-          >
-            kadam-x
+          <span class="row-label">[04]</span>
+          <span class="row-text">leetcode</span>
+          <a href="https://leetcode.com/u/kadam-x/" target="_blank" class="clickable">
+            @kadam-x
           </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="floating-console" id="main-console">
-      <div class="console-border-top">
-        <span class="console-label">TERMINAL_V2.0.exp</span>
-      </div>
-      <div id="terminal-history"></div>
-      <div class="input-line">
-        <span class="prompt">></span>
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="terminal-input"
-            autocomplete="off"
-            spellcheck="false"
-            autofocus
-          />
-          <span id="custom-cursor"></span>
         </div>
       </div>
     </div>
@@ -231,70 +195,83 @@ import Layout from "../layouts/Layout.astro";
   .contact-container {
     min-height: 100vh;
     padding: 4rem 2rem;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
-    font-family: "Fira Code", monospace;
   }
 
-  .terminal-nav {
-    margin-bottom: 5rem;
-  }
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     color: #a1cd5e;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.7rem;
+    margin-bottom: 3rem;
   }
   .back-link:hover {
     color: #ff5454;
+  }
+  .arrow {
+    color: #a1cd5e;
+  }
+
+  .contact-box {
+    border: 4px solid #a1cd5e;
+    padding: 0;
+    background: #030210;
+  }
+
+  .box-header {
+    background: #a1cd5e;
+    color: #030210;
+    padding: 0.75rem 1rem;
+    font-size: 0.7rem;
   }
 
   .social-links {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 6rem;
-    align-items: center;
+    gap: 0;
   }
 
   .contact-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1rem;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #323437;
+  }
+
+  .contact-row:last-child {
+    border-bottom: none;
   }
 
   .row-label {
-    color: #82aaff;
-    min-width: 60px;
+    color: #a1cd5e;
+    min-width: 50px;
+    font-size: 0.7rem;
   }
 
   .row-text {
-    color: #82aaff;
-  }
-
-  .row-action {
-    color: #b2b2b2;
-    font-size: 0.85rem;
+    color: #80a0ff;
+    min-width: 70px;
+    font-size: 0.7rem;
   }
 
   .clickable {
     color: #b2b2b2;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.15s;
     cursor: pointer;
     background: none;
     border: none;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 0.7rem;
     padding: 0;
   }
 
   .clickable:hover {
-    color: #82aaff;
-    text-decoration: underline;
+    color: #80a0ff;
   }
 
   .floating-console {

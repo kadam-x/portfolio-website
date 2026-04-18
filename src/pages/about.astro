@@ -1,19 +1,81 @@
 ---
-import MarkdownLayout from "../layouts/MarkdownLayout.astro";
+import Layout from "../layouts/Layout.astro";
 
 const title = "Kovacs Adam :: About";
 const backgroundColor = "#030210";
 ---
 
-<MarkdownLayout title={title} backgroundColor={backgroundColor}>
-  <h1>Self-taught Dev | Finance & CS Student</h1>
+<Layout title={title} backgroundColor={backgroundColor}>
+  <main class="about-container">
+    <a href="/" class="back-link">
+      <span class="arrow">[<</span>
+      <span>take me home</span>
+      <span class="arrow">]</span>
+    </a>
+    <div class="page-box">
+      <h1>Self-taught Dev | Finance & CS Student</h1>
 
-  <p>My name is Kovacs Adam and I am a 24-year-old finance and semi-CS student, but most importantly a self-taught developer. I enjoy simple and clean but blazingly fast design. Always had a systems thinking wanting to optimize to the last nanosecond. I truly believe in order to understand something you first have to struggle by building it from scratch. Once I finish my BSc I'll be doing a my masters in CS, specializing in low latency computing. My main interest lies in quantitative research, systematic trading, and turning financial theory into code that can be tested, measured, and broken. I am currently learning C++ and Rust, with a focus on performance, low-level control, and writing faster research tooling. This site is my workspace made public — small experiments, side projects, notes, and ideas that reflect what I am currently curious about.</p>
+      <p>My name is Kovacs Adam and I am a 24-year-old finance and semi-CS student, but most importantly a self-taught developer. I enjoy simple and clean but blazingly fast design. Always had a systems thinking wanting to optimize to the last nanosecond. I truly believe in order to understand something you first have to struggle by building it from scratch. Once I finish my BSc I'll be doing a my masters in CS, specializing in low latency computing. My main interest lies in quantitative research, systematic trading, and turning financial theory into code that can be tested, measured, and broken. I am currently learning C++ and Rust, with a focus on performance, low-level control, and writing faster research tooling. This site is my workspace made public — small experiments, side projects, notes, and ideas that reflect what I am currently curious about.</p>
 
-  <p>Finance and semi-CS student, mostly self-taught. I like simple, clean things that are also fast, which I sometimes tend to take that too seriously.</p>
-  <p>My main obsession is the gap between financial theory and what actually happens when you run it. I build things from scratch to understand them, break them to trust them. Currently that means C++ and Rust, with a focus on low-level control and writing research tooling that doesn't make me wait.</p>
-  <p>Once I finish my BSc I'm doing a master's in CS — probably specializing in whatever "make it faster" means at the postgraduate level.</p>
-  <p>This site is my public workspace: experiments, side projects, notes, and ideas I'm currently curious about. Nothing polished, everything real.</p>
+      <p>Finance and semi-CS student, mostly self-taught. I like simple, clean things that are also fast, which I sometimes tend to take that too seriously.</p>
+      <p>My main obsession is the gap between financial theory and what actually happens when you run it. I build things from scratch to understand them, break them to trust them. Currently that means C++ and Rust, with a focus on low-level control and writing research tooling that doesn't make me wait.</p>
+      <p>Once I finish my BSc I'm doing a master's in CS — probably specializing in whatever "make it faster" means at the postgraduate level.</p>
+      <p>This site is my public workspace: experiments, side projects, notes, and ideas I'm currently curious about. Nothing polished, everything real.</p>
 
-  <p>This website took inspiration from one of my favorite colorschemes : <a href="https://github.com/bluz71/vim-moonfly-colors">MOONFLY</a></p>
-</MarkdownLayout>
+      <p>This website took inspiration from one of my favorite colorschemes : <a href="https://github.com/bluz71/vim-moonfly-colors">MOONFLY</a></p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .about-container {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #a1cd5e;
+    text-decoration: none;
+    font-size: 0.7rem;
+    margin-bottom: 3rem;
+  }
+  .back-link:hover {
+    color: #ff5454;
+  }
+  .arrow {
+    color: #a1cd5e;
+  }
+  .page-box {
+    border: 4px solid #a1cd5e;
+    padding: 2rem;
+    background: #030210;
+  }
+  .page-box h1 {
+    font-size: 1.2rem;
+    color: #ff5454;
+    margin: 0 0 2rem 0;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .page-box p {
+    font-size: 0.7rem;
+    line-height: 2;
+    color: #b2b2b2;
+    margin-bottom: 1.5rem;
+  }
+  .page-box a {
+    color: #80a0ff;
+  }
+  @media (max-width: 640px) {
+    .about-container {
+      padding: 2rem 1rem;
+    }
+    .page-box {
+      padding: 1rem;
+    }
+  }
+</style>

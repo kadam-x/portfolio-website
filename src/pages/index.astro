@@ -18,17 +18,20 @@ import Layout from "../layouts/Layout.astro";
 
   <main class="hero-container">
     <div class="center-box">
-      <div class="welcome-header" id="welcome-header">
-        <span class="bracket">[</span>
-        <span class="welcome-text">kovacsadam.dev</span>
-        <span class="bracket">]</span>
+      <div class="menu-box" id="welcome-header">
+        <h1 class="site-title">{"{"} kovacsadam.dev {"}"}</h1>
+        <nav class="nav-links">
+          <a href="/about" class="nav-link">
+            <span class="link-prefix">&gt;</span> about
+          </a>
+          <a href="/projects" class="nav-link">
+            <span class="link-prefix">&gt;</span> my projects
+          </a>
+          <a href="/contact" class="nav-link">
+            <span class="link-prefix">&gt;</span> contact me
+          </a>
+        </nav>
       </div>
-
-      <nav class="nav-links">
-        <a href="/about" class="nav-link">about</a>
-        <a href="/projects" class="nav-link">my projects</a>
-        <a href="/contact" class="nav-link">contact me</a>
-      </nav>
     </div>
   </main>
 
@@ -37,9 +40,9 @@ import Layout from "../layouts/Layout.astro";
       const link = e.target.closest('.nav-link');
       if (!link) return;
       
-      const welcomeHeader = document.getElementById('welcome-header');
-      if (welcomeHeader) {
-        welcomeHeader.classList.add('leaving');
+      const menuBox = document.getElementById('welcome-header');
+      if (menuBox) {
+        menuBox.classList.add('leaving');
       }
     });
   </script>
@@ -56,71 +59,54 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .center-box {
-      padding: 3rem;
-      min-width: 400px;
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      align-items: center;
+      gap: 4rem;
       position: relative;
     }
 
-    .welcome-header {
-      text-align: center;
-      margin: 0 auto;
-      margin-bottom: 0rem;
-      display: inline-flex;
+    .menu-box {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      transition: opacity 0.15s ease-out, transform 0.15s ease-out;
-      background: #030210;
-      padding: 0.5rem 1rem;
+      gap: 5rem;
+      background: transparent;
     }
 
-    .welcome-header.leaving {
+    .menu-box.leaving {
       opacity: 0;
-      transform: scale(0.9);
     }
 
-.welcome-text {
+    .site-title {
       font-size: 3rem;
-      font-weight: 700;
-      color: #b2b2b2;
-      letter-spacing: 0.1em;
-      margin: 0 0.5rem;
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 1;
-    }
-
-    .bracket {
-      font-size: 6.75rem;
-      font-weight: 700;
-      color: #b2b2b2;
-      line-height: 1;
-      display: inline-block;
-      vertical-align: middle;
+      color: #80a0ff;
+      margin: 0;
     }
 
     .nav-links {
       display: flex;
-      flex-direction: row;
-      gap: 4rem;
-      justify-content: center;
-      padding: 1rem;
-      margin: 0 auto;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding: 0.5rem 0;
     }
 
     .nav-link {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: #b2b2b2;
-      text-align: center;
-      transition: all 0.2s;
-      padding: 0.5rem;
-      font-family: "Fira Code", "FiraCode Nerd Font", monospace;
-      z-index: 1;
+      transition: all 0.15s;
+      padding: 0.5rem 1rem;
+      display: inline-block;
     }
 
     .nav-link:hover {
-      color: #80a0ff;
+      background: #a1cd5e20;
+      color: #a1cd5e;
+    }
+
+    .link-prefix {
+      color: #a1cd5e;
+      margin-right: 0.75rem;
     }
 
     .fireflies {
