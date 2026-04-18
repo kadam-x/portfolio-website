@@ -101,6 +101,7 @@ const projects = [
           projects.map((project, index) => (
             <div class="project-card" data-id={project.id}>
               <div class="card-header">
+                <span class="card-prefix">[*]</span>
                 <h2>{project.title}</h2>
                 <button
                   class="info-btn-ui"
@@ -217,7 +218,11 @@ const projects = [
     position: relative;
     z-index: 10;
     min-height: 100vh;
-    padding: 4rem 2rem;
+    padding: 2rem;
+    padding-left: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .back-link {
@@ -226,8 +231,9 @@ const projects = [
     gap: 0.5rem;
     color: #a1cd5e;
     text-decoration: none;
-    font-size: 0.7rem;
-    margin-bottom: 2rem;
+    font-size: 16px;
+    margin-bottom: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   .back-link:hover {
@@ -242,142 +248,78 @@ const projects = [
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 1rem;
+    justify-content: flex-start;
   }
 
   .project-card {
-    border: 4px solid #a1cd5e;
-    padding: 1.5rem;
-    width: 350px;
-    background: #030210;
+    border: 1px solid #000000;
+    border-top: 2px solid #000000;
+    padding: 0;
+    width: 420px;
+    min-height: 420px;
+    background: #d8d9ed;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
   }
 
   .project-card:hover {
-    background: #0c0e14;
+    background: #d0d1dc;
   }
 
   .card-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-  }
-
-  .card-header h2 {
-    font-size: 1rem;
-    color: #80a0ff;
-    margin: 0;
-  }
-
-  .project-description {
-    color: #b2b2b2;
-    font-size: 0.65rem;
-    line-height: 1.8;
-    margin: 0 0 1rem 0;
-  }
-
-  .tech-tag {
-    font-size: 0.55rem;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid;
-  }
-
-  .link-btn {
-    font-size: 0.55rem;
-    padding: 0.4rem 0.6rem;
-    border: 2px solid #80a0ff;
-    color: #80a0ff;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .info-btn-ui {
-    background: #a1cd5e;
-    border: none;
-    color: #030210;
-    width: 20px;
-    height: 20px;
-    font-weight: bold;
-    font-size: 0.6rem;
-    cursor: pointer;
-    display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-  }
-
-  .info-btn-ui:hover {
-    background: #ff5454;
-  }
-
-  .card-footer {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .card-links {
-    display: flex;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: #cde6a8;
     gap: 0.5rem;
   }
 
+  .card-prefix {
+    color: #0c0e14;
+    font-size: 14px;
+  }
+
+  .card-header h2 {
+    font-size: 14px;
+    color: #0c0e14;
+    margin: 0;
+    font-weight: normal;
+  }
+
   .project-description {
-    color: #bdbdbd;
-    font-size: 0.95rem;
+    color: #000000;
+    font-size: 14px;
     line-height: 1.5;
-    margin: 0 0 1rem 0;
-    flex-grow: 0;
+    margin: 0;
+    padding: 1rem;
   }
 
-  .card-footer {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .tech-tag {
-    font-size: 0.65rem;
+.tech-tag {
+    font-size: 12px;
     padding: 0.2rem 0.5rem;
     border: 1px solid;
-    border-radius: 3px;
-    font-family: "Fira Code", monospace;
+    border-radius: 0;
+    font-family: Arial, Helvetica, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
+  .link-btn {
+    color: #0000FF;
+    text-decoration: underline;
+  }
+
   .card-links {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
 
-  .link-btn {
-    font-size: 0.7rem;
-    padding: 0.35rem 0.6rem;
-    border: 1px solid #80a0ff;
-    color: #80a0ff;
-    text-decoration: none;
-    font-family: "Fira Code", monospace;
-    transition: all 0.2s;
-  }
-
   .link-btn:hover {
-    background: #80a0ff;
-    color: #030210;
+    color: #0000aa;
   }
 
   @media (max-width: 768px) {

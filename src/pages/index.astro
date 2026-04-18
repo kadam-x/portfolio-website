@@ -3,49 +3,27 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="kovacsadam.dev" backgroundColor="#030210">
-  <div class="fireflies">
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-  </div>
-
   <main class="hero-container">
     <div class="center-box">
       <div class="menu-box" id="welcome-header">
-        <h1 class="site-title">{"{"} kovacsadam.dev {"}"}</h1>
+        <div class="menu-header">[*] INDEX</div>
+        <h1 class="site-title">kovacsadam.dev</h1>
         <nav class="nav-links">
           <a href="/about" class="nav-link">
-            <span class="link-prefix">&gt;</span> about
+            <span class="link-prefix">&gt;</span><span class="link-text">about</span>
           </a>
           <a href="/projects" class="nav-link">
-            <span class="link-prefix">&gt;</span> my projects
+            <span class="link-prefix">&gt;</span><span class="link-text">my projects</span>
           </a>
           <a href="/contact" class="nav-link">
-            <span class="link-prefix">&gt;</span> contact me
+            <span class="link-prefix">&gt;</span><span class="link-text">contact me</span>
           </a>
         </nav>
       </div>
     </div>
   </main>
 
-  <script is:inline>
-    document.addEventListener('click', function(e) {
-      const link = e.target.closest('.nav-link');
-      if (!link) return;
-      
-      const menuBox = document.getElementById('welcome-header');
-      if (menuBox) {
-        menuBox.classList.add('leaving');
-      }
-    });
-  </script>
+  
 
   <style>
     .hero-container {
@@ -61,162 +39,71 @@ import Layout from "../layouts/Layout.astro";
     .center-box {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 4rem;
+      align-items: flex-start;
+      gap: 1rem;
       position: relative;
     }
 
     .menu-box {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 5rem;
-      background: transparent;
+      align-items: flex-start;
+      gap: 2rem;
+      background: #d8d9ed;
+      border: 1px solid #000000;
+      border-top: 2px solid #000000;
+      padding-bottom: 1rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      min-width: 500px;
     }
 
-    .menu-box.leaving {
-      opacity: 0;
+    .menu-header {
+      background: #cde6a8;
+      color: #0c0e14;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      border-bottom: 1px solid #000000;
+      font-size: 14px;
+      text-align: left;
     }
 
     .site-title {
-      font-size: 3rem;
-      color: #80a0ff;
+      font-size: 1.4rem;
+      color: #000000;
       margin: 0;
+      padding: 0 1rem;
     }
 
     .nav-links {
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
-      padding: 0.5rem 0;
+      gap: 0.4rem;
+      padding: 0 1rem 2rem;
+      width: 100%;
     }
 
     .nav-link {
-      font-size: 1.8rem;
-      color: #b2b2b2;
-      transition: all 0.15s;
-      padding: 0.5rem 1rem;
+      color: #000000;
+      padding: 0.25rem 0.5rem;
       display: inline-block;
+      font-size: 16px;
     }
 
     .nav-link:hover {
-      background: #a1cd5e20;
-      color: #a1cd5e;
+      background: #cde6a8;
+      color: #000000;
     }
 
     .link-prefix {
-      color: #a1cd5e;
-      margin-right: 0.75rem;
+      color: #0000FF;
+      margin-right: 0.25rem;
+      font-weight: bold;
     }
 
-    .fireflies {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .firefly {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #a1cd5e;
-      box-shadow: 0 0 4px 2px #a1cd5e80;
-    }
-
-    .firefly:nth-child(1) { top: 10%; left: 15%; animation: firefly-drift-1 18s infinite ease-in-out, firefly-pulse-1 4s infinite ease-in-out; }
-    .firefly:nth-child(2) { top: 25%; left: 80%; animation: firefly-drift-2 14s infinite ease-in-out, firefly-pulse-2 5s infinite ease-in-out; }
-    .firefly:nth-child(3) { top: 60%; left: 10%; animation: firefly-drift-3 20s infinite ease-in-out, firefly-pulse-3 3s infinite ease-in-out; }
-    .firefly:nth-child(4) { top: 80%; left: 70%; animation: firefly-drift-4 16s infinite ease-in-out, firefly-pulse-4 6s infinite ease-in-out; }
-    .firefly:nth-child(5) { top: 40%; left: 85%; animation: firefly-drift-5 12s infinite ease-in-out, firefly-pulse-5 4s infinite ease-in-out; }
-    .firefly:nth-child(6) { top: 15%; left: 50%; animation: firefly-drift-6 22s infinite ease-in-out, firefly-pulse-1 5s infinite ease-in-out; }
-    .firefly:nth-child(7) { top: 70%; left: 30%; animation: firefly-drift-7 15s infinite ease-in-out, firefly-pulse-2 3s infinite ease-in-out; }
-    .firefly:nth-child(8) { top: 35%; left: 20%; animation: firefly-drift-8 19s infinite ease-in-out, firefly-pulse-3 6s infinite ease-in-out; }
-    .firefly:nth-child(9) { top: 55%; left: 75%; animation: firefly-drift-9 13s infinite ease-in-out, firefly-pulse-4 4s infinite ease-in-out; }
-    .firefly:nth-child(10) { top: 90%; left: 45%; animation: firefly-drift-10 17s infinite ease-in-out, firefly-pulse-5 5s infinite ease-in-out; }
-
-    @keyframes firefly-drift-1 {
-      0%, 100% { transform: translate(0, 0); }
-      25% { transform: translate(20px, -25px); }
-      50% { transform: translate(-15px, 20px); }
-      75% { transform: translate(25px, 5px); }
-    }
-    @keyframes firefly-drift-2 {
-      0%, 100% { transform: translate(0, 0); }
-      33% { transform: translate(-25px, 15px); }
-      66% { transform: translate(10px, -20px); }
-    }
-    @keyframes firefly-drift-3 {
-      0%, 100% { transform: translate(0, 0); }
-      20% { transform: translate(15px, 30px); }
-      50% { transform: translate(-20px, -10px); }
-      80% { transform: translate(30px, 15px); }
-    }
-    @keyframes firefly-drift-4 {
-      0%, 100% { transform: translate(0, 0); }
-      40% { transform: translate(-15px, -25px); }
-      70% { transform: translate(20px, 10px); }
-    }
-    @keyframes firefly-drift-5 {
-      0%, 100% { transform: translate(0, 0); }
-      30% { transform: translate(25px, -15px); }
-      60% { transform: translate(-10px, -25px); }
-    }
-    @keyframes firefly-drift-6 {
-      0%, 100% { transform: translate(0, 0); }
-      25% { transform: translate(-30px, 20px); }
-      50% { transform: translate(15px, 25px); }
-      75% { transform: translate(-20px, -15px); }
-    }
-    @keyframes firefly-drift-7 {
-      0%, 100% { transform: translate(0, 0); }
-      35% { transform: translate(20px, -30px); }
-      65% { transform: translate(-25px, 10px); }
-    }
-    @keyframes firefly-drift-8 {
-      0%, 100% { transform: translate(0, 0); }
-      20% { transform: translate(-15px, 25px); }
-      50% { transform: translate(30px, -20px); }
-      80% { transform: translate(10px, 30px); }
-    }
-    @keyframes firefly-drift-9 {
-      0%, 100% { transform: translate(0, 0); }
-      40% { transform: translate(25px, 15px); }
-      70% { transform: translate(-20px, -25px); }
-    }
-    @keyframes firefly-drift-10 {
-      0%, 100% { transform: translate(0, 0); }
-      30% { transform: translate(-10px, 30px); }
-      60% { transform: translate(25px, 10px); }
-      85% { transform: translate(-25px, -10px); }
-    }
-
-    @keyframes firefly-pulse-1 {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-    @keyframes firefly-pulse-2 {
-      0%, 100% { opacity: 0.3; }
-      40% { opacity: 0.8; }
-      70% { opacity: 0.5; }
-    }
-    @keyframes firefly-pulse-3 {
-      0%, 100% { opacity: 0.5; }
-      25% { opacity: 0.9; }
-      75% { opacity: 0.6; }
-    }
-    @keyframes firefly-pulse-4 {
-      0%, 100% { opacity: 0.35; }
-      50% { opacity: 1; }
-    }
-    @keyframes firefly-pulse-5 {
-      0%, 100% { opacity: 0.45; }
-      30% { opacity: 0.85; }
-      60% { opacity: 0.55; }
+    .link-text {
+      color: #0000FF;
+      text-decoration: underline;
     }
 
     @media (max-width: 640px) {

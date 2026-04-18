@@ -1,13 +1,11 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
   title: string;
-  backgroundColor?: string;
 }
 
-const { title, backgroundColor = "#030210" } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,108 +22,20 @@ const { title, backgroundColor = "#030210" } = Astro.props;
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="msapplication-TileColor" content="#030210" />
-    <meta name="theme-color" content="#030210" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="msapplication-TileColor" content="#d8d9ed" />
+    <meta name="theme-color" content="#d8d9ed" />
     <link rel="preload" href="/avatar/idle.png" as="image" />
     <link rel="preload" href="/avatar/eyes-closed.png" as="image" />
     <link rel="preload" href="/avatar/talking.png" as="image" />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Iosevka:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
     <meta name="generator" content={Astro.generator} />
-    <ClientRouter />
     <title>{title}</title>
   </head>
-  <body style={`background-color: ${backgroundColor}`}>
-    <div class="grain-overlay"></div>
+  <body style="background: #d8d9ed;">
+    <div class="bg-layer"></div>
+    <div class="scanlines"></div>
     <slot />
     <script is:inline>
-      // Navigation handling for View Transitions
-      if (!window._transitionHandlersSet) {
-        window._transitionHandlersSet = true;
-
-        function getTransitionType(fromPath, toPath) {
-          var from = fromPath.replace(/\/$/, "") || "/";
-          var to = toPath.replace(/\/$/, "") || "/";
-
-          var isProjectDetail = function (path) {
-            return path.startsWith("/projects/project-");
-          };
-
-          var fromIsProject = isProjectDetail(from);
-          var toIsProject = isProjectDetail(to);
-
-          if (fromIsProject || toIsProject) {
-            if (to === "/projects" && fromIsProject) return "fade";
-            if (from === "/projects" && toIsProject) return "fade";
-            if (fromIsProject && toIsProject) return "fade";
-            if (toIsProject) return "fade";
-            if (fromIsProject && to !== "/projects") return "fade";
-          }
-
-          if (to === "/" && from === "/about") return "back-top";
-          if (to === "/" && from === "/contact") return "back-bottom";
-          if (to === "/" && from === "/projects") return "back-right";
-          if (to === "/" && from !== "/") return "back";
-          if (to === "/about") return "slide-top";
-          if (to === "/contact") return "slide-bottom";
-          return "swipe";
-        }
-
-        document.addEventListener(
-          "click",
-          function (e) {
-            var link = e.target.closest("a");
-            if (!link || !link.href) return;
-
-            try {
-              var url = new URL(link.href, location.origin);
-              if (url.origin !== location.origin) return;
-
-              var type = getTransitionType(location.pathname, url.pathname);
-              document.documentElement.setAttribute("data-transition", type);
-            } catch (err) {}
-          },
-          true,
-        );
-
-        document.addEventListener("astro:before-preparation", function (e) {
-          var type = getTransitionType(e.from.pathname, e.to.pathname);
-          document.documentElement.setAttribute("data-transition", type);
-        });
-
-        document.addEventListener("astro:before-swap", function (e) {
-          var type = document.documentElement.getAttribute("data-transition");
-          if (type) {
-            e.newDocument.documentElement.setAttribute("data-transition", type);
-          }
-        });
-
-        document.addEventListener("astro:page-load", function () {
-          setTimeout(function () {
-            document.documentElement.removeAttribute("data-transition");
-          }, 500);
-        });
-      }
-    </script>
-
-    <script is:inline>
-      document.addEventListener('astro:page-load', function () {
-        const fireflies = document.querySelectorAll('.firefly');
-        fireflies.forEach(firefly => {
-          firefly.style.display = 'none';
-          firefly.offsetHeight;
-          firefly.style.display = 'block';
-        });
-      });
+      window.dispatchEvent(new Event('astro:page-load'));
     </script>
   </body>
 </html>
@@ -138,16 +48,18 @@ const { title, backgroundColor = "#030210" } = Astro.props;
   }
 
   html {
-    background-color: #030210;
+    background-color: transparent;
   }
 
   body {
-    font-family: "Press Start 2P", "JetBrains Mono", monospace;
+    font-family: monospace;
     overflow-x: hidden;
+    min-height: 100vh;
+    background: transparent;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Press Start 2P", "JetBrains Mono", monospace;
+    font-family: monospace;
   }
 
   a {
@@ -155,15 +67,29 @@ const { title, backgroundColor = "#030210" } = Astro.props;
     color: inherit;
   }
 
-  .grain-overlay {
+  .bg-layer {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
+    height: 100vh;
     width: 100%;
-    height: 100%;
+    z-index: -1;
+    background-image: url('/bg.webp');
+    background-size: cover;
+    background-position: center;
+    filter: saturate(120%) contrast(115%) brightness(85%);
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     pointer-events: none;
-    z-index: 9999;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.12) 2px,
+      rgba(0,0,0,0.12) 4px
+    );
   }
 </style>
