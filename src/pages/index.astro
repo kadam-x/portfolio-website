@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Kovacs Adam :: Portfolio" backgroundColor="#030210">
+<Layout title="kovacsadam.dev" backgroundColor="#030210">
   <div class="fireflies">
     <div class="firefly"></div>
     <div class="firefly"></div>
@@ -18,8 +18,10 @@ import Layout from "../layouts/Layout.astro";
 
   <main class="hero-container">
     <div class="center-box">
-      <div class="welcome-header">
-        <span class="welcome-text">WELCOME</span>
+      <div class="welcome-header" id="welcome-header">
+        <span class="bracket">[</span>
+        <span class="welcome-text">kovacsadam.dev</span>
+        <span class="bracket">]</span>
       </div>
 
       <nav class="nav-links">
@@ -27,41 +29,20 @@ import Layout from "../layouts/Layout.astro";
         <a href="/projects" class="nav-link">my projects</a>
         <a href="/contact" class="nav-link">contact me</a>
       </nav>
-
-      <div class="color-palette">
-        <div
-          class="color-square"
-          data-color="#030210"
-          style="background-color: #030210;"
-        >
-        </div>
-        <div
-          class="color-square"
-          data-color="#323437"
-          style="background-color: #323437;"
-        >
-        </div>
-        <div
-          class="color-square"
-          data-color="#ff5454"
-          style="background-color: #ff5454;"
-        >
-        </div>
-        <div
-          class="color-square"
-          data-color="#80a0ff"
-          style="background-color: #80a0ff;"
-        >
-        </div>
-        <div
-          class="color-square"
-          data-color="#a1cd5e"
-          style="background-color: #a1cd5e;"
-        >
-        </div>
-      </div>
     </div>
   </main>
+
+  <script is:inline>
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('.nav-link');
+      if (!link) return;
+      
+      const welcomeHeader = document.getElementById('welcome-header');
+      if (welcomeHeader) {
+        welcomeHeader.classList.add('leaving');
+      }
+    });
+  </script>
 
   <style>
     .hero-container {
@@ -87,53 +68,50 @@ import Layout from "../layouts/Layout.astro";
       text-align: center;
       margin: 0 auto;
       margin-bottom: 0rem;
-      border: 2px solid #323437;
-      padding: 1.2rem 9.2rem;
+      display: inline-flex;
+      align-items: center;
+      transition: opacity 0.15s ease-out, transform 0.15s ease-out;
       background: #030210;
-      display: inline-block;
+      padding: 0.5rem 1rem;
     }
 
-    .welcome-text {
-      font-size: 1.5rem;
+    .welcome-header.leaving {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+.welcome-text {
+      font-size: 3rem;
       font-weight: 700;
-      color: #80a0ff;
+      color: #b2b2b2;
       letter-spacing: 0.1em;
+      margin: 0 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    .bracket {
+      font-size: 6.75rem;
+      font-weight: 700;
+      color: #b2b2b2;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
     }
 
     .nav-links {
       display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      padding: 2rem 4.9rem;
+      flex-direction: row;
+      gap: 4rem;
+      justify-content: center;
+      padding: 1rem;
       margin: 0 auto;
-      background: #030210;
-      border: 20px solid #a1cd5e;
-      position: relative;
-    }
-
-    .nav-links::before,
-    .nav-links::after {
-      content: "";
-      position: absolute;
-      left: 15%;
-      right: 15%;
-      background: #030210;
-      height: 20px;
-    }
-
-    /* Position the top eraser over the top border */
-    .nav-links::before {
-      top: -20px;
-    }
-
-    /* Position the bottom eraser over the bottom border */
-    .nav-links::after {
-      bottom: -20px;
     }
 
     .nav-link {
-      font-size: 1.8rem;
-      color: #a1cd5e;
+      font-size: 1.5rem;
+      color: #b2b2b2;
       text-align: center;
       transition: all 0.2s;
       padding: 0.5rem;
@@ -143,46 +121,6 @@ import Layout from "../layouts/Layout.astro";
 
     .nav-link:hover {
       color: #80a0ff;
-    }
-
-    .color-palette {
-      margin: 0 auto;
-      border: 2px solid #323437;
-      background: #323437;
-      display: inline-flex;
-      gap: 0rem;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .color-square {
-      width: 5.15rem;
-      height: 5.15em;
-      border: 0px solid rgba(161, 205, 94, 0.3);
-      position: relative;
-      cursor: pointer;
-    }
-
-    .color-square::after {
-      content: attr(data-color);
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: #323437;
-      border: 1px solid #80a0ff;
-      color: #a1cd5e;
-      padding: 4px 8px;
-      font-size: 0.75rem;
-      font-family: "Fira Code", monospace;
-      opacity: 0;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .color-square:hover::after {
-      opacity: 1;
     }
 
     .fireflies {
@@ -200,9 +138,9 @@ import Layout from "../layouts/Layout.astro";
       position: absolute;
       width: 4px;
       height: 4px;
-      background: #a1cd5e;
+      background: #5c7a5c;
       border-radius: 50%;
-      box-shadow: 0 0 8px 2px #a1cd5e80;
+      box-shadow: 0 0 8px 2px #5c7a5c80;
     }
 
     .firefly:nth-child(1) { top: 10%; left: 15%; animation: firefly-drift-1 18s infinite ease-in-out, firefly-pulse-1 4s infinite ease-in-out; }
