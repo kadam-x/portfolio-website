@@ -8,7 +8,9 @@ const backgroundColor = "#030210";
 <Layout title={title} backgroundColor={backgroundColor}>
   <main class="hero-container">
     <div class="page-box">
-      <div class="box-header">[*] ABOUT_ME</div>
+      <div class="box-header">
+      <span>[*] ABOUT_ME</span>
+    </div>
       <nav class="nav-links">
         <a href="/" class="nav-link">&lt; take me home</a>
       </nav>
@@ -37,31 +39,33 @@ const backgroundColor = "#030210";
     z-index: 1;
   }
 
-  .page-box {
-    display: flex;
-    flex-direction: column;
-    background: #d8d9ed;
-    border: 1px solid #000000;
-    border-top: 2px solid #000000;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    width: 750px;
-    min-height: 100vh;
-    height: 100vh;
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+    .page-box {
+      display: flex;
+      flex-direction: column;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #000000 #000000 #ffffff;
+      box-shadow: 1px 1px 0 #000;
+      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+      font-size: 1rem;
+      width: 90%;
+      max-width: 750px;
+      min-height: 100vh;
+      height: 100vh;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-  .box-header {
-    background: #000033;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    width: 100%;
-    border-bottom: 1px solid #000000;
-    font-size: 14px;
-    text-align: left;
-  }
+.box-header {
+      background: linear-gradient(90deg, #000080, #1084d0);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      border-bottom: 1px solid #000000;
+      font-size: 0.875rem;
+      text-align: left;
+    }
 
   .nav-links {
     display: flex;
@@ -75,7 +79,7 @@ const backgroundColor = "#030210";
   }
 
   .page-box h1 {
-    font-size: 1.25rem;
+    font-size: 1.3125rem;
     color: #000000;
     margin: 0;
     text-align: left;
@@ -84,10 +88,10 @@ const backgroundColor = "#030210";
   }
 
   .page-box p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #000000;
-    margin: 0 0 1rem 0;
+font-size: 1rem;
+      line-height: 1.5;
+      color: #000000;
+      margin: 0 0 1rem 0;
   }
 
   .page-box a {
@@ -95,15 +99,22 @@ const backgroundColor = "#030210";
     text-decoration: underline;
   }
 
-  .nav-links .nav-link {
-    background: #d8d9ed;
-    border: 1px solid #000000;
-    color: #000000;
-    font-size: 16px;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 0.25rem 0.5rem;
-  }
+.nav-links .nav-link {
+      background: #c0c0c0;
+      border: 1px solid;
+      border-color: #ffffff #000000 #000000 #ffffff;
+      color: #000000;
+      font-size: 1rem;
+      text-decoration: none;
+      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .nav-links .nav-link:hover {
+      background: #000000;
+      color: #ffffff;
+      border-color: #808080 #ffffff #ffffff #808080;
+    }
 
   .nav-links .nav-link:hover {
     background: #000033;

@@ -5,7 +5,9 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="kovacsadam.dev" backgroundColor="#030210">
   <main class="hero-container">
     <div class="menu-box" id="welcome-header">
-      <div class="menu-header">[*] INDEX</div>
+      <div class="menu-header">
+      <span>[*] INDEX</span>
+    </div>
       <nav class="nav-links">
         <a href="/about" class="nav-link">&gt; about</a>
         <a href="/projects" class="nav-link">&gt; my projects</a>
@@ -55,12 +57,14 @@ import Layout from "../layouts/Layout.astro";
     .menu-box {
       display: flex;
       flex-direction: column;
-      background: #d8d9ed;
-      border: 1px solid #000000;
-      border-top: 2px solid #000000;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 20px;
-      width: 440px;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #000000 #000000 #ffffff;
+      box-shadow: 1px 1px 0 #000;
+      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+      font-size: 1.25rem;
+      width: 90%;
+      max-width: 440px;
       position: fixed;
       left: 50%;
       top: 50%;
@@ -68,12 +72,12 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .menu-header {
-      background: #000033;
+      background: linear-gradient(90deg, #000080, #1084d0);
       color: #ffffff;
       padding: 0.5rem 1rem;
       width: 100%;
       border-bottom: 1px solid #000000;
-      font-size: 18px;
+      font-size: 1.125rem;
       text-align: left;
     }
 
@@ -87,20 +91,36 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .nav-link {
-      color: #0000FF;
+      color: #0000ff;
       text-decoration: underline;
       padding: 0.5rem 1rem;
       display: inline-block;
-      font-size: 30px;
+      font-size: 1.875rem;
+      background: transparent;
     }
 
     .nav-link:hover {
       color: #ff0000;
+      background: transparent;
+    }
+
+    .contact-link:hover {
+      color: #ff0000;
+      background: transparent;
+    }
+
+    .nav-link:active {
+      border: 1px inset;
     }
 
     .contact-section {
       border-top: 1px solid #000000;
       padding: 1rem;
+      flex-grow: 1;
+    }
+
+    .menu-status {
+      display: none;
     }
 
     .contact-links {
@@ -115,18 +135,20 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .contact-link {
-      color: #0000FF;
+      color: #0000ff;
       text-decoration: underline;
-      font-size: 20px;
+      font-size: 1.25rem;
       cursor: pointer;
+      background: transparent;
     }
 
     .contact-link:hover {
       color: #ff0000;
+      background: transparent;
     }
 
     .copy-hint {
-      font-size: 15px;
+      font-size: 0.9375rem;
       color: #666;
       margin-left: 0.5rem;
     }

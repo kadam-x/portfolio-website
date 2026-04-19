@@ -110,17 +110,7 @@ const projects = [
     ],
     links: [],
   },
-  {
-    id: "project-9",
-    title: "Project Nine",
-    description: "Placeholder project description coming soon.",
-    techStack: [
-      { name: "Go", color: "#00ADD8" },
-      { name: "Docker", color: "#1d63ed" },
-    ],
-    links: [],
-  },
-];
+  ];
 ---
 
 <Layout title="Kovacs Adam :: Projects" backgroundColor="#030210">
@@ -257,8 +247,8 @@ const projects = [
       const nextBtn = document.getElementById("nextBtn");
       const navIndicator = document.getElementById("navIndicator");
       const cards = document.querySelectorAll(".project-card");
-      const totalProjects = 9;
-      const projectsPerPage = 3;
+      const totalProjects = 8;
+      const projectsPerPage = 4;
       let currentPage = 0;
 
       function showPage(page) {
@@ -276,7 +266,7 @@ const projects = [
         navIndicator.textContent = startNum + "-" + endNum;
 
         prevBtn.disabled = page === 0;
-        nextBtn.disabled = page === 2;
+        nextBtn.disabled = page === 1;
       }
 
       if (prevBtn && nextBtn) {
@@ -290,7 +280,7 @@ const projects = [
         });
 
         nextBtn.addEventListener("click", () => {
-          if (currentPage < 2) {
+          if (currentPage < 1) {
             currentPage++;
             showPage(currentPage);
           }
@@ -309,28 +299,28 @@ const projects = [
     z-index: 10;
     min-height: 100vh;
     padding: 4rem 2rem;
-    padding-left: 15rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .back-link {
+.back-link {
     display: inline-flex;
     align-items: center;
-    background: #d8d9ed;
-    border: 1px solid #000000;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
     color: #000000;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
     margin-bottom: 1.5rem;
     text-decoration: none;
   }
 
   .back-link:hover {
-    background: #000033;
+    background: #000000;
     color: #ffffff;
   }
 
@@ -342,36 +332,40 @@ const projects = [
   }
 
   .nav-arrow {
-    background: #d8d9ed;
-    border: 1px solid #000000;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
     color: #000000;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
   }
 
   .nav-arrow:hover {
-    background: #000033;
+    background: #000000;
     color: #ffffff;
   }
 
   .nav-arrow:disabled {
-    background: #d8d9ed;
-    color: #888888;
+    background: #c0c0c0;
+    color: #808080;
     cursor: not-allowed;
+    border-color: #808080 #ffffff #ffffff #808080;
   }
 
   .nav-arrow:disabled:hover {
-    background: #d8d9ed;
+    background: #c0c0c0;
+    color: #808080;
   }
 
   .nav-indicator {
-    background: #d8d9ed;
-    border: 1px solid #000000;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
     color: #000000;
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
     min-width: 2.5rem;
     text-align: center;
@@ -388,15 +382,16 @@ const projects = [
   }
 
   .project-card {
-    border: 1px solid #000000;
-    border-top: 2px solid #000000;
+    border: 2px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
     padding: 0;
-    width: 450px;
+    width: 28rem;
+    max-width: 28rem;
     min-height: 650px;
     flex-shrink: 0;
-    background: #d8d9ed;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    background: #c0c0c0;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
   }
@@ -431,7 +426,7 @@ const projects = [
     background: #d8d9ed;
     border: 1px solid #000000;
     color: #000000;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0.25rem 0.5rem;

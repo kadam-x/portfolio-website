@@ -44,6 +44,9 @@ const { title } = Astro.props;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    font-smooth: never;
   }
 
   html {
@@ -51,14 +54,17 @@ const { title } = Astro.props;
   }
 
   body {
-    font-family: monospace;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     overflow-x: hidden;
     min-height: 100vh;
     background: transparent;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    font-smooth: never;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: monospace;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
   }
 
   a {
