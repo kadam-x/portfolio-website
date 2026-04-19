@@ -23,17 +23,19 @@ const projects = [
   },
   {
     id: "project-2",
-    title: "Obscuratee",
+    title: "Implied Volatility Surface Pipeline",
     description:
       "A whimsical terminal application that brings colorful ASCII manatees to your command line, delivering marine-inspired wisdom with questionable accuracy. Featuring multiple display modes including legacy ASCII art, vibrant color modes, and special curse effects.",
     techStack: [
       { name: "Python", color: "#3776AB" },
-      { name: "PyPI", color: "#F7B731" },
-      { name: "ANSI", color: "#a1cd5e" },
+      { name: "Docker", color: "#1d63ed" },
+      { name: "FastAPI", color: "#04988a" },
+      { name: "Airflow", color: "#e43921" },
+      { name: "MinIO", color: "#cf163e" },
+      { name: "Grafana", color: "#ff671d" },
     ],
     links: [
-      { label: "PyPI Package", url: "https://pypi.org/project/obscuratee/" },
-      { label: "View Code", url: "https://github.com/snezzz0/obscuratee" },
+      { label: "View Code", url: "https://github.com/kadam-x/volatility-surface-pipeline" },
     ],
   },
   {
@@ -78,10 +80,46 @@ const projects = [
       { label: "View Code", url: "https://github.com/snezzz0/crypto-arbitrage-test" },
     ],
   },
-  // { id: 'project-5', title: 'Project Five', description: 'Description for project 5.', techStack: [], links: [] },
-  // { id: 'project-6', title: 'Project Six', description: 'Description for project 6.', techStack: [], links: [] },
-  // { id: 'project-7', title: 'Project Seven', description: 'Description for project 7.', techStack: [], links: [] },
-  // { id: 'project-8', title: 'Project Eight', description: 'Description for project 8.', techStack: [], links: [] },
+  {
+    id: "project-6",
+    title: "Project Six",
+    description: "Placeholder project description coming soon.",
+    techStack: [
+      { name: "React", color: "#61DAFB" },
+      { name: "TypeScript", color: "#3178C6" },
+    ],
+    links: [],
+  },
+  {
+    id: "project-7",
+    title: "Project Seven",
+    description: "Placeholder project description coming soon.",
+    techStack: [
+      { name: "Node.js", color: "#339933" },
+      { name: "Express", color: "#000000" },
+    ],
+    links: [],
+  },
+  {
+    id: "project-8",
+    title: "Project Eight",
+    description: "Placeholder project description coming soon.",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "TensorFlow", color: "#FF6F00" },
+    ],
+    links: [],
+  },
+  {
+    id: "project-9",
+    title: "Project Nine",
+    description: "Placeholder project description coming soon.",
+    techStack: [
+      { name: "Go", color: "#00ADD8" },
+      { name: "Docker", color: "#1d63ed" },
+    ],
+    links: [],
+  },
 ];
 ---
 
@@ -93,11 +131,17 @@ const projects = [
       &lt; take me home
     </a>
 
+    <div class="projects-nav">
+      <button class="nav-arrow" id="prevBtn">&lt; prev</button>
+      <span class="nav-indicator" id="navIndicator">1-3</span>
+      <button class="nav-arrow" id="nextBtn">next &gt;</button>
+    </div>
+
     <div class="projects-sidebar active">
       <div class="projects-grid">
         {
           projects.map((project, index) => (
-            <div class="project-card" data-id={project.id}>
+            <div class="project-card" data-id={project.id} data-index={index}>
               <div class="card-header">
                 <span class="card-prefix">[*]</span>
                 <h2>{project.title}</h2>
@@ -179,6 +223,10 @@ const projects = [
           "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
         "project-4": "Analyzed retail sales data using Python and pandas to uncover trends in seasonality.",
         "project-5": "A crypto arbitrage bot using CoinGecko and Binance APIs.",
+        "project-6": "Placeholder project dialogue.",
+        "project-7": "Placeholder project dialogue.",
+        "project-8": "Placeholder project dialogue.",
+        "project-9": "Placeholder project dialogue.",
       };
 
       const ALL_ANIMATIONS = [...EMOTES, ...STATES];
@@ -204,6 +252,50 @@ const projects = [
           );
         });
       });
+
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const navIndicator = document.getElementById("navIndicator");
+      const cards = document.querySelectorAll(".project-card");
+      const totalProjects = 9;
+      const projectsPerPage = 3;
+      let currentPage = 0;
+
+      function showPage(page) {
+        cards.forEach((card, index) => {
+          const start = page * projectsPerPage;
+          const end = start + projectsPerPage;
+          if (index >= start && index < end) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+        const startNum = page * projectsPerPage + 1;
+        const endNum = Math.min((page + 1) * projectsPerPage, totalProjects);
+        navIndicator.textContent = startNum + "-" + endNum;
+
+        prevBtn.disabled = page === 0;
+        nextBtn.disabled = page === 2;
+      }
+
+      if (prevBtn && nextBtn) {
+        showPage(currentPage);
+
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 0) {
+            currentPage--;
+            showPage(currentPage);
+          }
+        });
+
+        nextBtn.addEventListener("click", () => {
+          if (currentPage < 2) {
+            currentPage++;
+            showPage(currentPage);
+          }
+        });
+      }
     }
 
     initPage();
@@ -237,13 +329,55 @@ const projects = [
     color: #ff0000;
   }
 
+  .projects-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .nav-arrow {
+    background: #d8d9ed;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .nav-arrow:hover {
+    background: #cde6a8;
+  }
+
+  .nav-arrow:disabled {
+    background: #d8d9ed;
+    color: #888888;
+    cursor: not-allowed;
+  }
+
+  .nav-arrow:disabled:hover {
+    background: #d8d9ed;
+  }
+
+  .nav-indicator {
+    background: #d8d9ed;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0.25rem 0.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+  }
+
   .projects-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 1rem;
     justify-content: flex-start;
-    overflow-x: auto;
+    overflow-x: hidden;
     padding-bottom: 1rem;
   }
 
@@ -251,7 +385,7 @@ const projects = [
     border: 1px solid #000000;
     border-top: 2px solid #000000;
     padding: 0;
-    width: 300px;
+    width: 450px;
     min-height: 650px;
     flex-shrink: 0;
     background: #d8d9ed;
@@ -259,6 +393,10 @@ const projects = [
     font-size: 16px;
     display: flex;
     flex-direction: column;
+  }
+
+  .project-card.hidden {
+    display: none;
   }
 
   .card-header {
@@ -293,7 +431,7 @@ const projects = [
     font-family: Arial, Helvetica, sans-serif;
   }
 
-.info-btn-ui:hover {
+  .info-btn-ui:hover {
     color: #ff0000;
   }
 
@@ -306,7 +444,7 @@ const projects = [
     flex-grow: 1;
   }
 
-.tech-tag {
+  .tech-tag {
     font-size: 12px;
     padding: 0.2rem 0.5rem;
     border: 1px solid;
@@ -314,6 +452,14 @@ const projects = [
     font-family: Arial, Helvetica, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
   }
 
   .link-btn {
