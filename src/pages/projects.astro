@@ -5,27 +5,29 @@ import AvatarCurator from "../components/AvatarCurator.astro"
 const projects = [
   {
     id: "project-1",
-    title: "CopyBot",
+    title: "Implied Volatility Surface Pipeline",
     description:
-      "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
+      "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
     techStack: [
       { name: "Python", color: "#3776AB" },
-      { name: "Solana", color: "#9945FF" },
-      { name: "Webhooks", color: "#a1cd5e" },
-      { name: "Async", color: "#a1cd5e" },
+      { name: "Docker", color: "#1d63ed" },
+      { name: "FastAPI", color: "#04988a" },
+      { name: "Airflow", color: "#e43921" },
+      { name: "MinIO", color: "#cf163e" },
+      { name: "Grafana", color: "#ff671d" },
     ],
     links: [
       {
         label: "View Code",
-        url: "https://github.com/snezzz0/solana-wallet-tracker-old/",
+        url: "https://github.com/kadam-x/volatility-surface-pipeline",
       },
     ],
   },
   {
     id: "project-2",
-    title: "Implied Volatility Surface Pipeline",
+    title: "Pricing Library Benchmark & Profiler",
     description:
-      "A whimsical terminal application that brings colorful ASCII manatees to your command line, delivering marine-inspired wisdom with questionable accuracy. Featuring multiple display modes including legacy ASCII art, vibrant color modes, and special curse effects.",
+      "A modular Python library implementing Black-Scholes, Monte Carlo, and binomial tree options pricing with systematic benchmarking of numerical accuracy versus computational cost across parameter regimes.",
     techStack: [
       { name: "Python", color: "#3776AB" },
       { name: "Docker", color: "#1d63ed" },
@@ -82,13 +84,19 @@ const projects = [
   },
   {
     id: "project-6",
-    title: "Project Six",
-    description: "Placeholder project description coming soon.",
+    title: "Siege X Guide",
+    description:
+      "Interactive Rainbow Six Siege tactical guide featuring comprehensive map callouts, operator strategies, and gameplay tips for competitive players. Built with Next.js 15 featuring smooth animations with Framer Motion.",
     techStack: [
       { name: "React", color: "#61DAFB" },
+      { name: "Next.js", color: "#000000" },
       { name: "TypeScript", color: "#3178C6" },
+      { name: "Framer", color: "#0055FF" },
     ],
-    links: [],
+    links: [
+      { label: "Live Demo", url: "https://siege-x-guide.vercel.app/" },
+      { label: "View Code", url: "https://github.com/snezzz0/siegex" },
+    ],
   },
   {
     id: "project-7",
@@ -101,14 +109,22 @@ const projects = [
     links: [],
   },
   {
-    id: "project-8",
-    title: "Project Eight",
-    description: "Placeholder project description coming soon.",
+    id: "project-1",
+    title: "CopyBot",
+    description:
+      "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
     techStack: [
       { name: "Python", color: "#3776AB" },
-      { name: "TensorFlow", color: "#FF6F00" },
+      { name: "Solana", color: "#9945FF" },
+      { name: "Webhooks", color: "#a1cd5e" },
+      { name: "Async", color: "#a1cd5e" },
     ],
-    links: [],
+    links: [
+      {
+        label: "View Code",
+        url: "https://github.com/snezzz0/solana-wallet-tracker-old/",
+      },
+    ],
   },
   ];
 ---
@@ -207,8 +223,8 @@ const projects = [
       const EXPRESSIONS = ["talking"];
       const PROJECT_DIALOGUES = {
         "project-1":
-          "I built a system that tracks Solana wallets, measures real trade performance, and replaces underperformers using on-chain data.",
-        "project-2": "Fully typed with TypeScript. No 'any' allowed here!",
+          "I wanted to build something that quant desks actually use not a backtest, but the infrastructure underneath. This computes the vol surface the same way a risk system would: fetch the chain, invert BS numerically per strike, load it into a proper warehouse, serve it via API. The Brent's method inversion was the most interesting part to get right.",
+        "project-2": "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
         "project-3":
           "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
         "project-4": "Analyzed retail sales data using Python and pandas to uncover trends in seasonality.",
@@ -387,7 +403,7 @@ const projects = [
     padding: 0;
     width: 28rem;
     max-width: 28rem;
-    min-height: 650px;
+    min-height: 550px;
     flex-shrink: 0;
     background: #c0c0c0;
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
