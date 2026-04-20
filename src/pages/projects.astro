@@ -42,9 +42,9 @@ const projects = [
   },
   {
     id: "project-3",
-    title: "Siege X Guide",
+    title: "ML Factor Signal Monitor",
     description:
-      "Interactive Rainbow Six Siege tactical guide featuring comprehensive map callouts, operator strategies, and gameplay tips for competitive players. Built with Next.js 15 featuring smooth animations with Framer Motion.",
+      "A signal generation and monitoring pipeline for equity factor strategies. Computes momentum and mean-reversion signals, trains an XGBoost classifier with walk-forward validation, and tracks signal decay and feature importance drift over rolling windows.",
     techStack: [
       { name: "React", color: "#61DAFB" },
       { name: "Next.js", color: "#000000" },
@@ -52,26 +52,27 @@ const projects = [
       { name: "Framer", color: "#0055FF" },
     ],
     links: [
-      { label: "Live Demo", url: "https://siege-x-guide.vercel.app/" },
-      { label: "View Code", url: "https://github.com/snezzz0/siegex" },
+      { label: "View Code", url: "https://github.com/kadam-x/ml-factor-signal-monitor" },
     ],
   },
   {
     id: "project-4",
-    title: "Sales Data Analysis",
+    title: "Urban Mobility Anomaly Detection",
     description:
-      "Analyzed retail sales data using Python and pandas to uncover trends in seasonality, customer behavior, and product performance.",
+      "Unsupervised anomaly detection on Citibike NYC trip data. Isolation Forest flags unusual demand patterns per station per time window, DBSCAN clusters stations by behaviour, and SHAP explains what drove each anomaly score.",
     techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Pandas", color: "#150458" },
+      { name: "React", color: "#61DAFB" },
+      { name: "Next.js", color: "#000000" },
+      { name: "TypeScript", color: "#3178C6" },
+      { name: "Framer", color: "#0055FF" },
     ],
     links: [
-      { label: "View Code", url: "https://github.com/snezzz0/sales-data-analysis" },
+      { label: "View Code", url: "https://github.com/kadam-x/urban-mob-anom-det" },
     ],
   },
   {
     id: "project-5",
-    title: "Arbitrage Bot",
+    title: "Sports Performance Analytics",
     description:
       "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
     techStack: [
@@ -79,11 +80,29 @@ const projects = [
       { name: "API", color: "#F7B731" },
     ],
     links: [
-      { label: "View Code", url: "https://github.com/snezzz0/crypto-arbitrage-test" },
+      { label: "View Code", url: "https://github.com/kadam-x/sports-perf-analytics" },
     ],
   },
   {
-    id: "project-6",
+    id: "project-8",
+    title: "CopyBot",
+    description:
+      "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "Solana", color: "#9945FF" },
+      { name: "Webhooks", color: "#a1cd5e" },
+      { name: "Async", color: "#a1cd5e" },
+    ],
+    links: [
+      {
+        label: "View Code",
+        url: "https://github.com/snezzz0/solana-wallet-tracker-old/",
+      },
+    ],
+  },
+  {
+    id: "project-7",
     title: "Siege X Guide",
     description:
       "Interactive Rainbow Six Siege tactical guide featuring comprehensive map callouts, operator strategies, and gameplay tips for competitive players. Built with Next.js 15 featuring smooth animations with Framer Motion.",
@@ -99,17 +118,7 @@ const projects = [
     ],
   },
   {
-    id: "project-7",
-    title: "Project Seven",
-    description: "Placeholder project description coming soon.",
-    techStack: [
-      { name: "Node.js", color: "#339933" },
-      { name: "Express", color: "#000000" },
-    ],
-    links: [],
-  },
-  {
-    id: "project-1",
+    id: "project-8",
     title: "CopyBot",
     description:
       "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
@@ -226,9 +235,9 @@ const projects = [
           "I wanted to build something that quant desks actually use not a backtest, but the infrastructure underneath. This computes the vol surface the same way a risk system would: fetch the chain, invert BS numerically per strike, load it into a proper warehouse, serve it via API. The Brent's method inversion was the most interesting part to get right.",
         "project-2": "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
         "project-3":
-          "I built this to quickly reveal meta gadget placements for operators, ensuring players can master those game-changing tactical positions.",
-        "project-4": "Analyzed retail sales data using Python and pandas to uncover trends in seasonality.",
-        "project-5": "A crypto arbitrage bot using CoinGecko and Binance APIs.",
+          "Most quant projects stop at I built a model. This one asks what comes after — how do you know the signal is still working next month? I built the monitoring layer: rolling AUC tracking, feature importance drift detection, served as an API. Closer to what a systematic desk actually runs than anything with a P&L curve.",
+        "project-4": "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. Isolation Forest handles this well, and SHAP made the results actually interpretable rather than just a score.",
+        "project-5": "StatsBomb data is surprisingly rich — every pass, carry, and pressure with x/y coordinates. I built a proper feature store first (rolling per-90 metrics, workload proxies), then trained with walk-forward validation so there's no temporal leakage. The clustering was the most fun part — watching archetypes emerge from the data without telling the model what positions exist.",
         "project-6": "Placeholder project dialogue.",
         "project-7": "Placeholder project dialogue.",
         "project-8": "Placeholder project dialogue.",
