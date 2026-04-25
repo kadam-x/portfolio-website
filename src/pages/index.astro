@@ -52,31 +52,31 @@ import Layout from "../layouts/Layout.astro";
       justify-content: center;
       position: relative;
       z-index: 1;
+      background: url("/bg.webp");
+      background-size: cover;
+      background-position: center;
     }
 
     .menu-box {
       display: flex;
       flex-direction: column;
-      background: #c0c0c0;
-      border: 2px solid;
-      border-color: #ffffff #000000 #000000 #ffffff;
-      box-shadow: 1px 1px 0 #000;
+      background: #373737;
       font-family: "MS Sans Serif", "Segoe UI", sans-serif;
       font-size: 1.25rem;
       width: 90%;
-      max-width: 500px;
+      max-width: 750px;
+      min-height: 100vh;
       position: fixed;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      top: 0;
+      transform: translateX(-50%);
     }
 
     .menu-header {
-      background: #c0c0c0;
-      color: #000000;
+      background: #373737;
+      color: #ffffff;
       padding: 0.5rem 1rem;
       width: 100%;
-      border-bottom: 1px solid #000000;
       font-size: 1.125rem;
       text-align: left;
     }
@@ -91,8 +91,8 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .nav-link {
-      color: #0000ff;
-      text-decoration: underline;
+      color: #87ceeb;
+      text-decoration: none;
       padding: 0.5rem 1rem;
       display: inline-block;
       font-size: 1.875rem;
@@ -100,17 +100,16 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .nav-link:hover {
-      color: #ff0000;
+      color: #ffffff;
       background: transparent;
     }
 
     .contact-link:hover {
-      color: #ff0000;
+      color: #ffffff;
       background: transparent;
     }
 
     .contact-section {
-      border-top: 1px solid #000000;
       padding: 1rem;
       flex-grow: 1;
     }
@@ -131,8 +130,8 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .contact-link {
-      color: #0000ff;
-      text-decoration: underline;
+      color: #87ceeb;
+      text-decoration: none;
       font-size: 1.25rem;
       cursor: pointer;
       background: transparent;
@@ -145,7 +144,7 @@ import Layout from "../layouts/Layout.astro";
 
     .copy-hint {
       font-size: 0.9375rem;
-      color: #666;
+      color: #aaaaaa;
       margin-left: 0.5rem;
     }
 
