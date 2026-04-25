@@ -87,9 +87,14 @@
     isEmoting = true;
     setExpression(expression === "talking" ? "talking" : "none");
 
+    if (expression === "talking") {
+      wrap.classList.add("bouncing");
+    }
+
     setTimeout(() => {
       setExpression("none");
       isEmoting = false;
+      if (wrap) wrap.classList.remove("bouncing");
     }, 1200);
   }
 
@@ -120,7 +125,10 @@
     left: 0;
     width: 240px;
     height: 240px;
-    animation: float 3.5s ease-in-out infinite;
+  }
+
+  #avatar-wrap.bouncing {
+    animation: bounce 0.25s ease-in-out infinite;
   }
 
   #avatar-base {
@@ -181,9 +189,8 @@
     border-right: 10px solid #d8d9ed;
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-4px) rotate(0.3deg); }
-    66% { transform: translateY(-2px) rotate(-0.3deg); }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
   }
 </style>
