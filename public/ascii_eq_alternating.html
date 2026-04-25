@@ -1,0 +1,181 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .scene {
+    width: 100%;
+    height: 520px;
+    background: #0d0d12;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+    display: flex;
+    align-items: stretch;
+  }
+  canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .left-col { width: 140px; flex-shrink: 0; }
+  .right-col { width: 140px; flex-shrink: 0; }
+  .center-panel {
+    flex: 1;
+    border-left: 1px solid rgba(160, 80, 255, 0.35);
+    border-right: 1px solid rgba(160, 80, 255, 0.35);
+    background: rgba(13, 13, 20, 0.96);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 36px 32px;
+    z-index: 5;
+    position: relative;
+  }
+  .panel-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(160, 80, 255, 0.45);
+    margin-bottom: 24px;
+  }
+  .panel-nav {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    color: #9999bb;
+    line-height: 2.6;
+  }
+  .panel-nav span { color: rgba(160, 80, 255, 0.55); margin-right: 8px; }
+  .panel-divider {
+    border: none;
+    border-top: 1px solid rgba(160, 80, 255, 0.12);
+    margin: 24px 0;
+  }
+  .panel-contact {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: rgba(100, 140, 200, 0.6);
+    line-height: 2.2;
+  }
+</style>
+
+<div class="scene" id="scene">
+  <div class="left-col" id="lcol"></div>
+  <div class="center-panel">
+    <div class="panel-tag">// PORTFOLIO</div>
+    <div class="panel-nav">
+      <div><span>></span> about</div>
+      <div><span>></span> my projects</div>
+      <div><span>></span> history</div>
+    </div>
+    <hr class="panel-divider">
+    <div class="panel-contact">
+      email: you [at] proton [dot] com<br>
+      github @yourhandle<br>
+      linkedin @You
+    </div>
+  </div>
+  <div class="right-col" id="rcol"></div>
+  <canvas id="c"></canvas>
+</div>
+
+<script>
+const scene = document.getElementById('scene');
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+const ROW_CHARS = ['+', '-', '+', '-'];
+const COL_CHARS = ['|', '+', '|', '+'];
+const CELL = 16;
+const REACH = 180;
+const SMOOTHING = 0.1;
+
+let W, H, leftEdge, rightEdge, colW;
+let current_l = [], current_r = [];
+let mouse = { x: -9999, y: -9999 };
+
+function setup() {
+  W = scene.offsetWidth;
+  H = scene.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+  const lcol = document.getElementById('lcol');
+  const rcol = document.getElementById('rcol');
+  leftEdge = lcol.offsetLeft + lcol.offsetWidth;
+  rightEdge = rcol.offsetLeft;
+  colW = lcol.offsetWidth;
+  const rows = Math.floor(H / CELL);
+  current_l = new Array(rows).fill(0);
+  current_r = new Array(rows).fill(0);
+}
+
+scene.addEventListener('mousemove', e => {
+  const r = scene.getBoundingClientRect();
+  mouse.x = e.clientX - r.left;
+  mouse.y = e.clientY - r.top;
+});
+scene.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+function getChar(row, col) {
+  const isEvenRow = row % 2 === 0;
+  const isEvenCol = col % 2 === 0;
+  if (isEvenRow && isEvenCol) return '+';
+  if (!isEvenRow && !isEvenCol) return '+';
+  if (isEvenRow) return '-';
+  return '|';
+}
+
+function tick() {
+  ctx.clearRect(0, 0, W, H);
+  const rows = Math.floor(H / CELL);
+  const maxCells = Math.floor(colW / CELL);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  for (let row = 0; row < rows; row++) {
+    const cy = row * CELL + CELL / 2;
+
+    const dl = Math.sqrt((mouse.x - leftEdge) ** 2 + (mouse.y - cy) ** 2);
+    const dr = Math.sqrt((mouse.x - rightEdge) ** 2 + (mouse.y - cy) ** 2);
+
+    const tl = Math.round(Math.max(0, 1 - dl / REACH) ** 2 * maxCells);
+    const tr = Math.round(Math.max(0, 1 - dr / REACH) ** 2 * maxCells);
+
+    current_l[row] += (tl - current_l[row]) * SMOOTHING;
+    current_r[row] += (tr - current_r[row]) * SMOOTHING;
+
+    const lenL = Math.round(current_l[row]);
+    const lenR = Math.round(current_r[row]);
+
+    for (let i = 0; i < lenL && i < maxCells; i++) {
+      const x = leftEdge - CELL * (i + 0.5);
+      if (x < 0) continue;
+      const t = i / Math.max(lenL - 1, 1);
+      const alpha = 0.2 + t * 0.7;
+      const rv = Math.round(100 + t * 130);
+      const bv = Math.round(215 + t * 40);
+      ctx.fillStyle = `rgba(${rv},50,${bv},${alpha})`;
+      ctx.font = `${CELL - 2}px 'Courier New', monospace`;
+      ctx.fillText(getChar(row, i), x, cy);
+    }
+
+    for (let i = 0; i < lenR && i < maxCells; i++) {
+      const x = rightEdge + CELL * (i + 0.5);
+      if (x > W) continue;
+      const t = i / Math.max(lenR - 1, 1);
+      const alpha = 0.2 + t * 0.7;
+      const rv = Math.round(100 + t * 130);
+      const bv = Math.round(215 + t * 40);
+      ctx.fillStyle = `rgba(${rv},50,${bv},${alpha})`;
+      ctx.font = `${CELL - 2}px 'Courier New', monospace`;
+      ctx.fillText(getChar(row, i), x, cy);
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+setup();
+window.addEventListener('resize', setup);
+tick();
+</script>

@@ -3,14 +3,12 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="kovacsadam.dev" backgroundColor="#030210">
-  <main class="hero-container">
-    <div class="menu-box" id="welcome-header">
-      <div class="menu-header">
-      <span>[*] INDEX</span>
-    </div>
+  <div class="scene" id="scene">
+    <div class="center-panel">
       <nav class="nav-links">
         <a href="/about" class="nav-link">&gt; about</a>
         <a href="/projects" class="nav-link">&gt; my projects</a>
+        <a href="/history" class="nav-link">&gt; history</a>
       </nav>
       <div class="contact-section">
         <div class="contact-links">
@@ -24,7 +22,8 @@ import Layout from "../layouts/Layout.astro";
         </div>
       </div>
     </div>
-  </main>
+    <canvas id="c"></canvas>
+  </div>
 
   <script>
     const emailBtn = document.getElementById("copy-email");
@@ -43,79 +42,151 @@ import Layout from "../layouts/Layout.astro";
         }
       });
     }
+
+    const scene = document.getElementById('scene');
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    const CELL = 8;
+    const REACH = 180;
+    const SMOOTHING = 0.1;
+
+    let W, H, leftEdge, rightEdge, colW;
+    let current_l = [], current_r = [];
+    let mouse = { x: -9999, y: -9999 };
+
+    function setup() {
+      W = scene.offsetWidth;
+      H = scene.offsetHeight;
+      canvas.width = W;
+      canvas.height = H;
+      const centerPanel = document.querySelector('.center-panel');
+      const panelRect = centerPanel.getBoundingClientRect();
+      const sceneRect = scene.getBoundingClientRect();
+      leftEdge = panelRect.left - sceneRect.left;
+      rightEdge = panelRect.right - sceneRect.left;
+      colW = 100;
+      const rows = Math.floor(H / CELL);
+      current_l = new Array(rows).fill(0);
+      current_r = new Array(rows).fill(0);
+    }
+
+    scene.addEventListener('mousemove', e => {
+      const r = scene.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    scene.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    function getChar(row, col) {
+      const isEvenRow = row % 2 === 0;
+      const isEvenCol = col % 2 === 0;
+      if (isEvenRow && isEvenCol) return '+';
+      if (!isEvenRow && !isEvenCol) return '+';
+      if (isEvenRow) return '-';
+      return '|';
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      const rows = Math.floor(H / CELL);
+      const maxCells = Math.floor(colW / CELL);
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let row = 0; row < rows; row++) {
+        const cy = row * CELL + CELL / 2;
+
+        const dl = Math.sqrt((mouse.x - leftEdge) ** 2 + (mouse.y - cy) ** 2);
+        const dr = Math.sqrt((mouse.x - rightEdge) ** 2 + (mouse.y - cy) ** 2);
+
+        const tl = Math.round(Math.max(0, 1 - dl / REACH) ** 2 * maxCells);
+        const tr = Math.round(Math.max(0, 1 - dr / REACH) ** 2 * maxCells);
+
+        current_l[row] += (tl - current_l[row]) * SMOOTHING;
+        current_r[row] += (tr - current_r[row]) * SMOOTHING;
+
+        const lenL = Math.round(current_l[row]);
+        const lenR = Math.round(current_r[row]);
+
+        for (let i = 0; i < lenL && i < maxCells; i++) {
+          const x = leftEdge - CELL * (i + 0.5);
+          if (x < 0) continue;
+          const t = i / Math.max(lenL - 1, 1);
+          const alpha = 0.2 + t * 0.7;
+          ctx.fillStyle = `rgba(194, 194, 192, ${alpha})`;
+          ctx.font = `${CELL - 2}px 'Courier New', monospace`;
+          ctx.fillText(getChar(row, i), x, cy);
+        }
+
+        for (let i = 0; i < lenR && i < maxCells; i++) {
+          const x = rightEdge + CELL * (i + 0.5);
+          if (x > W) continue;
+          const t = i / Math.max(lenR - 1, 1);
+          const alpha = 0.2 + t * 0.7;
+          ctx.fillStyle = `rgba(194, 194, 192, ${alpha})`;
+          ctx.font = `${CELL - 2}px 'Courier New', monospace`;
+          ctx.fillText(getChar(row, i), x, cy);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    setup();
+    window.addEventListener('resize', setup);
+    tick();
   </script>
 
   <style>
-    .hero-container {
+    .scene {
+      width: 100%;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
       position: relative;
-      z-index: 1;
-      background: url("/spyro-bg.jpg");
-      background-size: cover;
-      background-position: center;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
     }
-
-    .menu-box {
+    canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .center-panel {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      background: #373737;
-      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-      font-size: 1.25rem;
-      width: 90%;
+      justify-content: center;
+      padding: 2rem 2rem 2rem 4rem;
       max-width: 750px;
-      min-height: 100vh;
-      position: fixed;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-    }
-
-    .menu-header {
-      background: #373737;
-      color: #ffffff;
-      padding: 0.5rem 1rem;
+      margin: 0 auto;
       width: 100%;
-      font-size: 1.125rem;
-      text-align: left;
     }
 
     .nav-links {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      padding: 1rem;
-      width: 100%;
+      margin-bottom: 2rem;
       justify-content: center;
+      min-height: 200px;
     }
 
     .nav-link {
-      color: #87ceeb;
+      color: #c2c2c0;
       text-decoration: none;
-      padding: 0.5rem 1rem;
-      display: inline-block;
+      padding: 0.5rem 0;
       font-size: 1.875rem;
-      background: transparent;
     }
 
     .nav-link:hover {
       color: #ffffff;
-      background: transparent;
-    }
-
-    .contact-link:hover {
-      color: #ffffff;
-      background: transparent;
     }
 
     .contact-section {
-      padding: 1rem;
       flex-grow: 1;
-    }
-
-    .menu-status {
-      display: none;
     }
 
     .contact-links {
@@ -130,30 +201,20 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .contact-link {
-      color: #87ceeb;
+      color: #c2c2c0;
       text-decoration: none;
       font-size: 1.25rem;
       cursor: pointer;
-      background: transparent;
     }
 
     .contact-link:hover {
       color: #ff0000;
-      background: transparent;
     }
 
     .copy-hint {
       font-size: 0.9375rem;
       color: #aaaaaa;
       margin-left: 0.5rem;
-    }
-
-    @media (max-width: 640px) {
-      .menu-box {
-        width: 100%;
-        left: 0;
-        transform: none;
-      }
     }
   </style>
 </Layout>

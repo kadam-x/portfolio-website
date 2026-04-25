@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="History - kovacsadam.dev" backgroundColor="#030210">
+  <main class="history-container">
+    <a href="/" class="back-link">&lt; back</a>
+    <h1 class="title">Update history</h1>
+    <div class="history-list">
+      <p><span class="date">2026-04-25</span> - experimenting with a few bgs and styles</p>
+      <p><span class="date">2026-04-22</span> - experimental dark retro vibe</p>
+      <p><span class="date">2026-04-20</span> - added boucing to curator, removed idle animation</p>
+      <p><span class="date">2026-04-18</span> - new about, wider index box</p>
+      <p><span class="date">2026-04-15</span> - socials</p>
+      <p><span class="date">2026-04-12</span> - fixed typo</p>
+      <p><span class="date">2026-04-10</span> - projects partially uploaded</p>
+      <p><span class="date">2026-04-08</span> - reduced project card height</p>
+      <p><span class="date">2026-04-05</span> - removed red border effect when clicking nav links</p>
+      <p><span class="date">2026-04-03</span> - removed color from title bar</p>
+      <p><span class="date">2026-04-01</span> - latest working, b4 removing the title bars</p>
+      <p><span class="date">2026-03-30</span> - new background</p>
+      <p><span class="date">2026-03-28</span> - latest working</p>
+      <p><span class="date">2026-03-25</span> - new layout -contact</p>
+      <p><span class="date">2026-03-22</span> - latest working</p>
+      <p><span class="date">2026-03-20</span> - latest working</p>
+      <p><span class="date">2026-03-18</span> - latest working</p>
+      <p><span class="date">2026-03-15</span> - latest working</p>
+      <p><span class="date">2026-03-12</span> - before long gemini prompt</p>
+      <p><span class="date">2026-03-10</span> - pixelated fireflies</p>
+    </div>
+  </main>
+
+  <style>
+    .history-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+    }
+
+    .back-link {
+      color: #87ceeb;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      font-size: 1.125rem;
+    }
+
+    .title {
+      color: #87ceeb;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: normal;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .history-list p {
+      color: #ffffff;
+      font-size: 1.125rem;
+      margin: 0;
+    }
+
+    .date {
+      color: #aaaaaa;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+  </style>
+</Layout>
