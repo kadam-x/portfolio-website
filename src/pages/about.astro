@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 
 const title = "Kovacs Adam :: About";
 
-const gitOutput = execSync("git log --date=format:%Y-%m-%d --format='%ad %s' -15", { encoding: "utf-8" });
+const gitOutput = execSync("git log --date=format:%Y-%m-%d --format='%ad %s' -45", { encoding: "utf-8" });
 const commitList = gitOutput.trim().split("\n").map(line => {
   const [date, ...msgParts] = line.split(" ");
   return { date, message: msgParts.join(" ") };
