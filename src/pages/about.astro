@@ -1,11 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { execSync } from "child_process";
 
 const title = "Kovacs Adam :: About";
+
+const gitOutput = execSync("git log --date=format:%Y-%m-%d --format='%ad %s' -15", { encoding: "utf-8" });
+const commitList = gitOutput.trim().split("\n").map(line => {
+  const [date, ...msgParts] = line.split(" ");
+  return { date, message: msgParts.join(" ") };
+});
 ---
 
 <Layout title={title}>
-  <main>
+  <aside class="commits">
+    {commitList.map(commit => (
+      <span class="commit">{commit.date} {commit.message}</span>
+    ))}
+  </aside>
+
+  <div class="container">
+    <main>
     <a href="/" class="home-link">← take me home</a>
 
     <h2>About</h2>
@@ -21,7 +35,8 @@ const title = "Kovacs Adam :: About";
       <li><a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest, most human systems programming guides, clearly made with passion and for free</li>
       <li><a href="https://www.youtube.com/@The-Vestibule">The Vestibule</a> - formerly known as Sylvian Franklin, who shares a similar vision to me</li>
     </ul>
-  </main>
+    </main>
+  </div>
 </Layout>
 
 <style>
@@ -37,9 +52,25 @@ const title = "Kovacs Adam :: About";
     min-height: 100vh;
   }
 
+  .container {
+    display: flex;
+    gap: 3rem;
+    max-width: 900px;
+  }
+
+  .commits {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 11px;
+    color: #666;
+  }
+
   main {
     max-width: 680px;
-    margin: 0 auto;
     padding: 2rem;
   }
 
