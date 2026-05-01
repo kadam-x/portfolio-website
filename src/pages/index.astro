@@ -1,18 +1,14 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import { Image } from 'astro:assets';
+import profileImg from '../assets/small-adam.webp';
 ---
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kovacsadam.dev</title>
-</head>
-<body>
-
+<Layout title="kovacsadam.dev">
   <main>
     <h1>KOVACS ADAM</h1>
 
-      <img src="/small-adam.webp" alt="Kovacs Adam" width="340" />
+    <Image src={profileImg} alt="Kovacs Adam" width={340} />
 
     <p class="placeholder">
       Hey! Check out my <a href="/about">about</a> and <a href="/projects">projects</a> pages.
@@ -29,14 +25,8 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      min-height: 100%;
+    :global(body) {
       background: #0a0a0a;
-      color: #e0ddd5;
-      font-family: monospace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     main {
@@ -51,13 +41,14 @@
       font-size: clamp(18px, 3vw, 28px);
       font-weight: 700;
       letter-spacing: 0.15em;
+      color: #e0ddd5;
+      font-family: monospace;
     }
 
     img {
       width: min(340px, 80vw);
       display: block;
       background: #1a1a1a;
-      view-transition-name: none;
     }
 
     .placeholder {
@@ -110,6 +101,4 @@
       }
     });
   </script>
-
-</body>
-</html>
+</Layout>
