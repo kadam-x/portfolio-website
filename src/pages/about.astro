@@ -2,135 +2,70 @@
 import Layout from "../layouts/Layout.astro";
 
 const title = "Kovacs Adam :: About";
-const backgroundColor = "#030210";
 ---
 
-<Layout title={title} backgroundColor={backgroundColor}>
-  <main class="hero-container">
-    <div class="page-box">
-      <div class="box-header">
-      <span>[*] ABOUT_ME</span>
-    </div>
-      <nav class="nav-links">
-        <a href="/" class="nav-link">&lt; take me home</a>
-      </nav>
-      <div class="page-content">
-        <h1>Self-taught Dev | Finance & CS Student</h1>
+<Layout title={title}>
+  <main>
+    <a href="/" class="home-link">← take me home</a>
 
-        <p>My name is Kovacs Adam and I am a 24-year-old finance and semi-CS student, who enjoys simple and clean but *blazingly fast* design.</p> 
-        <p>If we circle back 10 or so years, I actually started out with RollerCoaster Tycoon(great times), than redstone in Minecraft than pretending to know Java for so I could finally make my own mod allowing me to create planes and hot-air balloons, so I don't have to download it from a shady site at 11PM just to find my PC infected with a trojan, later came Factorio and now we're here, truly Gen Z by heart. </p> 
-        <p> My main interests include in high performace, low level computing as I'm currently learning C++ and the next on the list is definitely Rust. Over the last couple of years I've also been interested in algorithmic trading on alternative data and turning my theories into code that can be tested, measured, tweaked and deployed. I am currently learning C++ and the next on the list is definitely Rust, but I do enjoy dabbling into different languages here and there. This site is my workspace and a bit of my artistic style made public.</p>
+    <h2>About</h2>
+    <p>Self-taught Dev | Finance & CS Student</p>
+    <p>My name is Kovacs Adam and I am a 24-year-old finance and semi-CS student, who enjoys simple and clean but *blazingly fast* design.</p>
+    <p>If we circle back 10 or so years, I actually started out with RollerCoaster Tycoon (great times), than redstone in Minecraft than pretending to know Java so I could finally make my own mod allowing me to create planes and hot-air balloons, so I don't have to download it from a shady site at 11PM just to find my PC infected with a trojan, later came Factorio and now we're here, truly Gen Z by heart.</p>
+    <p>My main interests include high performance, low level computing as I'm currently learning C++ and the next on the list is definitely Rust. Over the last couple of years I've also been interested in algorithmic trading on alternative data and turning my theories into code that can be tested, measured, tweaked and deployed. This site is my workspace and a bit of my artistic style made public.</p>
+    <p><a href="https://github.com/kadam-x/portfolio-website">This website</a> was inspired by Win95 (shocker I know) and an era where creative engineering and well thought-out, polished choices standing the test of time were prioritized over fancy animations and bloated frameworks, where each site had a soul and not the same 3 tailwind buttons with the same exact padding, where developers had passion and ideas, and most importantly, where the internet felt alive and personal.</p>
 
-<p><a href="https://github.com/kadam-x/portfolio-website">This website</a> was inspired by Win95(shocker I know) and an era where creative engineering and well though-out, polished choices, standing the test of time were prioritized over fancy animations and bloated frameworks, where each site had a soul and not the same 3 tailwind buttons with the same exact padding, where developers had passion and ideas, and most importantly, where the internet felt alive and personal.</p> 
-
-        <h4>Some great examples</h4>
-
-        <p><a href="https://www.mcmaster.com/">mcmaster.com</a> - awsome engineering engineering made professionally and standing the test of time</p>
-
-        <p><a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest, most human systems programming guide, cleary made with passion and for free</p>
-
-        <p><a href="https://www.youtube.com/@The-Vestibule">The Vestibule</a> - formerly knows as Sylvian Franklin, who shares a similar vision to me.</p>
-      </div>
-    </div>
+    <h2>Some great examples</h2>
+    <ul class="examples">
+      <li><a href="https://www.mcmaster.com/">mcmaster.com</a> - awesome engineering made professionally and standing the test of time</li>
+      <li><a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest, most human systems programming guides, clearly made with passion and for free</li>
+      <li><a href="https://www.youtube.com/@The-Vestibule">The Vestibule</a> - formerly known as Sylvian Franklin, who shares a similar vision to me</li>
+    </ul>
   </main>
 </Layout>
 
 <style>
-  .hero-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-  }
-
-    .page-box {
-      display: flex;
-      flex-direction: column;
-      background: #c0c0c0;
-      border: 2px solid;
-      border-color: #ffffff #000000 #000000 #ffffff;
-      box-shadow: 1px 1px 0 #000;
-      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-      font-size: 1rem;
-      width: 90%;
-      max-width: 750px;
-      min-height: 100vh;
-      height: 100vh;
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-.box-header {
-      background: #c0c0c0;
-      color: #000000;
-      padding: 0.5rem 1rem;
-      width: 100%;
-      border-bottom: 1px solid #000000;
-      font-size: 0.875rem;
-      text-align: left;
-    }
-
-  .nav-links {
-    display: flex;
-    padding: 1rem;
-  }
-
-  .page-content {
-    padding: 1rem;
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-
-  .page-box h1 {
-    font-size: 1.3125rem;
-    color: #000000;
+  /* Reset any global styles from Layout that might interfere */
+  :global(body) {
+    background: #fff;
+    color: #000;
+    font-family: serif;
     margin: 0;
-    text-align: left;
-    line-height: 1.5;
-    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
   }
 
-  .page-box p {
-font-size: 1rem;
-      line-height: 1.5;
-      color: #000000;
-      margin: 0 0 1rem 0;
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem;
   }
 
-  .page-box a {
-    color: #0000FF;
+  .home-link {
+    color: #0000ff;
+    text-decoration: underline;
+    font-size: 14px;
+    margin-bottom: 2rem;
+    display: inline-block;
+  }
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: #0000ff;
     text-decoration: underline;
   }
 
-.nav-links .nav-link {
-      background: #c0c0c0;
-      border: 1px solid;
-      border-color: #ffffff #000000 #000000 #ffffff;
-      color: #000000;
-      font-size: 1rem;
-      text-decoration: none;
-      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-      padding: 0.25rem 0.5rem;
-    }
-
-    .nav-links .nav-link:hover {
-      background: #000000;
-      color: #ffffff;
-      border-color: #808080 #ffffff #ffffff #808080;
-    }
-
-  .nav-links .nav-link:hover {
-    background: #000033;
-    color: #ffffff;
-  }
-
-  @media (max-width: 640px) {
-    .page-box {
-      width: 100%;
-      left: 0;
-      transform: none;
-    }
+  .examples {
+    padding-left: 2rem;
   }
 </style>

@@ -329,7 +329,21 @@ const projects = [
     align-items: flex-start;
   }
 
-.back-link {
+.projects-container::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-color: #c8dfc8;
+    background-image: repeating-conic-gradient(#b8d4b8 0% 25%, #d8ecd8 0% 50%);
+    background-size: 80px 80px;
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+
+  .back-link {
     display: inline-flex;
     align-items: center;
     background: #c0c0c0;

@@ -1,160 +1,116 @@
 ---
-import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="kovacsadam.dev" backgroundColor="#030210">
-  <main class="hero-container">
-    <div class="menu-box" id="welcome-header">
-      <div class="menu-header">
-      <span>[*] INDEX</span>
-    </div>
-      <nav class="nav-links">
-        <a href="/about" class="nav-link">&gt; about</a>
-        <a href="/projects" class="nav-link">&gt; my projects</a>
-      </nav>
-      <div class="contact-section">
-        <div class="contact-links">
-          <div class="email-row">
-            <span id="copy-email" class="contact-link">email: kadamx [at] proton [dot] com</span>
-            <span id="copy-hint" class="copy-hint">(click to copy)</span>
-          </div>
-          <a href="https://github.com/kadam-x" target="_blank" class="contact-link">github @kadam-x</a>
-          <a href="https://www.linkedin.com/in/kvcs-adam-s/" target="_blank" class="contact-link">linkedin @Adam Kovacs</a>
-          <a href="https://leetcode.com/u/kadam-x/" target="_blank" class="contact-link">leetcode @kadam-x</a>
-        </div>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kovacsadam.dev</title>
+</head>
+<body>
+
+  <main>
+    <h1>KOVACS ADAM</h1>
+
+    <img src="/small-adam.webp" alt="Kovacs Adam" />
+
+    <p class="placeholder">
+      Hey! Check out my <a href="/about">about</a> and <a href="/projects">projects</a> pages.
+    </p>
+
+    <div class="links">
+      <p>Contact: <span id="copy-email" class="copy">kadamx [at] proton [dot] me</span> <span id="copy-hint">(click to copy)</span></p>
+      <p>GitHub: <a href="https://github.com/kadam-x" target="_blank">@kadam-x</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/kvcs-adam-s/" target="_blank">@Adam Kovacs</a></p>
+      <p>Leetcode: <a href="https://leetcode.com/u/kadam-x/" target="_blank">@kadam-x</a></p>
     </div>
   </main>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      background: #0a0a0a;
+      color: #e0ddd5;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 40px 60px;
+      gap: 28px;
+    }
+
+    h1 {
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+
+    img {
+      width: min(340px, 80vw);
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      background: #1a1a1a;
+    }
+
+    .placeholder {
+      font-size: clamp(12px, 1.5vw, 14px);
+      color: #e0ddd5;
+      text-align: center;
+    }
+
+    .placeholder a {
+      color: #00e5ff;
+      text-decoration: underline;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: clamp(12px, 1.5vw, 14px);
+      color: #e0ddd5;
+      text-align: center;
+    }
+
+    .links a {
+      color: #e0ddd5;
+      text-decoration: underline;
+    }
+
+    .copy {
+      cursor: pointer;
+    }
+
+    #copy-hint {
+      font-size: 11px;
+      opacity: 0.5;
+    }
+  </style>
 
   <script>
     const emailBtn = document.getElementById("copy-email");
     const copyHint = document.getElementById("copy-hint");
 
-    if (emailBtn && copyHint) {
-      emailBtn.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText("kadamx@proton.com");
-          copyHint.textContent = "(copied!)";
-          setTimeout(() => {
-            copyHint.textContent = "(click to copy)";
-          }, 2000);
-        } catch (err) {
-          console.error("Failed to copy:", err);
-        }
-      });
-    }
+    emailBtn?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText("kadamx@proton.me");
+        copyHint.textContent = "(copied!)";
+        setTimeout(() => { copyHint.textContent = "(click to copy)"; }, 2000);
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    });
   </script>
 
-  <style>
-    .hero-container {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .menu-box {
-      display: flex;
-      flex-direction: column;
-      background: #c0c0c0;
-      border: 2px solid;
-      border-color: #ffffff #000000 #000000 #ffffff;
-      box-shadow: 1px 1px 0 #000;
-      font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-      font-size: 1.25rem;
-      width: 90%;
-      max-width: 500px;
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .menu-header {
-      background: #c0c0c0;
-      color: #000000;
-      padding: 0.5rem 1rem;
-      width: 100%;
-      border-bottom: 1px solid #000000;
-      font-size: 1.125rem;
-      text-align: left;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .nav-link {
-      color: #0000ff;
-      text-decoration: underline;
-      padding: 0.5rem 1rem;
-      display: inline-block;
-      font-size: 1.875rem;
-      background: transparent;
-    }
-
-    .nav-link:hover {
-      color: #ff0000;
-      background: transparent;
-    }
-
-    .contact-link:hover {
-      color: #ff0000;
-      background: transparent;
-    }
-
-    .contact-section {
-      border-top: 1px solid #000000;
-      padding: 1rem;
-      flex-grow: 1;
-    }
-
-    .menu-status {
-      display: none;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .email-row {
-      display: flex;
-      align-items: center;
-    }
-
-    .contact-link {
-      color: #0000ff;
-      text-decoration: underline;
-      font-size: 1.25rem;
-      cursor: pointer;
-      background: transparent;
-    }
-
-    .contact-link:hover {
-      color: #ff0000;
-      background: transparent;
-    }
-
-    .copy-hint {
-      font-size: 0.9375rem;
-      color: #666;
-      margin-left: 0.5rem;
-    }
-
-    @media (max-width: 640px) {
-      .menu-box {
-        width: 100%;
-        left: 0;
-        transform: none;
-      }
-    }
-  </style>
-</Layout>
+</body>
+</html>
