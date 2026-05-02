@@ -3,9 +3,10 @@ import "../styles/global.css";
 
 interface Props {
   title: string;
+  useGridBackground?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, useGridBackground } = Astro.props;
 ---
 
 <!doctype html>
@@ -29,7 +30,7 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <div class="bg-layer"></div>
+    <div class:list={["bg-layer", useGridBackground && "bg-layer--custom"]}></div>
     <slot />
     <script is:inline>
       window.dispatchEvent(new Event('astro:page-load'));
@@ -77,5 +78,22 @@ const { title } = Astro.props;
     width: 100%;
     z-index: -1;
     background: linear-gradient(180deg, #004040 0%, #008080 100%);
+  }
+
+  .bg-layer--custom {
+    background-color: #c8dfc8;
+  }
+
+  .bg-layer--custom::before {
+    content: '';
+    position: fixed;
+    top: -70%;
+    left: -70%;
+    width: 250%;
+    height: 250%;
+    background-image: repeating-conic-gradient(#b8d4b8 0% 25%, #d8ecd8 0% 50%);
+    background-size: 56px 56px;
+    transform: rotate(45deg);
+    z-index: -1;
   }
 </style>
