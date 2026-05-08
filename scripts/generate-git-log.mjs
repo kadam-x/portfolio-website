@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { writeFileSync } from "fs";
+import { writeFileSync, mkdirSync } from "fs";
 
 mkdirSync("src/data", { recursive: true });
 
