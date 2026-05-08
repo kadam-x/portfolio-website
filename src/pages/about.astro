@@ -1,11 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { execSync } from "child_process";
+import gitLog from "../data/git-log.json";
 
 const title = "Kovacs Adam :: About";
 
-const gitOutput = execSync("git log --date=format:%Y-%m-%d --format='%ad %s' -45", { encoding: "utf-8" });
-const commitList = gitOutput.trim().split("\n").map(line => {
+const commitList = gitLog.map((line) => {
   const [date, ...msgParts] = line.split(" ");
   return { date, message: msgParts.join(" ") };
 });
@@ -13,28 +12,67 @@ const commitList = gitOutput.trim().split("\n").map(line => {
 
 <Layout title={title}>
   <aside class="commits">
-    {commitList.map(commit => (
-      <span class="commit">{commit.date} {commit.message}</span>
-    ))}
+    {
+      commitList.map((commit) => (
+        <span class="commit">
+          {commit.date} {commit.message}
+        </span>
+      ))
+    }
   </aside>
 
   <div class="container">
     <main>
-    <a href="/" class="home-link">← take me home</a>
+      <a href="/" class="home-link">← take me home</a>
 
-    <h2>About</h2>
-    <p>Self-taught Dev | Finance & CS Student</p>
-    <p>My name is Kovacs Adam and I am a 24-year-old finance and semi-CS student, who enjoys simple and clean but *blazingly fast* design.</p>
-    <p>If we circle back 10 or so years, I actually started out with RollerCoaster Tycoon (great times), than redstone in Minecraft than pretending to know Java so I could finally make my own mod allowing me to create planes and hot-air balloons, so I don't have to download it from a shady site at 11PM just to find my PC infected with a trojan, later came Factorio and now we're here, truly Gen Z by heart.</p>
-    <p>My main interests include high performance, low level computing as I'm currently learning C++ and the next on the list is definitely Rust. Over the last couple of years I've also been interested in algorithmic trading on alternative data and turning my theories into code that can be tested, measured, tweaked and deployed. This site is my workspace and a bit of my artistic style made public.</p>
-    <p><a href="https://github.com/kadam-x/portfolio-website">This website</a> was inspired by Win95 (shocker I know) and an era where creative engineering and well thought-out, polished choices standing the test of time were prioritized over fancy animations and bloated frameworks, where each site had a soul and not the same 3 tailwind buttons with the same exact padding, where developers had passion and ideas, and most importantly, where the internet felt alive and personal.</p>
+      <h2>About</h2>
+      <p>Self-taught Dev | Finance & CS Student</p>
+      <p>
+        My name is Kovacs Adam and I am a 24-year-old finance and semi-CS
+        student, who enjoys simple and clean but *blazingly fast* design.
+      </p>
+      <p>
+        If we circle back 10 or so years, I actually started out with
+        RollerCoaster Tycoon (great times), than redstone in Minecraft than
+        pretending to know Java so I could finally make my own mod allowing me
+        to create planes and hot-air balloons, so I don't have to download it
+        from a shady site at 11PM just to find my PC infected with a trojan,
+        later came Factorio and now we're here, truly Gen Z by heart.
+      </p>
+      <p>
+        My main interests include high performance, low level computing as I'm
+        currently learning C++ and the next on the list is definitely Rust. Over
+        the last couple of years I've also been interested in algorithmic
+        trading on alternative data and turning my theories into code that can
+        be tested, measured, tweaked and deployed. This site is my workspace and
+        a bit of my artistic style made public.
+      </p>
+      <p>
+        <a href="https://github.com/kadam-x/portfolio-website">This website</a> was
+        inspired by Win95 (shocker I know) and an era where creative engineering and
+        well thought-out, polished choices standing the test of time were prioritized
+        over fancy animations and bloated frameworks, where each site had a soul and
+        not the same 3 tailwind buttons with the same exact padding, where developers
+        had passion and ideas, and most importantly, where the internet felt alive
+        and personal.
+      </p>
 
-    <h2>Some great examples</h2>
-    <ul class="examples">
-      <li><a href="https://www.mcmaster.com/">mcmaster.com</a> - awesome engineering made professionally and standing the test of time</li>
-      <li><a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest, most human systems programming guides, clearly made with passion and for free</li>
-      <li><a href="https://www.youtube.com/@The-Vestibule">The Vestibule</a> - formerly known as Sylvian Franklin, who shares a similar vision to me</li>
-    </ul>
+      <h2>Some great examples</h2>
+      <ul class="examples">
+        <li>
+          <a href="https://www.mcmaster.com/">mcmaster.com</a> - awesome engineering
+          made professionally and standing the test of time
+        </li>
+        <li>
+          <a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest,
+          most human systems programming guides, clearly made with passion and for
+          free
+        </li>
+        <li>
+          <a href="https://www.youtube.com/@The-Vestibule">The Vestibule</a> - formerly
+          known as Sylvian Franklin, who shares a similar vision to me
+        </li>
+      </ul>
     </main>
   </div>
 </Layout>
