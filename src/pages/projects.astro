@@ -71,19 +71,6 @@ const projects = [
     ],
   },
   {
-    id: "project-5",
-    title: "Sports Performance Analytics",
-    description:
-      "A Bloomberg style crypto arbitrage bot using CoinGecko's API, Binance's API calculates spread and visualizes 24H data.",
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "API", color: "#F7B731" },
-    ],
-    links: [
-      { label: "View Code", url: "https://github.com/kadam-x/sports-perf-analytics" },
-    ],
-  },
-  {
     id: "project-8",
     title: "CopyBot",
     description:
@@ -117,25 +104,7 @@ const projects = [
       { label: "View Code", url: "https://github.com/snezzz0/siegex" },
     ],
   },
-  {
-    id: "project-8",
-    title: "CopyBot",
-    description:
-      "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Solana", color: "#9945FF" },
-      { name: "Webhooks", color: "#a1cd5e" },
-      { name: "Async", color: "#a1cd5e" },
-    ],
-    links: [
-      {
-        label: "View Code",
-        url: "https://github.com/snezzz0/solana-wallet-tracker-old/",
-      },
-    ],
-  },
-  ];
+];
 ---
 
 <Layout 
@@ -146,14 +115,16 @@ const projects = [
   <AvatarCurator transition:persist />
 
   <main class="projects-container">
-    <a href="/" class="back-link" id="homeLink">
-      &lt; take me home
-    </a>
+    <div class="top-bar">
+      <a href="/" class="back-link" id="homeLink">
+        &lt; take me home
+      </a>
 
-    <div class="projects-nav">
-      <button class="nav-arrow" id="prevBtn">&lt; prev</button>
-      <span class="nav-indicator" id="navIndicator">1-3</span>
-      <button class="nav-arrow" id="nextBtn">next &gt;</button>
+      <div class="projects-nav">
+        <span class="nav-indicator" id="navIndicator">1-2</span>
+        <button class="nav-arrow" id="prevBtn">&lt; prev</button>
+        <button class="nav-arrow" id="nextBtn">next &gt;</button>
+      </div>
     </div>
 
     <div class="projects-sidebar active">
@@ -276,8 +247,9 @@ const projects = [
       const nextBtn = document.getElementById("nextBtn");
       const navIndicator = document.getElementById("navIndicator");
       const cards = document.querySelectorAll(".project-card");
-      const totalProjects = 8;
-      const projectsPerPage = 4;
+      const totalProjects = 6;
+      const projectsPerPage = 2;
+      const totalPages = 2;
       let currentPage = 0;
 
       function showPage(page) {
@@ -295,7 +267,7 @@ const projects = [
         navIndicator.textContent = startNum + "-" + endNum;
 
         prevBtn.disabled = page === 0;
-        nextBtn.disabled = page === 1;
+        nextBtn.disabled = page === totalPages;
       }
 
       if (prevBtn && nextBtn) {
@@ -309,7 +281,7 @@ const projects = [
         });
 
         nextBtn.addEventListener("click", () => {
-          if (currentPage < 1) {
+          if (currentPage < totalPages) {
             currentPage++;
             showPage(currentPage);
           }
@@ -330,7 +302,14 @@ const projects = [
     padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
+  }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
   }
 
   .back-link {
@@ -344,7 +323,6 @@ const projects = [
     cursor: pointer;
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
-    margin-bottom: 1.5rem;
     text-decoration: none;
   }
 
@@ -357,7 +335,7 @@ const projects = [
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-left: auto;
   }
 
   .nav-arrow {
@@ -402,21 +380,22 @@ const projects = [
 
   .projects-grid {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     gap: 1rem;
-    justify-content: flex-start;
-    overflow-x: hidden;
+    justify-content: flex-end;
+    align-items: flex-end;
     padding-bottom: 1rem;
+    padding-right: 2rem;
   }
 
   .project-card {
     border: 2px solid;
     border-color: #ffffff #000000 #000000 #ffffff;
     padding: 0;
-    width: 28rem;
-    max-width: 28rem;
-    min-height: 550px;
+    width: 100rem;
+    max-width: 100rem;
+    min-height: 418px;
     flex-shrink: 0;
     background: #c0c0c0;
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;

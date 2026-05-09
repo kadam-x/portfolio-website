@@ -171,8 +171,8 @@ import talkingImg from '../assets/avatar/talking.png';
 
   #avatar-bubble {
     position: absolute;
-    bottom: 60px;
-    left: 260px;
+    bottom: 280px;
+    left: 40px;
     background: #d8d9ed;
     border: 1px solid #000000;
     padding: 1rem 1.5rem;
@@ -194,13 +194,26 @@ import talkingImg from '../assets/avatar/talking.png';
 
   .bubble-arrow {
     position: absolute;
-    bottom: 20px;
-    left: -13px;
+    bottom: -11px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #d8d9ed;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #000000;
+  }
+
+  .bubble-arrow::after {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #d8d9ed;
   }
 
   @keyframes bounce {
