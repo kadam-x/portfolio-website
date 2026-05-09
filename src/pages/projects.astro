@@ -1,10 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AvatarCurator from "../components/AvatarCurator.astro"
+import AvatarCurator from "../components/AvatarCurator.astro";
 
 const projects = [
   {
     id: "project-1",
+    title: "Pricing Library Benchmark & Profiler",
+    description:
+      "A modular Python library implementing Black-Scholes, Monte Carlo, and binomial tree options pricing with systematic benchmarking of numerical accuracy versus computational cost across parameter regimes.",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "Docker", color: "#1d63ed" },
+      { name: "FastAPI", color: "#04988a" },
+      { name: "Airflow", color: "#e43921" },
+      { name: "MinIO", color: "#cf163e" },
+      { name: "Grafana", color: "#ff671d" },
+    ],
+    links: [
+      {
+        label: "View Code",
+        url: "https://github.com/kadam-x/volatility-surface-pipeline",
+      },
+    ],
+  },
+  {
+    id: "project-2",
     title: "Implied Volatility Surface Pipeline",
     description:
       "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
@@ -24,23 +44,6 @@ const projects = [
     ],
   },
   {
-    id: "project-2",
-    title: "Pricing Library Benchmark & Profiler",
-    description:
-      "A modular Python library implementing Black-Scholes, Monte Carlo, and binomial tree options pricing with systematic benchmarking of numerical accuracy versus computational cost across parameter regimes.",
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Docker", color: "#1d63ed" },
-      { name: "FastAPI", color: "#04988a" },
-      { name: "Airflow", color: "#e43921" },
-      { name: "MinIO", color: "#cf163e" },
-      { name: "Grafana", color: "#ff671d" },
-    ],
-    links: [
-      { label: "View Code", url: "https://github.com/kadam-x/volatility-surface-pipeline" },
-    ],
-  },
-  {
     id: "project-3",
     title: "ML Factor Signal Monitor",
     description:
@@ -52,7 +55,10 @@ const projects = [
       { name: "Framer", color: "#0055FF" },
     ],
     links: [
-      { label: "View Code", url: "https://github.com/kadam-x/ml-factor-signal-monitor" },
+      {
+        label: "View Code",
+        url: "https://github.com/kadam-x/ml-factor-signal-monitor",
+      },
     ],
   },
   {
@@ -67,11 +73,14 @@ const projects = [
       { name: "Framer", color: "#0055FF" },
     ],
     links: [
-      { label: "View Code", url: "https://github.com/kadam-x/urban-mob-anom-det" },
+      {
+        label: "View Code",
+        url: "https://github.com/kadam-x/urban-mob-anom-det",
+      },
     ],
   },
   {
-    id: "project-8",
+    id: "project-5",
     title: "CopyBot",
     description:
       "A Python-based system for monitoring, analyzing, and optimizing Solana copy-trading wallets using real-time on-chain data and post-trade performance tracking. It ingests real-time wallet activity via webhooks, enriches trades with market and risk data, and tracks post-purchase token performance using delayed OHLCV analysis.",
@@ -89,7 +98,7 @@ const projects = [
     ],
   },
   {
-    id: "project-7",
+    id: "project-6",
     title: "Siege X Guide",
     description:
       "Interactive Rainbow Six Siege tactical guide featuring comprehensive map callouts, operator strategies, and gameplay tips for competitive players. Built with Next.js 15 featuring smooth animations with Framer Motion.",
@@ -107,21 +116,18 @@ const projects = [
 ];
 ---
 
-<Layout 
-  title="Kovacs Adam :: Projects" 
-  showProfile={false} 
+<Layout
+  title="Kovacs Adam :: Projects"
+  showProfile={false}
   useGridBackground={true}
 >
   <AvatarCurator transition:persist />
 
   <main class="projects-container">
     <div class="top-bar">
-      <a href="/" class="back-link" id="homeLink">
-        &lt; take me home
-      </a>
+      <a href="/" class="back-link" id="homeLink"> &lt; take me home </a>
 
       <div class="projects-nav">
-        <span class="nav-indicator" id="navIndicator">1-2</span>
         <button class="nav-arrow" id="prevBtn">&lt; prev</button>
         <button class="nav-arrow" id="nextBtn">next &gt;</button>
       </div>
@@ -208,11 +214,14 @@ const projects = [
       const PROJECT_DIALOGUES = {
         "project-1":
           "I wanted to build something that quant desks actually use not a backtest, but the infrastructure underneath. This computes the vol surface the same way a risk system would: fetch the chain, invert BS numerically per strike, load it into a proper warehouse, serve it via API. The Brent's method inversion was the most interesting part to get right.",
-        "project-2": "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
+        "project-2":
+          "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
         "project-3":
           "Most quant projects stop at I built a model. This one asks what comes after — how do you know the signal is still working next month? I built the monitoring layer: rolling AUC tracking, feature importance drift detection, served as an API. Closer to what a systematic desk actually runs than anything with a P&L curve.",
-        "project-4": "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. Isolation Forest handles this well, and SHAP made the results actually interpretable rather than just a score.",
-        "project-5": "StatsBomb data is surprisingly rich — every pass, carry, and pressure with x/y coordinates. I built a proper feature store first (rolling per-90 metrics, workload proxies), then trained with walk-forward validation so there's no temporal leakage. The clustering was the most fun part — watching archetypes emerge from the data without telling the model what positions exist.",
+        "project-4":
+          "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. Isolation Forest handles this well, and SHAP made the results actually interpretable rather than just a score.",
+        "project-5":
+          "StatsBomb data is surprisingly rich — every pass, carry, and pressure with x/y coordinates. I built a proper feature store first (rolling per-90 metrics, workload proxies), then trained with walk-forward validation so there's no temporal leakage. The clustering was the most fun part — watching archetypes emerge from the data without telling the model what positions exist.",
         "project-6": "Placeholder project dialogue.",
         "project-7": "Placeholder project dialogue.",
         "project-8": "Placeholder project dialogue.",
@@ -245,7 +254,6 @@ const projects = [
 
       const prevBtn = document.getElementById("prevBtn");
       const nextBtn = document.getElementById("nextBtn");
-      const navIndicator = document.getElementById("navIndicator");
       const cards = document.querySelectorAll(".project-card");
       const totalProjects = 6;
       const projectsPerPage = 2;
@@ -262,9 +270,6 @@ const projects = [
             card.classList.add("hidden");
           }
         });
-        const startNum = page * projectsPerPage + 1;
-        const endNum = Math.min((page + 1) * projectsPerPage, totalProjects);
-        navIndicator.textContent = startNum + "-" + endNum;
 
         prevBtn.disabled = page === 0;
         nextBtn.disabled = page === totalPages;
@@ -366,18 +371,6 @@ const projects = [
     color: #808080;
   }
 
-  .nav-indicator {
-    background: #c0c0c0;
-    border: 1px solid;
-    border-color: #ffffff #000000 #000000 #ffffff;
-    color: #000000;
-    font-size: 1rem;
-    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-    padding: 0.25rem 0.5rem;
-    min-width: 2.5rem;
-    text-align: center;
-  }
-
   .projects-grid {
     display: flex;
     flex-direction: column;
@@ -475,7 +468,7 @@ const projects = [
   }
 
   .link-btn {
-    color: #0000FF;
+    color: #0000ff;
     text-decoration: underline;
   }
 
