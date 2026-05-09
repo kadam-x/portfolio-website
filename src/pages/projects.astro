@@ -5,9 +5,9 @@ import AvatarCurator from "../components/AvatarCurator.astro";
 const projects = [
   {
     id: "project-1",
-    title: "Pricing Library Benchmark & Profiler",
+    title: "RBL Capital",
     description:
-      "A modular Python library implementing Black-Scholes, Monte Carlo, and binomial tree options pricing with systematic benchmarking of numerical accuracy versus computational cost across parameter regimes.",
+      "A paper trading and backtesting simulated 'prop shop' running ",
     techStack: [
       { name: "Python", color: "#3776AB" },
       { name: "Docker", color: "#1d63ed" },
@@ -18,13 +18,35 @@ const projects = [
     ],
     links: [
       {
-        label: "View Code",
-        url: "https://github.com/kadam-x/volatility-surface-pipeline",
+        label: "Prediction Market Algo",
+        url: "https://github.com/kadam-x/prediction-market-algo",
+      },
+      {
+        label: "Live Grafana Dashboard",
+        url: "",
+      },
+      {
+        label: "Macro Signal Framework (Tauric Research Fork)",
+        url: "https://github.com/kadam-x/TradingAgents",
       },
     ],
   },
   {
     id: "project-2",
+    title: "DUAL//CORE - WORK IN PROGRESS",
+    description: "",
+    techStack: [
+      { name: "Python", color: "#3776AB" },
+      { name: "Docker", color: "#1d63ed" },
+      { name: "FastAPI", color: "#04988a" },
+      { name: "Airflow", color: "#e43921" },
+      { name: "MinIO", color: "#cf163e" },
+      { name: "Grafana", color: "#ff671d" },
+    ],
+    links: [{}],
+  },
+  {
+    id: "project-3",
     title: "Implied Volatility Surface Pipeline",
     description:
       "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
@@ -40,24 +62,6 @@ const projects = [
       {
         label: "View Code",
         url: "https://github.com/kadam-x/volatility-surface-pipeline",
-      },
-    ],
-  },
-  {
-    id: "project-3",
-    title: "ML Factor Signal Monitor",
-    description:
-      "A signal generation and monitoring pipeline for equity factor strategies. Computes momentum and mean-reversion signals, trains an XGBoost classifier with walk-forward validation, and tracks signal decay and feature importance drift over rolling windows.",
-    techStack: [
-      { name: "React", color: "#61DAFB" },
-      { name: "Next.js", color: "#000000" },
-      { name: "TypeScript", color: "#3178C6" },
-      { name: "Framer", color: "#0055FF" },
-    ],
-    links: [
-      {
-        label: "View Code",
-        url: "https://github.com/kadam-x/ml-factor-signal-monitor",
       },
     ],
   },
@@ -79,7 +83,7 @@ const projects = [
       },
     ],
   },
-  {
+  /* {
     id: "project-5",
     title: "CopyBot",
     description:
@@ -112,7 +116,7 @@ const projects = [
       { label: "Live Demo", url: "https://siege-x-guide.vercel.app/" },
       { label: "View Code", url: "https://github.com/snezzz0/siegex" },
     ],
-  },
+  }, */
 ];
 ---
 
@@ -255,9 +259,9 @@ const projects = [
       const prevBtn = document.getElementById("prevBtn");
       const nextBtn = document.getElementById("nextBtn");
       const cards = document.querySelectorAll(".project-card");
-      const totalProjects = 6;
+      const totalProjects = 4;
       const projectsPerPage = 2;
-      const totalPages = 2;
+      const totalPages = 1;
       let currentPage = 0;
 
       function showPage(page) {
@@ -304,7 +308,7 @@ const projects = [
     position: relative;
     z-index: 10;
     min-height: 100vh;
-    padding: 4rem 2rem;
+    padding: 3rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -329,6 +333,7 @@ const projects = [
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
     text-decoration: none;
+    margin-left: 3rem;
   }
 
   .back-link:hover {
@@ -340,7 +345,7 @@ const projects = [
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-left: auto;
+    margin-right: 6rem;
   }
 
   .nav-arrow {
@@ -379,16 +384,16 @@ const projects = [
     justify-content: flex-end;
     align-items: flex-end;
     padding-bottom: 1rem;
-    padding-right: 2rem;
+    padding-right: 6rem;
   }
 
   .project-card {
     border: 2px solid;
     border-color: #ffffff #000000 #000000 #ffffff;
     padding: 0;
-    width: 100rem;
-    max-width: 100rem;
-    min-height: 418px;
+    width: 80rem;
+    max-width: 80rem;
+    min-height: 360px;
     flex-shrink: 0;
     background: #c0c0c0;
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
@@ -424,19 +429,20 @@ const projects = [
   }
 
   .info-btn-ui {
-    background: #d8d9ed;
-    border: 1px solid #000000;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
     color: #000000;
     font-size: 1rem;
     cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     padding: 0.25rem 0.5rem;
     min-width: 1.5rem;
     text-align: center;
   }
 
   .info-btn-ui:hover {
-    background: #000033;
+    background: #000000;
     color: #ffffff;
   }
 
