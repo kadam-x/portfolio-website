@@ -26,14 +26,14 @@ const { title, useGridBackground } = Astro.props;
     <meta name="msapplication-TileColor" content="#d8d9ed" />
     <meta name="theme-color" content="#d8d9ed" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preload" as="image" href="/small-adam.webp" />
     <title>{title}</title>
   </head>
   <body>
-    <div class:list={["bg-layer", useGridBackground && "bg-layer--custom"]}></div>
+    <div class:list={["bg-layer", useGridBackground && "bg-layer--custom"]}>
+    </div>
     <slot />
     <script is:inline>
-      window.dispatchEvent(new Event('astro:page-load'));
+      window.dispatchEvent(new Event("astro:page-load"));
     </script>
   </body>
 </html>
@@ -62,7 +62,12 @@ const { title, useGridBackground } = Astro.props;
     font-smooth: never;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
   }
 
@@ -85,7 +90,7 @@ const { title, useGridBackground } = Astro.props;
   }
 
   .bg-layer--custom::before {
-    content: '';
+    content: "";
     position: fixed;
     top: -70%;
     left: -70%;
@@ -97,3 +102,4 @@ const { title, useGridBackground } = Astro.props;
     z-index: -1;
   }
 </style>
+

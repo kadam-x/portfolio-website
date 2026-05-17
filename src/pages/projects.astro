@@ -6,27 +6,32 @@ const projects = [
   {
     id: "project-1",
     title: "RBL Capital",
-    description:
-      "A paper trading and backtesting simulated 'prop shop' running ",
+    description: `A simulated proprietary trading research system built to explore systematic edge across asset classes. Currently in active development across four research desks:
+
+· Prediction Markets - real-time order flow imbalance monitoring on Polymarket, testing whether anomalous informed flow leads correlated TradFi instrument moves ahead of macro events
+
+· Macro Signals - forked Tauric Research agent framework scanning defence, infrastructure, and commodities for sentiment-driven positioning signals
+
+· Equities - agent-monitored low-frequency long/short ideas on individual stocks, fundamentals and macro-regime aware
+
+· Mid-freq Crypto - systematic signal research on Hyperliquid perpetuals`,
     techStack: [
       { name: "Python", color: "#3776AB" },
-      { name: "Docker", color: "#1d63ed" },
-      { name: "FastAPI", color: "#04988a" },
-      { name: "Airflow", color: "#e43921" },
-      { name: "MinIO", color: "#cf163e" },
-      { name: "Grafana", color: "#ff671d" },
+      { name: "Postgres", color: "#336791" },
+      { name: "Redis", color: "#FF4438" },
+      { name: "Discord", color: "#5865F2" },
     ],
     links: [
       {
-        label: "Prediction Market Algo",
+        label: "Prediction Markets (Ingestion & Storage)",
         url: "https://github.com/kadam-x/prediction-market-algo",
       },
       {
-        label: "Live Grafana Dashboard",
+        label: "Live Dashboard",
         url: "",
       },
       {
-        label: "Macro Signal Framework (Tauric Research Fork)",
+        label: "Tauric Research Fork",
         url: "https://github.com/kadam-x/TradingAgents",
       },
     ],
@@ -217,13 +222,13 @@ const projects = [
       const EXPRESSIONS = ["talking"];
       const PROJECT_DIALOGUES = {
         "project-1":
-          "I wanted to build something that quant desks actually use not a backtest, but the infrastructure underneath. This computes the vol surface the same way a risk system would: fetch the chain, invert BS numerically per strike, load it into a proper warehouse, serve it via API. The Brent's method inversion was the most interesting part to get right.",
+          "I built this because prediction markets and DeFI are one of the few places where insider positioning is both legal and detectable. The real question is not whether the retail can catch up in time",
         "project-2":
           "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
         "project-3":
-          "Most quant projects stop at I built a model. This one asks what comes after — how do you know the signal is still working next month? I built the monitoring layer: rolling AUC tracking, feature importance drift detection, served as an API. Closer to what a systematic desk actually runs than anything with a P&L curve.",
+          "I wanted to build something that sits closer to how risk systems actually work than a typical portfolio project. Fetching the chain, inverting Black-Scholes numerically per strike, warehousing it properly, serving it through an API. Getting Brent's method to behave at the wings was the part that kept me up.",
         "project-4":
-          "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. Isolation Forest handles this well, and SHAP made the results actually interpretable rather than just a score.",
+          "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. .",
         "project-5":
           "StatsBomb data is surprisingly rich — every pass, carry, and pressure with x/y coordinates. I built a proper feature store first (rolling per-90 metrics, workload proxies), then trained with walk-forward validation so there's no temporal leakage. The clustering was the most fun part — watching archetypes emerge from the data without telling the model what positions exist.",
         "project-6": "Placeholder project dialogue.",
