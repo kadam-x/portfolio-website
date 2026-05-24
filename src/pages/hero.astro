@@ -96,9 +96,9 @@ import Layout from "../layouts/Layout.astro";
          SECTION 3 -- nav links
          ======================================================== -->
     <nav>
-      <a href="/about">about</a>
-      <span class="sep">//</span>
-      <a href="/projects">projects</a>
+      <a href="/about">[//about]</a>
+      <span class="sep">|</span>
+      <a href="/projects">[projects//]</a>
     </nav>
 
     <div class="separator">
@@ -141,10 +141,12 @@ import Layout from "../layouts/Layout.astro";
          SECTION 5 -- Dune quote
          ======================================================== -->
     <blockquote class="quote">
-      <p>"Once men turned their thinking over to machines in the hope</p>
-      <p>&nbsp;that this would set them free. But that only permitted</p>
-      <p>&nbsp;other men with machines to enslave them."</p>
-      <p class="attr">-- Frank Herbert, Dune</p>
+      <p>>>>>>Once men turned their thinking over to machines</p>
+      <p>>>>>>in the hope that this would set them free</p>
+      <p>
+        >>>>>But that only permitted other men with machines to enslave them
+      </p>
+      <p class="attr">- Frank Herbert, Dune</p>
     </blockquote>
   </main>
 
@@ -250,8 +252,10 @@ import Layout from "../layouts/Layout.astro";
       flex-direction: column;
       gap: 5px;
       font-size: 13px;
-      text-align: center;
       color: #cbcbcb;
+      width: 100%;
+      align-items: flex-start;
+      padding-left: 45px;
     }
 
     .links a {
@@ -284,8 +288,9 @@ import Layout from "../layouts/Layout.astro";
     .quote {
       font-size: 12px;
       color: #cbcbcb;
-      text-align: center;
       line-height: 1.85;
+      width: 100%;
+      padding-left: 45px;
     }
 
     .quote .attr {

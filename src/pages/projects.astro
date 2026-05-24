@@ -5,30 +5,13 @@ import AvatarCurator from "../components/AvatarCurator.astro";
 const projects = [
   {
     id: "project-1",
+    type: "trading",
     title: "RBL Capital",
-    description: `A simulated proprietary trading research system built to explore systematic edge across asset classes. Currently in active development across four research desks:
-
-· Prediction Markets - real-time order flow imbalance monitoring on Polymarket, testing whether anomalous informed flow leads correlated TradFi instrument moves ahead of macro events
-
-· Macro Signals - forked Tauric Research agent framework scanning defence, infrastructure, and commodities for sentiment-driven positioning signals
-
-· Equities - agent-monitored low-frequency long/short ideas on individual stocks, fundamentals and macro-regime aware
-
-· Mid-freq Crypto - systematic signal research on Hyperliquid perpetuals`,
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Postgres", color: "#336791" },
-      { name: "Redis", color: "#FF4438" },
-      { name: "Discord", color: "#5865F2" },
-    ],
+    description: `A simulated proprietary trading research system built to explore systematic edge across asset classes. Currently in active development across four research desks:<br><br><span class="desk-name">Prediction Markets</span> - real-time order flow imbalance monitoring on Polymarket, testing whether anomalous informed flow leads correlated TradFi instrument moves ahead of macro events.<br><br><span class="desk-name">Macro Signals</span> - forked Tauric Research agent framework scanning defence, infrastructure, and commodities for sentiment-driven positioning signals.<br><br><span class="desk-name">Equities</span> - agent-monitored low-frequency long/short ideas on individual stocks, fundamentals and macro-regime aware.<br><br><span class="desk-name">Mid-freq Crypto</span> - systematic signal research on Hyperliquid perpetuals.`,
     links: [
       {
-        label: "Prediction Markets (Ingestion & Storage)",
+        label: "Prediction Markets - Ingestion & Research",
         url: "https://github.com/kadam-x/prediction-market-algo",
-      },
-      {
-        label: "Live Dashboard",
-        url: "",
       },
       {
         label: "Tauric Research Fork",
@@ -38,53 +21,32 @@ const projects = [
   },
   {
     id: "project-2",
-    title: "DUAL//CORE - WORK IN PROGRESS",
-    description: "",
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Docker", color: "#1d63ed" },
-      { name: "FastAPI", color: "#04988a" },
-      { name: "Airflow", color: "#e43921" },
-      { name: "MinIO", color: "#cf163e" },
-      { name: "Grafana", color: "#ff671d" },
-    ],
-    links: [{}],
-  },
-  {
-    id: "project-3",
+    type: "engineering",
     title: "Implied Volatility Surface Pipeline",
     description:
       "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
-    techStack: [
-      { name: "Python", color: "#3776AB" },
-      { name: "Docker", color: "#1d63ed" },
-      { name: "FastAPI", color: "#04988a" },
-      { name: "Airflow", color: "#e43921" },
-      { name: "MinIO", color: "#cf163e" },
-      { name: "Grafana", color: "#ff671d" },
-    ],
     links: [
       {
         label: "View Code",
         url: "https://github.com/kadam-x/volatility-surface-pipeline",
       },
+      {
+        label: "Docs",
+        url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md",
+      },
     ],
   },
   {
-    id: "project-4",
-    title: "Urban Mobility Anomaly Detection",
+    id: "project-3",
+    type: "game",
+    span: 2,
+    title: "DUAL//CORE",
     description:
-      "Unsupervised anomaly detection on Citibike NYC trip data. Isolation Forest flags unusual demand patterns per station per time window, DBSCAN clusters stations by behaviour, and SHAP explains what drove each anomaly score.",
-    techStack: [
-      { name: "React", color: "#61DAFB" },
-      { name: "Next.js", color: "#000000" },
-      { name: "TypeScript", color: "#3178C6" },
-      { name: "Framer", color: "#0055FF" },
-    ],
+      "A dual-screen arcade shooter where you control two ships simultaneously - one on each side of the screen. Each ship mirrors the other's movement but fires in opposite directions. Survive waves of enemies, manage shared resources between both cores, and unlock new weapon combinations as you progress.",
     links: [
       {
-        label: "View Code",
-        url: "https://github.com/kadam-x/urban-mob-anom-det",
+        label: "Devlog",
+        url: "",
       },
     ],
   },
@@ -134,7 +96,7 @@ const projects = [
 
   <main class="projects-container">
     <div class="top-bar">
-      <a href="/" class="back-link" id="homeLink"> &lt; take me home </a>
+      <a href="/hero" class="back-link" id="homeLink"> &lt; take me home </a>
 
       <div class="projects-nav">
         <button class="nav-arrow" id="prevBtn">&lt; prev</button>
@@ -146,7 +108,13 @@ const projects = [
       <div class="projects-grid">
         {
           projects.map((project, index) => (
-            <div class="project-card" data-id={project.id} data-index={index}>
+            <div
+              class="project-card"
+              data-id={project.id}
+              data-index={index}
+              data-type={project.type}
+              data-span={project.span || 1}
+            >
               <div class="card-header">
                 <span class="card-prefix">[*]</span>
                 <h2>{project.title}</h2>
@@ -165,20 +133,9 @@ const projects = [
                 </div>
               )}
 
-              <p class="project-description">{project.description}</p>
+              <p class="project-description" set:html={project.description} />
 
               <div class="card-footer">
-                <div class="tech-stack">
-                  {project.techStack.map((tech) => (
-                    <span
-                      class="tech-tag"
-                      style={`background-color: ${tech.color}20; border-color: ${tech.color}40; color: ${tech.color};`}
-                    >
-                      {tech.name}
-                    </span>
-                  ))}
-                </div>
-
                 <div class="card-links">
                   {project.links.map((link) => (
                     <a
@@ -224,17 +181,9 @@ const projects = [
         "project-1":
           "I built this because prediction markets and DeFI are one of the few places where insider positioning is both legal and detectable. The real question is not whether the retail can catch up in time",
         "project-2":
-          "I was curious about, when does Monte Carlo beat the binomial tree, and when does it not? I implemented all three methods behind a unified interface, then swept across moneyness, time to expiry, and volatility regimes to measure accuracy and runtime. The kind of analysis you'd do before choosing a pricer for a production system.",
+          "Two ships. One keyboard. Zero mercy. Been wanting to build a dual-screen shooter since I played those old flash games. The core mechanic of mirrored movement but opposite firing directions creates this puzzle-like flow where you have to think about both sides simultaneously.",
         "project-3":
           "I wanted to build something that sits closer to how risk systems actually work than a typical portfolio project. Fetching the chain, inverting Black-Scholes numerically per strike, warehousing it properly, serving it through an API. Getting Brent's method to behave at the wings was the part that kept me up.",
-        "project-4":
-          "I picked this because spatial + temporal data is underrepresented in most DS portfolios. The interesting challenge was defining anomaly without labels — you can't just label a demand spike as bad, context matters. .",
-        "project-5":
-          "StatsBomb data is surprisingly rich — every pass, carry, and pressure with x/y coordinates. I built a proper feature store first (rolling per-90 metrics, workload proxies), then trained with walk-forward validation so there's no temporal leakage. The clustering was the most fun part — watching archetypes emerge from the data without telling the model what positions exist.",
-        "project-6": "Placeholder project dialogue.",
-        "project-7": "Placeholder project dialogue.",
-        "project-8": "Placeholder project dialogue.",
-        "project-9": "Placeholder project dialogue.",
       };
 
       const ALL_ANIMATIONS = [...EMOTES, ...STATES];
@@ -264,16 +213,15 @@ const projects = [
       const prevBtn = document.getElementById("prevBtn");
       const nextBtn = document.getElementById("nextBtn");
       const cards = document.querySelectorAll(".project-card");
-      const totalProjects = 4;
-      const projectsPerPage = 2;
-      const totalPages = 1;
+
+      const pageLayout = [[0, 1], [2]];
+      const totalPages = pageLayout.length - 1;
       let currentPage = 0;
 
       function showPage(page) {
+        const visibleIndices = pageLayout[page] || [];
         cards.forEach((card, index) => {
-          const start = page * projectsPerPage;
-          const end = start + projectsPerPage;
-          if (index >= start && index < end) {
+          if (visibleIndices.includes(index)) {
             card.classList.remove("hidden");
           } else {
             card.classList.add("hidden");
@@ -407,6 +355,31 @@ const projects = [
     flex-direction: column;
   }
 
+  .project-card[data-span="2"] {
+    min-height: calc(360px + 1rem);
+  }
+
+  .project-card[data-type="game"] {
+    background: #1a1a2e;
+    border-color: #0f0f1a #4a4a6a #4a4a6a #0f0f1a;
+  }
+
+  .project-card[data-type="game"] .card-header {
+    background: #0f0f1a;
+  }
+
+  .project-card[data-type="game"] .card-header h2 {
+    color: #00ff88;
+  }
+
+  .project-card[data-type="game"] .card-prefix {
+    color: #00ff88;
+  }
+
+  .project-card[data-type="game"] .project-description {
+    color: #e0e0e0;
+  }
+
   .project-card.hidden {
     display: none;
   }
@@ -460,22 +433,11 @@ const projects = [
     flex-grow: 1;
   }
 
-  .tech-tag {
-    font-size: 12px;
-    padding: 0.2rem 0.5rem;
-    border: 1px solid;
-    border-radius: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-right: 0.25rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
+  .project-description :global(.desk-name) {
+    font-weight: bold;
+    color: #000033;
+    display: inline-block;
+    margin-bottom: 0.5rem;
   }
 
   .link-btn {
