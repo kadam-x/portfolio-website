@@ -1,26 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import gitLog from "../data/git-log.json";
 
 const title = "Kovacs Adam :: About";
-
-const commitList = gitLog.map((line) => {
-  const [date, ...msgParts] = line.split(" ");
-  return { date, message: msgParts.join(" ") };
-});
 ---
 
 <Layout title={title}>
-  <aside class="commits">
-    {
-      commitList.map((commit) => (
-        <span class="commit">
-          {commit.date} {commit.message}
-        </span>
-      ))
-    }
-  </aside>
-
   <div class="container">
     <main>
       <a href="/hero" class="home-link">← take me home</a>
@@ -94,17 +78,6 @@ const commitList = gitLog.map((line) => {
     display: flex;
     gap: 3rem;
     max-width: 900px;
-  }
-
-  .commits {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 11px;
-    color: #666;
   }
 
   main {

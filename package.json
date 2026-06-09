@@ -4,13 +4,13 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/generate-git-log.mjs && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.4",
-    "astro": "^6.2.1",
+    "@astrojs/mdx": "^6.0.2",
+    "astro": "^6.4.4",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "three": "^0.182.0"

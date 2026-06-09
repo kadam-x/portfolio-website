@@ -3,9 +3,6 @@ dist/
 # generated types
 .astro/
 
-# git log script
-src/data/git-log.json
-
 # dependencies
 node_modules/
 
