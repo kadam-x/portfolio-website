@@ -1,113 +1,333 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 const title = "Kovacs Adam :: About";
 ---
 
 <Layout title={title}>
-  <div class="container">
-    <main>
-      <a href="/hero" class="home-link">← take me home</a>
+  <canvas id="bg-canvas"></canvas>
 
-      <h2>About</h2>
-      <p>Self-taught Dev | Finance & CS Student</p>
-      <p>
-        My name is Kovacs Adam and I am a 24-year-old finance and semi-CS
-        student, who enjoys simple and clean but *blazingly fast* design.
-      </p>
-      <p>
-        If we circle back 10 or so years, I actually started out with
-        RollerCoaster Tycoon (great times), than redstone in Minecraft than
-        pretending to know Java so I could finally make my own mod allowing me
-        to create planes and hot-air balloons, so I don't have to download it
-        from a shady site at 11PM just to find my PC infected with a trojan,
-        later came Factorio and now we're here, truly Gen Z by heart.
-      </p>
-      <p>
-        My main interests include high performance, low level computing as I'm
-        currently learning C++ and the next on the list is definitely Rust.
-        During the Solana craze i've became really interested in algorithmic
-        trading, more specifically alternative data and turning my theories into
-        code that can be tested, measured, tweaked and deployed.
-      </p>
-      <a href="https://github.com/kadam-x/portfolio-website">This website</a> (or
-      collection of sites) is my workspace and a bit of my artistic style made public.
-      It was inspired by an era where creative engineering and well thought-out, polished
-      choices standing the test of time were prioritized over fancy animations and
-      bloated frameworks, where each site had a soul and not the same 3 tailwind buttons
-      with the same exact padding, where developers had passion and ideas, and most
-      importantly, where the internet felt alive and personal.
-      <p></p>
+  <a href="/hero" class="home-link-fixed">&lt; take me home</a>
 
-      <h2>Some great examples</h2>
-      <ul class="examples">
-        <li>
-          <a href="https://www.mcmaster.com/">mcmaster.com</a> - awesome engineering
-          made professionally and standing the test of time
-        </li>
-        <li>
-          <a href="https://beej.us/guide/">Beej's Guides</a> - one of the clearest,
-          most human systems programming guides, clearly made with passion and for
-          free
-        </li>
-        <li>
-          <a href="https://andrewkelley.me/">Andrew Kelley</a> - The creator of Zig
-        </li>
-        <li>
-          <a href="https://www.youtube.com/@Magicalbat">MagicalBat</a>
-        </li>
-      </ul>
-    </main>
+  <div id="text-overlays">
+    <div class="text-overlay active" data-index="0">
+      <h1>Kovacs Adam</h1>
+      <p class="tagline">Finance & CS Student &mdash; Self-taught Dev</p>
+    </div>
+
+    <div class="text-overlay" data-index="1">
+      <div class="text-block">
+        <p class="label">// origin</p>
+        <p>
+          My name is Kovacs Adam and I am a 24-year-old finance and semi-CS
+          student, who enjoys simple and clean but <em>blazingly fast</em> design.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-overlay" data-index="2">
+      <div class="text-block">
+        <p class="label">// how it started</p>
+        <p>
+          If we circle back 10 or so years, I actually started out with
+          RollerCoaster Tycoon, then redstone in Minecraft, then pretending to
+          know Java so I could make my own mod — planes and hot-air balloons —
+          so I didn't have to download it from a shady site at 11PM just to find
+          my PC infected with a trojan. Later came Factorio and now we're here.
+          Truly Gen Z by heart.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-overlay" data-index="3">
+      <div class="text-block">
+        <p class="label">// interests</p>
+        <p>
+          High performance, low-level computing — currently learning C++, Rust
+          is next on the list. During the Solana craze I got deep into
+          algorithmic trading: alternative data, turning theories into code that
+          can be tested, measured, tweaked, and deployed.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-overlay" data-index="4">
+      <div class="text-block">
+        <p class="label">// this site</p>
+        <p>
+          <a href="https://github.com/kadam-x/portfolio-website" target="_blank"
+            >This website</a
+          > is my workspace and a bit of my artistic style made public. Inspired by
+          an era where creative engineering and polished choices standing the test
+          of time were prioritized over fancy animations and bloated frameworks —
+          where each site had a soul, and the internet felt alive and personal.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-scroll">
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
   </div>
 </Layout>
 
+<script>
+  import * as THREE from "three";
+
+  // ── renderer ──────────────────────────────────────────────────
+  const canvas = document.getElementById("bg-canvas") as HTMLCanvasElement;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0a0a);
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000,
+  );
+  camera.position.set(0, 0, 30);
+
+  // ── lights ────────────────────────────────────────────────────
+  const pointLight = new THREE.PointLight(0xffffff, 80);
+  pointLight.position.set(5, 5, 5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+  scene.add(pointLight, ambientLight);
+
+  // ── main object: torus knot ───────────────────────────────────
+  const torusKnot = new THREE.Mesh(
+    new THREE.TorusKnotGeometry(8, 2.2, 180, 20),
+    new THREE.MeshStandardMaterial({
+      color: 0x1a3a6a,
+      wireframe: false,
+      roughness: 0.4,
+      metalness: 0.8,
+    }),
+  );
+  scene.add(torusKnot);
+
+  // ── star field ────────────────────────────────────────────────
+  function addStars() {
+    const geo = new THREE.SphereGeometry(0.18, 6, 6);
+    const mat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    for (let i = 0; i < 380; i++) {
+      const star = new THREE.Mesh(geo, mat);
+      star.position.set(
+        THREE.MathUtils.randFloatSpread(400),
+        THREE.MathUtils.randFloatSpread(400),
+        THREE.MathUtils.randFloatSpread(400),
+      );
+      scene.add(star);
+    }
+  }
+  addStars();
+
+  // ── scroll → camera + overlay switching ───────────────────────
+  const scrollWrap = document.getElementById("about-scroll")!;
+  const overlays = document.querySelectorAll(".text-overlay");
+  let scrollT = 0;
+
+  scrollWrap.addEventListener("scroll", () => {
+    const el = scrollWrap;
+    scrollT = el.scrollTop / (el.scrollHeight - el.clientHeight);
+
+    const radius = 30;
+    const angle = scrollT * Math.PI * 2;
+    camera.position.x = radius * Math.sin(angle);
+    camera.position.z = radius * Math.cos(angle);
+    camera.position.y = -scrollT * 8;
+    camera.lookAt(0, 0, 0);
+
+    const targets = [
+      { tx: -14, ty: 0  },
+      { tx: 16,  ty: 0  },
+      { tx: -10, ty: 4  },
+      { tx: 18,  ty: -4 },
+      { tx: -8,  ty: 0  },
+    ];
+    const sectionCount = targets.length;
+    const rawIndex = scrollT * sectionCount;
+    const cur = Math.min(sectionCount - 1, Math.floor(rawIndex));
+    const nxt = Math.min(sectionCount - 1, cur + 1);
+    const localT = rawIndex - cur;
+    const eased = Math.max(0, (localT - 0.7) / 0.3);
+    const t = Math.min(1, Math.max(0, eased));
+    const sideOffset = targets[cur].tx + (targets[nxt].tx - targets[cur].tx) * t;
+    const vertOffset = targets[cur].ty + (targets[nxt].ty - targets[cur].ty) * t;
+    camera.translateX(sideOffset);
+    camera.translateY(vertOffset);
+
+    const activeIndex = Math.min(
+      overlays.length - 1,
+      Math.floor(scrollT * overlays.length),
+    );
+    overlays.forEach((overlay, i) => {
+      overlay.classList.toggle("active", i === activeIndex);
+    });
+  });
+
+  // ── resize ────────────────────────────────────────────────────
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ── animate ───────────────────────────────────────────────────
+  function animate() {
+    requestAnimationFrame(animate);
+    torusKnot.rotation.x += 0.003;
+    torusKnot.rotation.y += 0.005;
+    renderer.render(scene, camera);
+  }
+  animate();
+</script>
+
 <style>
-  /* Reset any global styles from Layout that might interfere */
   :global(body) {
-    background: #fff;
-    color: #000;
-    font-family: serif;
     margin: 0;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* scrollable layer - just spacers to drive scroll height */
+  #about-scroll {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  #about-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .spacer {
+    height: 100vh;
+  }
+
+  /* fixed overlays - centered, cross-fade via active class */
+  #text-overlays {
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    pointer-events: none;
+  }
+
+  .text-overlay {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .text-overlay[data-index="0"] {
+    left: 25%;
+  }
+
+  .text-overlay:not([data-index="0"]) {
+    left: 65%;
+  }
+
+  .text-overlay[data-index="2"] {
+    left: 25%;
+  }
+
+  .text-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  h1 {
+    font-family: "Courier New", monospace;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: #e8e8e8;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .tagline {
+    font-family: "Courier New", monospace;
+    font-size: 1rem;
+    color: #4a6fa5;
+    margin: 0 0 2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .text-block {
+    max-width: 480px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .container {
-    display: flex;
-    gap: 3rem;
-    max-width: 900px;
-  }
-
-  main {
-    max-width: 680px;
-    padding: 2rem;
-  }
-
-  .home-link {
-    color: #0000ff;
-    text-decoration: underline;
-    font-size: 14px;
-    margin-bottom: 2rem;
-    display: inline-block;
-  }
-
-  h2 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+  .label {
+    font-family: "Courier New", monospace;
+    font-size: 0.72rem;
+    color: #4a6fa5;
+    letter-spacing: 0.14em;
+    margin: 0;
   }
 
   p {
-    margin-bottom: 1rem;
+    font-family: "Courier New", monospace;
+    font-size: 0.92rem;
+    color: #999;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  em {
+    color: #c8d8f0;
+    font-style: normal;
   }
 
   a {
-    color: #0000ff;
+    color: #4a6fa5;
     text-decoration: underline;
   }
 
-  .examples {
-    padding-left: 2rem;
+  a:hover {
+    color: #7aa0d4;
+  }
+
+  .home-link-fixed {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 20;
+    font-family: "Courier New", monospace;
+    font-size: 0.82rem;
+    color: #4a6fa5;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .home-link-fixed:hover {
+    color: #7aa0d4;
+  }
+
+  @media (max-width: 600px) {
+    .text-overlay {
+      width: 90vw;
+    }
   }
 </style>
