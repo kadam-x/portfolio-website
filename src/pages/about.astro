@@ -100,17 +100,20 @@ const title = "Kovacs Adam :: About";
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
   scene.add(pointLight, ambientLight);
 
-  // ── main object: torus knot ───────────────────────────────────
-  const torusKnot = new THREE.Mesh(
-    new THREE.TorusKnotGeometry(8, 2.2, 180, 20),
+  // ── main object: earth ────────────────────────────────────────
+  const textureLoader = new THREE.TextureLoader();
+  const earthMap = textureLoader.load(
+    "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg",
+  );
+  const earth = new THREE.Mesh(
+    new THREE.SphereGeometry(7, 64, 64),
     new THREE.MeshStandardMaterial({
-      color: 0x1a3a6a,
-      wireframe: false,
-      roughness: 0.4,
-      metalness: 0.8,
+      map: earthMap,
+      roughness: 0.5,
+      metalness: 0.1,
     }),
   );
-  scene.add(torusKnot);
+  scene.add(earth);
 
   // ── star field ────────────────────────────────────────────────
   function addStars() {
@@ -157,7 +160,8 @@ const title = "Kovacs Adam :: About";
     const nxt = Math.min(sectionCount - 1, cur + 1);
     const localT = rawIndex - cur;
     const eased = Math.max(0, (localT - 0.7) / 0.3);
-    const t = Math.min(1, Math.max(0, eased));
+    const tRaw = Math.min(1, Math.max(0, eased));
+    const t = tRaw * tRaw * (3 - 2 * tRaw);
     const sideOffset = targets[cur].tx + (targets[nxt].tx - targets[cur].tx) * t;
     const vertOffset = targets[cur].ty + (targets[nxt].ty - targets[cur].ty) * t;
     camera.translateX(sideOffset);
@@ -182,8 +186,7 @@ const title = "Kovacs Adam :: About";
   // ── animate ───────────────────────────────────────────────────
   function animate() {
     requestAnimationFrame(animate);
-    torusKnot.rotation.x += 0.003;
-    torusKnot.rotation.y += 0.005;
+    earth.rotation.y += 0.003;
     renderer.render(scene, camera);
   }
   animate();
@@ -245,7 +248,8 @@ const title = "Kovacs Adam :: About";
     left: 65%;
   }
 
-  .text-overlay[data-index="2"] {
+  .text-overlay[data-index="2"],
+  .text-overlay[data-index="4"] {
     left: 25%;
   }
 
