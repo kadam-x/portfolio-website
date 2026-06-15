@@ -95,25 +95,11 @@ function CameraRig({ focused }) {
   return null;
 }
 
-function LightsRig({ ready }) {
-  const ambRef = useRef(null);
-  const dirRef = useRef(null);
-
-  useFrame((_, delta) => {
-    if (!ambRef.current || !dirRef.current) return;
-
-    const targetAmb = ready ? 0.8 : 0;
-    const targetDir = ready ? 1.2 : 0;
-
-    const f = 1 - Math.exp(-8 * delta);
-    ambRef.current.intensity += (targetAmb - ambRef.current.intensity) * f;
-    dirRef.current.intensity  += (targetDir - dirRef.current.intensity) * f;
-  });
-
+function LightsRig() {
   return (
     <>
-      <ambientLight ref={ambRef} intensity={0} />
-      <directionalLight ref={dirRef} position={[2, 4, 2]} intensity={0} />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[2, 4, 2]} intensity={0.8} />
     </>
   );
 }
@@ -125,17 +111,23 @@ function Scene({ focused, setFocused, terminalTexture, onInteract }) {
 
   useEffect(() => {
     scene.traverse((node) => {
-      if (node.isMesh && node.name === "screen_glass_screen_0") {
-        const mat = new THREE.MeshStandardMaterial({
-          map:               terminalTexture,
-          emissiveMap:       terminalTexture,
-          emissive:          new THREE.Color(0x004400),
-          emissiveIntensity: 0.6,
-          roughness:         0.3,
-          metalness:         0.0,
-        });
-        node.material        = mat;
-        screenMatRef.current = mat;
+      if (node.isMesh) {
+        const name = node.name.toLowerCase();
+        if (name === "screen_glass_screen_0") {
+          const mat = new THREE.MeshStandardMaterial({
+            map:               terminalTexture,
+            emissiveMap:       terminalTexture,
+            emissive:          new THREE.Color(0x004400),
+            emissiveIntensity: 0.6,
+            roughness:         0.3,
+            metalness:         0.0,
+          });
+          node.material        = mat;
+          screenMatRef.current = mat;
+        }
+        if (name.includes("table") || name.includes("desk") || name.includes("base") || name.includes("floor")) {
+          node.visible = false;
+        }
       }
     });
   }, [scene]);
@@ -164,7 +156,23 @@ function Scene({ focused, setFocused, terminalTexture, onInteract }) {
           }
         }}
       />
-      <OrbitControls ref={orbitRef} enablePan={false} target={[0, 0, 0]} />
+      <mesh position={[0, -0.22, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2.5, 1]} />
+        <meshStandardMaterial
+          color="#0d0d0d"
+          emissive="#0a1a0a"
+          emissiveIntensity={0.3}
+          roughness={0.9}
+          metalness={0.0}
+        />
+      </mesh>
+      <OrbitControls
+        ref={orbitRef}
+        enablePan={false}
+        target={[0, 0, 0]}
+        minPolarAngle={0}
+        maxPolarAngle={Math.PI * 0.55}
+      />
     </>
   );
 }
@@ -343,7 +351,7 @@ export default function VintagePC() {
         gl={{ antialias: true }}
       >
         <Suspense fallback={null}>
-          <LightsRig ready={ready} />
+          <LightsRig />
           <Environment preset="city" />
           <Scene
             focused={focused}
