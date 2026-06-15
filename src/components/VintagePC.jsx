@@ -104,6 +104,67 @@ function LightsRig() {
   );
 }
 
+function DeskMesh() {
+  const tex = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 512;
+    c.height = 512;
+    const ctx = c.getContext("2d");
+
+    const img = ctx.createImageData(512, 512);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const grain = Math.random() * 120 + 80;
+      const n = (Math.random() * 80 + grain) | 0;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = n;
+      img.data[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+
+    for (let i = 0; i < 200; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      const w = Math.random() * 120 + 5;
+      ctx.strokeStyle = `rgba(0,0,0,${Math.random() * 0.15})`;
+      ctx.lineWidth = Math.random() * 3 + 0.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w * (Math.random() - 0.5), y + w * (Math.random() - 0.15));
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 40; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
+      ctx.beginPath();
+      ctx.arc(x, y, Math.random() * 4 + 1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(4, 2);
+    return t;
+  }, []);
+
+  return (
+    <mesh position={[0, -0.22, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <planeGeometry args={[2.5, 0.8]} />
+      <meshStandardMaterial
+        color="#020202"
+        emissive="#071207"
+        emissiveIntensity={0.25}
+        map={tex}
+        bumpMap={tex}
+        bumpScale={0.008}
+        roughnessMap={tex}
+        roughness={1.0}
+        metalness={0.0}
+      />
+    </mesh>
+  );
+}
+
 function Scene({ focused, setFocused, terminalTexture, onInteract }) {
   const { scene } = useGLTF("/models/computer.glb");
   const orbitRef     = useRef();
@@ -156,16 +217,7 @@ function Scene({ focused, setFocused, terminalTexture, onInteract }) {
           }
         }}
       />
-      <mesh position={[0, -0.22, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2.5, 1]} />
-        <meshStandardMaterial
-          color="#0d0d0d"
-          emissive="#0a1a0a"
-          emissiveIntensity={0.3}
-          roughness={0.9}
-          metalness={0.0}
-        />
-      </mesh>
+      <DeskMesh />
       <OrbitControls
         ref={orbitRef}
         enablePan={false}
