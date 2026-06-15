@@ -26,6 +26,7 @@ const { title, useGridBackground } = Astro.props;
     <meta name="msapplication-TileColor" content="#d8d9ed" />
     <meta name="theme-color" content="#d8d9ed" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="fetch" crossorigin href="/models/computer.glb" />
     <title>{title}</title>
   </head>
   <body>

@@ -89,10 +89,33 @@ function CameraRig({ focused }) {
       camera.position.copy(target);
       snapRef.current = false;
     } else {
-      camera.position.lerp(target, 0.05);
+      camera.position.lerp(target, 0.025);
     }
   });
   return null;
+}
+
+function LightsRig({ ready }) {
+  const ambRef = useRef(null);
+  const dirRef = useRef(null);
+
+  useFrame((_, delta) => {
+    if (!ambRef.current || !dirRef.current) return;
+
+    const targetAmb = ready ? 0.8 : 0;
+    const targetDir = ready ? 1.2 : 0;
+
+    const f = 1 - Math.exp(-8 * delta);
+    ambRef.current.intensity += (targetAmb - ambRef.current.intensity) * f;
+    dirRef.current.intensity  += (targetDir - dirRef.current.intensity) * f;
+  });
+
+  return (
+    <>
+      <ambientLight ref={ambRef} intensity={0} />
+      <directionalLight ref={dirRef} position={[2, 4, 2]} intensity={0} />
+    </>
+  );
 }
 
 function Scene({ focused, setFocused, terminalTexture, onInteract }) {
@@ -211,6 +234,7 @@ export default function VintagePC() {
   }, [focused, handleCommand]);
 
   const canvasRef = useRef(null);
+  const [ready, setReady] = useState(false);
 
   if (!canvasRef.current) {
     const c = document.createElement("canvas");
@@ -218,6 +242,11 @@ export default function VintagePC() {
     c.height = CH;
     canvasRef.current = c;
   }
+
+  useEffect(() => {
+    const id = setTimeout(() => setReady(true), 400);
+    return () => clearTimeout(id);
+  }, []);
 
   const [textureKey, setTextureKey] = useState(0);
   const prevTextureRef = useRef(null);
@@ -301,14 +330,20 @@ export default function VintagePC() {
         {'<- take me home'}
       </button>
 
+      <div style={{
+        width: "100%",
+        height: "100%",
+        opacity: ready ? 1 : 0,
+        transition: "opacity 0.4s ease-out",
+        willChange: "opacity",
+      }}>
       <Canvas
         style={{ width: "100%", height: "100%" }}
         camera={{ position: [0.5, 0, 1], fov: 35 }}
         gl={{ antialias: true }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.8} />
-          <directionalLight position={[2, 4, 2]} intensity={1.2} />
+          <LightsRig ready={ready} />
           <Environment preset="city" />
           <Scene
             focused={focused}
@@ -318,6 +353,7 @@ export default function VintagePC() {
           />
         </Suspense>
       </Canvas>
+      </div>
 
       {focused && (
         <div style={{
