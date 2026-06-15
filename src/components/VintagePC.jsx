@@ -378,7 +378,7 @@ export default function VintagePC() {
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <button
-        onClick={() => { window.location.href = "/hero"; }}
+        onClick={() => { window.location.href = "/"; }}
         style={{
           position:      "fixed",
           top:           "1rem",
