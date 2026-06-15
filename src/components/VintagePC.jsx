@@ -9,14 +9,11 @@ const FOCUSED_POS = new THREE.Vector3(0.05, 0.042, 0.55);
 const CW = 6144;
 const CH = 4000;
 
-const FONT_MAIN  = "bold 14px 'Courier New', monospace";
-const FONT_SMALL = "11px 'Courier New', monospace";
-const LINE_H     = 15;
+const FONT_MAIN  = "bold 18px 'Courier New', monospace";
+const LINE_H     = 22;
 const PAD_X      = 330;
 const PAD_Y      = 1350;
-const PROMPT_Y   = PAD_Y + 350;
-const GAP        = LINE_H * 0.5;
-const KEY_COL_W  = 150;
+const PROMPT_Y   = PAD_Y + 250;
 
 const COMMANDS = {
   help: {
@@ -85,13 +82,20 @@ const COMMANDS = {
 
 function CameraRig({ focused }) {
   const { camera } = useThree();
+  const snapRef = useRef(true);
   useFrame(() => {
-    camera.position.lerp(focused ? FOCUSED_POS : IDLE_POS, 0.05);
+    const target = focused ? FOCUSED_POS : IDLE_POS;
+    if (snapRef.current) {
+      camera.position.copy(target);
+      snapRef.current = false;
+    } else {
+      camera.position.lerp(target, 0.05);
+    }
   });
   return null;
 }
 
-function Scene({ focused, setFocused, terminalTexture }) {
+function Scene({ focused, setFocused, terminalTexture, onInteract }) {
   const { scene } = useGLTF("/models/computer.glb");
   const orbitRef     = useRef();
   const screenMatRef = useRef(null);
@@ -128,7 +132,15 @@ function Scene({ focused, setFocused, terminalTexture }) {
   return (
     <>
       <CameraRig focused={focused} />
-      <primitive object={scene} onClick={() => !focused && setFocused(true)} />
+      <primitive
+        object={scene}
+        onClick={() => {
+          if (!focused) {
+            setFocused(true);
+            if (onInteract) onInteract();
+          }
+        }}
+      />
       <OrbitControls ref={orbitRef} enablePan={false} target={[0, 0, 0]} />
     </>
   );
@@ -142,7 +154,8 @@ export default function VintagePC() {
   ]);
   const [cursor,  setCursor]  = useState(true);
 
-  const inputRef  = useRef("");
+  const inputRef        = useRef("");
+  const hasInteractedRef = useRef(false);
 
   useEffect(() => {
     const id = setInterval(() => setCursor(c => !c), 530);
@@ -166,6 +179,7 @@ export default function VintagePC() {
 
   useEffect(() => {
     const handler = (e) => {
+      hasInteractedRef.current = true;
       if (e.key === "Escape") { setFocused(false); return; }
       if (!focused) return;
 
@@ -196,19 +210,20 @@ export default function VintagePC() {
     return () => window.removeEventListener("keydown", handler);
   }, [focused, handleCommand]);
 
-  // ── Terminal texture: created here, outside R3F, so React state updates flow correctly ──
-  const terminalTexture = useMemo(() => {
+  const canvasRef = useRef(null);
+
+  if (!canvasRef.current) {
     const c = document.createElement("canvas");
     c.width  = CW;
     c.height = CH;
-    const t = new THREE.CanvasTexture(c);
-    t.flipY = true;
-    return { canvas: c, texture: t };
-  }, []);
+    canvasRef.current = c;
+  }
 
-  // Redraw the canvas whenever output, input, cursor, or focused changes
+  const [textureKey, setTextureKey] = useState(0);
+  const prevTextureRef = useRef(null);
+
   useEffect(() => {
-    const { canvas, texture } = terminalTexture;
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
     ctx.fillStyle = "#050e05";
@@ -217,14 +232,6 @@ export default function VintagePC() {
     ctx.fillStyle = "rgba(0,0,0,0.15)";
     for (let sy = 0; sy < CH; sy += 4) {
       ctx.fillRect(0, sy, CW, 2);
-    }
-
-    if (!focused) {
-      ctx.font = FONT_MAIN;
-      ctx.fillStyle = "#2d7a2d";
-      ctx.fillText("> click to interact", PAD_X, PAD_Y);
-      texture.needsUpdate = true;
-      return;
     }
 
     const maxLines = Math.floor((PROMPT_Y - PAD_Y) / LINE_H);
@@ -238,24 +245,44 @@ export default function VintagePC() {
       y += LINE_H;
     }
 
-    ctx.font = FONT_MAIN;
-    ctx.fillStyle = "#2d7a2d";
-    ctx.fillText("> " + input, PAD_X, PROMPT_Y);
-
-    if (cursor) {
+    if (!focused && !hasInteractedRef.current) {
       ctx.font = FONT_MAIN;
-      const promptWidth = ctx.measureText("> " + input).width;
-      ctx.fillStyle = "#00ff44";
-      ctx.fillRect(PAD_X + promptWidth, PROMPT_Y - LINE_H + 2, 7, LINE_H - 2);
+      ctx.fillStyle = "#2d7a2d";
+      ctx.fillText("> click to interact", PAD_X, y);
+      setTextureKey(k => k + 1);
+      return;
     }
 
-    texture.needsUpdate = true;
-  }, [output, input, cursor, focused, terminalTexture]);
+    if (focused) {
+      ctx.font = FONT_MAIN;
+      ctx.fillStyle = "#2d7a2d";
+      ctx.fillText("> " + input, PAD_X, PROMPT_Y);
+
+      if (cursor) {
+        ctx.font = FONT_MAIN;
+        const promptWidth = ctx.measureText("> " + input).width;
+        ctx.fillStyle = "#00ff44";
+        ctx.fillRect(PAD_X + promptWidth, PROMPT_Y - LINE_H + 2, 7, LINE_H - 2);
+      }
+    }
+
+    setTextureKey(k => k + 1);
+  }, [output, input, cursor, focused]);
+
+  const terminalTexture = useMemo(() => {
+    if (prevTextureRef.current) {
+      prevTextureRef.current.dispose();
+    }
+    const t = new THREE.CanvasTexture(canvasRef.current);
+    t.flipY = true;
+    prevTextureRef.current = t;
+    return t;
+  }, [textureKey]);
 
   return (
     <div style={{ width: "95%", height: "100%" }}>
       <button
-        onClick={() => setFocused(false)}
+        onClick={() => { window.location.href = "/hero"; }}
         style={{
           position:      "fixed",
           top:           "1rem",
@@ -286,7 +313,8 @@ export default function VintagePC() {
           <Scene
             focused={focused}
             setFocused={setFocused}
-            terminalTexture={terminalTexture.texture}
+            terminalTexture={terminalTexture}
+            onInteract={() => { hasInteractedRef.current = true; }}
           />
         </Suspense>
       </Canvas>
