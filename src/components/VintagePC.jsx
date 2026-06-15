@@ -98,8 +98,15 @@ function CameraRig({ focused }) {
 function LightsRig() {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[2, 4, 2]} intensity={0.8} />
+      <ambientLight intensity={0} />
+      <spotLight
+        position={[0, 0.8, 0.55]}
+        angle={0.4}
+        penumbra={0.6}
+        decay={1}
+        distance={1.8}
+        intensity={3}
+      />
     </>
   );
 }
@@ -152,8 +159,8 @@ function DeskMesh() {
       <planeGeometry args={[2.5, 0.8]} />
       <meshStandardMaterial
         color="#020202"
-        emissive="#071207"
-        emissiveIntensity={0.25}
+        emissive="#020202"
+        emissiveIntensity={0}
         map={tex}
         bumpMap={tex}
         bumpScale={0.008}
@@ -221,7 +228,7 @@ function Scene({ focused, setFocused, terminalTexture, onInteract }) {
       <OrbitControls
         ref={orbitRef}
         enablePan={false}
-        target={[0, 0, 0]}
+        target={[0.05, 0, 0]}
         minPolarAngle={0}
         maxPolarAngle={Math.PI * 0.55}
       />
@@ -369,7 +376,7 @@ export default function VintagePC() {
   }, [textureKey]);
 
   return (
-    <div style={{ width: "95%", height: "100%" }}>
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <button
         onClick={() => { window.location.href = "/hero"; }}
         style={{
@@ -415,21 +422,16 @@ export default function VintagePC() {
       </Canvas>
       </div>
 
-      {focused && (
-        <div style={{
-          position:      "fixed",
-          bottom:        "2rem",
-          left:          "50%",
-          transform:     "translateX(-50%)",
-          fontFamily:    "'Courier New', monospace",
-          fontSize:      "11px",
-          color:         "#1a4a1a",
-          pointerEvents: "none",
-          zIndex:        100,
-        }}>
-          ESC zoom out
-        </div>
-      )}
+      <div style={{
+        position:      "absolute",
+        inset:         0,
+        zIndex:        50,
+        pointerEvents: "none",
+        background:    "radial-gradient(ellipse 130% 130% at 50% 50%, transparent 18%, rgba(0,0,0,0.85) 48%, #000 72%)",
+      }} />
+
+
+
     </div>
   );
 }
