@@ -96,16 +96,24 @@ function CameraRig({ focused }) {
 }
 
 function LightsRig() {
+  const lightRef = useRef();
+  useFrame(() => {
+    if (!lightRef.current) return;
+    const base = 1.5;
+    const flicker = Math.random() * 0.4 + 0.8;
+    lightRef.current.intensity = base * flicker;
+  });
   return (
     <>
       <ambientLight intensity={0} />
       <spotLight
+        ref={lightRef}
         position={[0, 0.8, 0.55]}
         angle={0.4}
         penumbra={0.6}
         decay={1}
         distance={1.8}
-        intensity={3}
+        intensity={1.5}
       />
     </>
   );
