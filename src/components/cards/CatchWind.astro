@@ -1,0 +1,137 @@
+---
+export const project = {
+  id: "project-3",
+  type: "game",
+  title: "Catch Wind",
+  description:
+    "A dual-screen arcade shooter where you control two ships simultaneously - one on each side of the screen. Each ship mirrors the other's movement but fires in opposite directions. Survive waves of enemies, manage shared resources between both cores, and unlock new weapon combinations as you progress.",
+  links: [
+    {
+      label: "Devlog",
+      url: "",
+    },
+  ],
+};
+---
+
+<div class="project-card" data-id={project.id} data-type={project.type}>
+  <img src="/logos/minecraft-empty-map.webp" alt="" class="map-image" />
+  <div class="card-overlay">
+    <div class="card-header">
+      <h2>{project.title}</h2>
+      <button class="info-btn-ui" data-info-trigger aria-label="Project Info">
+        ?
+      </button>
+    </div>
+
+    <p class="project-description" set:html={project.description} />
+
+    <div class="card-footer">
+      <div class="card-links">
+        {
+          project.links.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-btn"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+  .project-card,
+  .project-card[data-type="game"] {
+    padding: 0;
+    border: none;
+    background: none !important;
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    display: block;
+    position: relative;
+    font-family: "Press Start 2P", monospace;
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .map-image {
+    display: block;
+    width: 75rem;
+    height: auto;
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 6rem 0rem;
+    transform: scaleX(0.8);
+    transform-origin: center center;
+  }
+
+  .project-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: transparent;
+    border: none;
+  }
+  .project-card .card-header h2 {
+    color: #f0d060;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+    flex-grow: 1;
+    text-shadow: 2px 2px 0 #4a3f1a;
+    letter-spacing: 0.1em;
+  }
+
+  .project-card .info-btn-ui {
+    background: transparent;
+    border: 1px solid;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.65rem;
+  }
+
+  .project-card .project-description {
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    font-size: 0.55rem;
+    line-height: 1.8;
+  }
+
+  .project-card .card-footer {
+    margin-top: auto;
+    padding: 0;
+  }
+
+  .project-card .card-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .project-card .link-btn {
+    color: inherit;
+    text-decoration: underline;
+    font-size: 0.65rem;
+  }
+</style>

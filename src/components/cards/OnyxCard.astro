@@ -1,0 +1,50 @@
+---
+export const project = {
+  id: "project-4",
+  type: "neovim",
+  title: "onyx-colorscheme",
+  description:
+    "A custom Neovim colorscheme built for long sessions — dark, low-contrast base with carefully tuned syntax highlights that don't fight each other. Designed to keep the important stuff visible without the noise.",
+  links: [
+    {
+      label: "View on GitHub",
+      url: "https://github.com/kadam-x/onyx-colorscheme/tree/main",
+    },
+  ],
+};
+---
+
+<div
+  class="project-card"
+  data-id={project.id}
+  data-type={project.type}
+>
+  <div class="card-header">
+    <span class="card-prefix">[*]</span>
+    <h2>{project.title}</h2>
+    <button
+      class="info-btn-ui"
+      data-info-trigger
+      aria-label="Project Info"
+    >
+      ?
+    </button>
+  </div>
+
+  <p class="project-description" set:html={project.description} />
+
+  <div class="card-footer">
+    <div class="card-links">
+      {project.links.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-btn"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>

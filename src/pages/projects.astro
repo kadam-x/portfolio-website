@@ -1,68 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AvatarCurator from "../components/AvatarCurator.astro";
-
-const projects = [
-  {
-    id: "project-1",
-    type: "trading",
-    title: "RBL Capital",
-    description: `A simulated proprietary trading research system built to explore systematic edge across asset classes. Currently in active development across four research desks:<br><br><span class="desk-name">Prediction Markets</span> - real-time order flow imbalance monitoring on Polymarket, testing whether anomalous informed flow leads correlated TradFi instrument moves ahead of macro events.<br><br><span class="desk-name">Macro Signals</span> - forked Tauric Research agent framework scanning defence, infrastructure, and commodities for sentiment-driven positioning signals.<br><br><span class="desk-name">Equities</span> - agent-monitored low-frequency long/short ideas on individual stocks, fundamentals and macro-regime aware.<br><br><span class="desk-name">Mid-freq Crypto</span> - systematic signal research on Hyperliquid perpetuals.`,
-    links: [
-      {
-        label: "Prediction Markets - Ingestion & Research",
-        url: "https://github.com/kadam-x/prediction-market-algo",
-      },
-      {
-        label: "Tauric Research Fork",
-        url: "https://github.com/kadam-x/TradingAgents",
-      },
-    ],
-  },
-  {
-    id: "project-2",
-    type: "engineering",
-    title: "Implied Volatility Surface Pipeline",
-    description:
-      "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
-    links: [
-      {
-        label: "View Code",
-        url: "https://github.com/kadam-x/volatility-surface-pipeline",
-      },
-      {
-        label: "Docs",
-        url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md",
-      },
-    ],
-  },
-  {
-    id: "project-3",
-    type: "game",
-    title: "DUAL//CORE",
-    description:
-      "A dual-screen arcade shooter where you control two ships simultaneously - one on each side of the screen. Each ship mirrors the other's movement but fires in opposite directions. Survive waves of enemies, manage shared resources between both cores, and unlock new weapon combinations as you progress.",
-    links: [
-      {
-        label: "Devlog",
-        url: "",
-      },
-    ],
-  },
-  {
-    id: "project-4",
-    type: "neovim",
-    title: "onyx-colorscheme",
-    description:
-      "A custom Neovim colorscheme built for long sessions — dark, low-contrast base with carefully tuned syntax highlights that don't fight each other. Designed to keep the important stuff visible without the noise.",
-    links: [
-      {
-        label: "View on GitHub",
-        url: "https://github.com/kadam-x/onyx-colorscheme/tree/main",
-      },
-    ],
-  },
-];
+import RBLCard from "../components/cards/RBLCard.astro";
+import IVSurfaceCard from "../components/cards/IVSurfaceCard.astro";
+import DeadSailCard from "../components/cards/CatchWind.astro";
+import OnyxCard from "../components/cards/OnyxCard.astro";
 ---
 
 <Layout
@@ -78,58 +20,17 @@ const projects = [
 
       <div class="projects-nav">
         <button class="nav-arrow" id="prevBtn">&lt; prev</button>
-        <span class="page-counter" id="pageCounter">1 / {projects.length}</span>
+        <span class="page-counter" id="pageCounter">1 / 4</span>
         <button class="nav-arrow" id="nextBtn">next &gt;</button>
       </div>
     </div>
 
     <div class="projects-sidebar active">
       <div class="projects-grid">
-        {
-          projects.map((project, index) => (
-            <div
-              class="project-card"
-              data-id={project.id}
-              data-index={index}
-              data-type={project.type}
-            >
-              <div class="card-header">
-                <span class="card-prefix">[*]</span>
-                <h2>{project.title}</h2>
-                <button
-                  class="info-btn-ui"
-                  data-info-trigger
-                  aria-label="Project Info"
-                >
-                  ?
-                </button>
-              </div>
-
-              {!project.isLearning && (
-                <div class="video-placeholder">
-                  <span>Live Demo</span>
-                </div>
-              )}
-
-              <p class="project-description" set:html={project.description} />
-
-              <div class="card-footer">
-                <div class="card-links">
-                  {project.links.map((link) => (
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="link-btn"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))
-        }
+        <RBLCard />
+        <IVSurfaceCard />
+        <DeadSailCard />
+        <OnyxCard />
       </div>
     </div>
   </main>
@@ -238,7 +139,7 @@ const projects = [
   })();
 </script>
 
-<style>
+<style is:global>
   .projects-container {
     position: relative;
     z-index: 10;
@@ -470,7 +371,7 @@ const projects = [
     flex-grow: 1;
   }
 
-  .project-description :global(.desk-name) {
+  .project-description .desk-name {
     font-weight: bold;
     color: #000033;
     display: inline-block;

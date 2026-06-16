@@ -1,0 +1,178 @@
+---
+export const project = {
+  id: "project-1",
+  type: "trading",
+  title: "RBL Capital",
+  description: `A simulated proprietary trading research system built to explore systematic edge across asset classes. Currently in active development across four research desks:<br><br><span class="desk-name">Prediction Markets</span> - real-time order flow imbalance monitoring on Polymarket, testing whether anomalous informed flow leads correlated TradFi instrument moves ahead of macro events.<br><br><span class="desk-name">Macro Signals</span> - forked Tauric Research agent framework scanning defence, infrastructure, and commodities for sentiment-driven positioning signals.<br><br><span class="desk-name">Equities</span> - agent-monitored low-frequency long/short ideas on individual stocks, fundamentals and macro-regime aware.<br><br><span class="desk-name">Mid-freq Crypto</span> - systematic signal research on Hyperliquid perpetuals.`,
+  links: [
+    {
+      label: "Prediction Markets - Ingestion & Research",
+      url: "https://github.com/kadam-x/prediction-market-algo",
+    },
+    {
+      label: "Tauric Research Fork",
+      url: "https://github.com/kadam-x/TradingAgents",
+    },
+  ],
+};
+---
+
+<div
+  class="project-card"
+  data-id={project.id}
+  data-type={project.type}
+>
+  <div class="accent-bar"></div>
+
+  <div class="card-header">
+    <img src="/logos/rbl-capital-small.webp" alt="RBL Capital" class="logo" />
+    <h2>{project.title}</h2>
+    <button
+      class="info-btn-ui"
+      data-info-trigger
+      aria-label="Project Info"
+    >?</button>
+  </div>
+
+  <p class="project-description" set:html={project.description} />
+
+  <div class="card-footer">
+    <div class="card-links">
+      {project.links.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-btn"
+        >
+          {link.label}
+          <span class="link-arrow">&rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .project-card {
+    background: #0f1219;
+    border: 1px solid #1e2230;
+    font-family: "SF Pro Text", "Inter", system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .accent-bar {
+    height: 3px;
+    background: linear-gradient(90deg, #56a39d, #4a8f89, #56a39d);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem 0.75rem;
+    background: transparent;
+    gap: 0.75rem;
+  }
+
+  .logo {
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  .card-header h2 {
+    font-size: 2rem;
+    color: #e8e6e3;
+    margin: 0;
+    font-weight: 500;
+    font-family: "SF Pro Display", "Inter", system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  .info-btn-ui {
+    background: transparent;
+    border: 1px solid #2a2f3a;
+    color: #6a6f7a;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    transition: all 0.2s ease;
+  }
+
+  .info-btn-ui:hover {
+    background: #1e2230;
+    border-color: #56a39d;
+    color: #56a39d;
+  }
+
+  .project-description {
+    color: #7a7f8a;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+    padding: 0 1.5rem 1rem;
+    flex-grow: 1;
+  }
+
+  .project-description :global(.desk-name) {
+    color: #56a39d;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card-footer {
+    padding: 0 1.5rem 1.25rem;
+    margin-top: auto;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .link-btn {
+    color: #6a6f7a;
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid #2a2f3a;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .link-btn:hover {
+    color: #e8e6e3;
+    border-color: #56a39d;
+    background: rgba(86, 163, 157, 0.06);
+  }
+
+  .link-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .link-btn:hover .link-arrow {
+    transform: translateX(2px);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+export const project = {
+  id: "project-2",
+  type: "engineering",
+  title: "Implied Volatility Surface Pipeline",
+  description:
+    "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
+  links: [
+    {
+      label: "View Code",
+      url: "https://github.com/kadam-x/volatility-surface-pipeline",
+    },
+    {
+      label: "Docs",
+      url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md",
+    },
+  ],
+};
+---
+
+<div
+  class="project-card"
+  data-id={project.id}
+  data-type={project.type}
+>
+  <div class="card-header">
+    <span class="card-prefix">[*]</span>
+    <h2>{project.title}</h2>
+    <button
+      class="info-btn-ui"
+      data-info-trigger
+      aria-label="Project Info"
+    >
+      ?
+    </button>
+  </div>
+
+  <p class="project-description" set:html={project.description} />
+
+  <div class="card-footer">
+    <div class="card-links">
+      {project.links.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-btn"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
