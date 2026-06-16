@@ -1,19 +1,12 @@
----
-import { Image } from 'astro:assets';
-import idleImg from '../assets/avatar/idle.png';
-import blinkImg from '../assets/avatar/eyes-closed.png';
-import talkingImg from '../assets/avatar/talking.png';
----
-
 <div id="avatar-container">
   <div id="avatar-bubble" class="hidden">
     <div class="bubble-content"></div>
     <div class="bubble-arrow"></div>
   </div>
   <div id="avatar-wrap">
-    <Image id="avatar-base" src={idleImg} alt="avatar" width={240} />
-    <Image id="avatar-blink" src={blinkImg} alt="" aria-hidden="true" width={240} />
-    <Image id="avatar-talking" src={talkingImg} alt="" aria-hidden="true" width={240} />
+    <img id="avatar-base" src="/avatar/idle.png" alt="avatar" width="240" />
+    <img id="avatar-blink" src="/avatar/eyes-closed.png" alt="" aria-hidden="true" width="240" />
+    <img id="avatar-talking" src="/avatar/talking.png" alt="" aria-hidden="true" width="240" />
   </div>
 </div>
 
