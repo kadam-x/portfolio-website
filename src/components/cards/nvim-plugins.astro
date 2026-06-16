@@ -1,18 +1,18 @@
 ---
 export const project = {
-  id: "project-2",
-  type: "engineering",
-  title: "Implied Volatility Surface Pipeline",
+  id: "project-4",
+  type: "neovim",
+  title: "nvim-plugins",
   description:
-    "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, and stores results in a star-schema warehouse served via REST API and Grafana dashboard.",
+    "A collection of personal Neovim plugins. Includes <strong>onyx-colorscheme</strong> — a dark, low-contrast colorscheme built for long sessions with carefully tuned syntax highlights — and <strong>bufline.nvim</strong>, a minimal bufferline plugin with diagnostics integration.",
   links: [
     {
-      label: "View Code",
-      url: "https://github.com/kadam-x/volatility-surface-pipeline",
+      label: "onyx-colorscheme",
+      url: "https://github.com/kadam-x/onyx-colorscheme/tree/main",
     },
     {
-      label: "Docs",
-      url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md",
+      label: "bufline.nvim",
+      url: "https://github.com/kadam-x/bufline.nvim",
     },
   ],
 };
@@ -23,8 +23,9 @@ export const project = {
   data-id={project.id}
   data-type={project.type}
 >
+  <div class="top-accent"></div>
   <div class="card-header">
-    <span class="card-prefix">/></span>
+    <span class="card-prefix">>></span>
     <h2>{project.title}</h2>
     <button
       class="info-btn-ui"
@@ -54,30 +55,24 @@ export const project = {
 </div>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
   .project-card,
-  .project-card[data-type="engineering"] {
-    background: #0a1628;
-    border: 1px solid #1a3050;
-    font-family: "SF Mono", "Courier New", monospace;
+  .project-card[data-type="neovim"] {
+    background: #0d1117;
+    border: 1px solid #1e2a3a;
+    font-family: "JetBrains Mono", "SF Mono", monospace;
     position: relative;
     overflow: hidden;
   }
 
-  .project-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.08;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-  }
-
   .project-card.hidden {
     display: none;
+  }
+
+  .top-accent {
+    height: 2px;
+    background: linear-gradient(90deg, #2b5b84, #569cd6, #2b5b84);
   }
 
   .card-header {
@@ -87,29 +82,27 @@ export const project = {
     background: transparent;
     gap: 0.75rem;
     border: none;
-    position: relative;
-    z-index: 1;
   }
 
   .card-prefix {
-    color: #4a8ab5;
-    font-size: 0.85rem;
+    color: #569cd6;
+    font-size: 0.75rem;
   }
 
   .card-header h2 {
-    color: #e0e8f0;
+    color: #d4d4d4;
     margin: 0;
     font-size: 1.1rem;
     font-weight: 500;
     flex-grow: 1;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .info-btn-ui {
     background: transparent;
-    border: 1px solid #1a3050;
-    color: #5a7a9a;
-    font-size: 0.8rem;
+    border: 1px solid #2a3a4a;
+    color: #808080;
+    font-size: 0.75rem;
     cursor: pointer;
     font-family: inherit;
     padding: 0.2rem 0.5rem;
@@ -117,26 +110,27 @@ export const project = {
   }
 
   .info-btn-ui:hover {
-    border-color: #4a8ab5;
-    color: #7ab8e0;
+    border-color: #569cd6;
+    color: #569cd6;
   }
 
   .project-description {
-    color: #8a9ab0;
-    font-size: 0.85rem;
+    color: #a0a8b0;
+    font-size: 0.8rem;
     line-height: 1.6;
     margin: 0;
     padding: 0.5rem 1.5rem 1rem;
     flex-grow: 1;
-    position: relative;
-    z-index: 1;
+  }
+
+  .project-description :global(strong) {
+    color: #569cd6;
+    font-weight: 500;
   }
 
   .card-footer {
     padding: 0 1.5rem 1rem;
     margin-top: auto;
-    position: relative;
-    z-index: 1;
   }
 
   .card-links {
@@ -146,18 +140,18 @@ export const project = {
   }
 
   .link-btn {
-    color: #5a7a9a;
+    color: #808080;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     padding: 0.3rem 0.75rem;
-    border: 1px solid #1a3050;
+    border: 1px solid #2a3a4a;
     transition: all 0.2s ease;
     font-family: inherit;
   }
 
   .link-btn:hover {
-    color: #7ab8e0;
-    border-color: #4a8ab5;
-    background: rgba(74, 138, 181, 0.06);
+    color: #569cd6;
+    border-color: #569cd6;
+    background: rgba(86, 156, 214, 0.06);
   }
 </style>
