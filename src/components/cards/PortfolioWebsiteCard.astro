@@ -1,0 +1,167 @@
+---
+export const project = {
+  id: "project-5",
+  type: "web",
+  title: "Portfolio Website",
+  description: `This very site a personal portfolio and interactive playground built with Astro. Features a retro Windows 98-inspired UI, an animated robot mascot with dialogue system, and custom project cards. Designed to be a living showcase that evolves alongside the work it presents.`,
+  links: [
+    {
+      label: "Source",
+      url: "https://github.com/kadam-x/portfolio-website",
+    },
+  ],
+};
+---
+
+<div class="project-card" data-id={project.id} data-type={project.type}>
+  <div class="card-header">
+    <span class="card-prefix">{">"}_</span>
+    <h2>{project.title}</h2>
+    <button class="info-btn-ui" data-info-trigger aria-label="Project Info"
+      >?</button
+    >
+  </div>
+
+  <p class="project-description" set:html={project.description} />
+
+  <div class="card-footer">
+    <div class="card-links">
+      {
+        project.links.map((link) => (
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link-btn"
+          >
+            <span class="link-bracket">[</span>
+            {link.label}
+            <span class="link-bracket">]</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
+  .project-card,
+  .project-card[data-type="web"] {
+    background: #1e1e2e;
+    border: 1px solid #313244;
+    font-family: "JetBrains Mono", "SF Mono", monospace;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.04;
+    background-image: radial-gradient(circle, #cba6f7 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem 0.5rem;
+    background: transparent;
+    gap: 0.75rem;
+    border: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-prefix {
+    color: #a6e3a1;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .card-header h2 {
+    color: #cdd6f4;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex-grow: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .info-btn-ui {
+    background: transparent;
+    border: 1px solid #45475a;
+    color: #6c7086;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0.2rem 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .info-btn-ui:hover {
+    border-color: #cba6f7;
+    color: #cba6f7;
+  }
+
+  .project-description {
+    color: #bac2de;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0.5rem 1.5rem 1rem;
+    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-footer {
+    padding: 0 1.5rem 1rem;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .link-btn {
+    color: #a6adc8;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid #45475a;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .link-bracket {
+    color: #585b70;
+    transition: color 0.2s ease;
+  }
+
+  .link-btn:hover {
+    color: #cdd6f4;
+    border-color: #cba6f7;
+    background: rgba(203, 166, 247, 0.06);
+  }
+
+  .link-btn:hover .link-bracket {
+    color: #cba6f7;
+  }
+</style>
