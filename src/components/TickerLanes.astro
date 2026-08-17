@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <canvas id="tickerCanvas"></canvas>
@@ -8,13 +9,12 @@
 
   type Candle = { open: number; high: number; low: number; close: number };
 
-  const CANDLE_INTERVAL_MS = 1400; // how often a new candle forms
-  const VOLATILITY = 32;           // typical open->close move
-  const WICK_RANGE = 16;           // extra high/low beyond body
+  const CANDLE_INTERVAL_MS = 1400;
+  const VOLATILITY = 32;
+  const WICK_RANGE = 16;
 
   function nextCandle(prevClose: number): Candle {
     const open = prevClose;
-    // occasional bigger "news" move to break up monotony
     const shock = Math.random() < 0.12 ? (Math.random() - 0.5) * 80 : 0;
     let close = open + (Math.random() - 0.5) * VOLATILITY + shock;
     close = Math.max(-100, Math.min(100, close));
@@ -96,7 +96,6 @@
           const yHigh = baseY - (c.high / 100) * amp;
           const yLow = baseY - (c.low / 100) * amp;
 
-          // wick
           ctx.globalAlpha = 0.5;
           ctx.strokeStyle = color;
           ctx.lineWidth = 1;
@@ -105,7 +104,6 @@
           ctx.lineTo(x, yLow);
           ctx.stroke();
 
-          // body
           const top = Math.min(yOpen, yClose);
           const bodyH = Math.max(2, Math.abs(yClose - yOpen));
           ctx.globalAlpha = 0.45;
@@ -143,10 +141,13 @@
 <style>
   #tickerCanvas {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 55vh;
     z-index: 0;
     pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 35%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to bottom, black 35%, transparent 90%);
   }
 </style>
