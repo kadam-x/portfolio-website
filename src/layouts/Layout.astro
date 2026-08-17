@@ -1,106 +1,45 @@
 ---
-import "../styles/global.css";
-
 interface Props {
   title: string;
-  useGridBackground?: boolean;
 }
 
-const { title, useGridBackground } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="kovacsadam.dev" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.9"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d0e17" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png"
+    />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="msapplication-TileColor" content="#d8d9ed" />
-    <meta name="theme-color" content="#d8d9ed" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="preload" as="fetch" crossorigin href="/models/computer.glb" />
     <title>{title}</title>
   </head>
   <body>
-    <div class:list={["bg-layer", useGridBackground && "bg-layer--custom"]}>
-    </div>
     <slot />
-    <script is:inline>
-      window.dispatchEvent(new Event("astro:page-load"));
+    <script>
+      function init() {
+        document.dispatchEvent(new Event("astro:page-load"));
+      }
+      init();
+      document.addEventListener("astro:page-load", init);
     </script>
   </body>
 </html>
 
 <style is:global>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: unset;
-    font-smooth: never;
-  }
-
-  html {
-    background-color: transparent;
-  }
-
-  body {
-    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-    background: transparent;
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: unset;
-    font-smooth: never;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "MS Sans Serif", "Segoe UI", sans-serif;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .bg-layer {
-    position: fixed;
-    inset: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: -1;
-    background: linear-gradient(180deg, #004040 0%, #008080 100%);
-  }
-
-  .bg-layer--custom {
-    background-color: #c8dfc8;
-  }
-
-  .bg-layer--custom::before {
-    content: "";
-    position: fixed;
-    top: -70%;
-    left: -70%;
-    width: 250%;
-    height: 250%;
-    background-image: repeating-conic-gradient(#b8d4b8 0% 25%, #d8ecd8 0% 50%);
-    background-size: 56px 56px;
-    transform: rotate(45deg);
-    z-index: -1;
-  }
+  @import "../styles/global.css";
 </style>
-

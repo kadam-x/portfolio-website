@@ -1,3 +1,61 @@
+:root {
+  --bg: #0d0e17;
+  --fg: #dadada;
+  --fg-bright: #ffffff;
+  --muted: #747474;
+  --surface: #1c1c1c;
+  --border: #2a2a2a;
+
+  --accent-green: #71e9c4;
+  --accent-blue: #6aa2ff;
+  --accent-magenta: #c481ff;
+  --accent-cyan: #7abed3;
+  --accent-orange: #f38b3f;
+  --accent-red: #ab092c;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, "Courier New", monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
-  background: linear-gradient(to bottom, #004040 0%, #008080 100%);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: transparent;
+}
+
+a {
+  color: var(--accent-green);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--fg-bright);
+}
+
+::selection {
+  background: var(--accent-green);
+  color: var(--bg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }

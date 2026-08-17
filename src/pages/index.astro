@@ -1,484 +1,444 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import TickerLanes from "../components/TickerLanes.astro";
+import AvatarCurator from "../components/AvatarCurator.astro";
+
+const projects = [
+  {
+    id: "rbl",
+    title: "RBL Capital",
+    description:
+      "A simulated proprietary trading research system built to explore systematic edge across asset classes. Spans prediction markets, macro signals, equities, and mid-freq crypto desks.",
+    tech: ["Python", "Polymarket", "Agent Frameworks", "Crypto Perps"],
+    openSource: true,
+    links: [
+      { label: "Prediction Markets", url: "https://github.com/kadam-x/prediction-market-algo" },
+      { label: "Tauric Research Fork", url: "https://github.com/kadam-x/TradingAgents" },
+    ],
+    emote: "I built this because prediction markets and DeFi are one of the few places where insider positioning is both legal and detectable.",
+  },
+  {
+    id: "iv",
+    title: "IV Surface Pipeline",
+    description:
+      "A full data engineering pipeline that ingests SPY options chain data daily, inverts Black-Scholes to compute implied volatility across all strikes and expiries, served via REST API and Grafana.",
+    tech: ["Python", "Black-Scholes", "Data Warehouse", "REST API", "Grafana"],
+    openSource: true,
+    links: [
+      { label: "Source", url: "https://github.com/kadam-x/volatility-surface-pipeline" },
+      { label: "Docs", url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md" },
+    ],
+    emote: "I wanted to build something that sits closer to how risk systems actually work than a typical portfolio project. Getting Brent's method to behave at the wings was the part that kept me up.",
+  },
+  {
+    id: "catchwind",
+    title: "Catch Wind",
+    description:
+      "A dual-screen arcade shooter where you control two ships simultaneously. Each ship mirrors the other's movement but fires in opposite directions. Survive waves and unlock weapons.",
+    tech: ["JavaScript", "Canvas", "Game Dev"],
+    openSource: false,
+    links: [],
+    emote: "Two ships. One keyboard. Zero mercy. The core mechanic of mirrored movement but opposite firing directions creates this puzzle-like flow where you have to think about both sides simultaneously.",
+  },
+  {
+    id: "nvim",
+    title: "nvim-plugins",
+    description:
+      "A collection of personal Neovim plugins. Includes onyx-colorscheme — a dark, low-contrast colorscheme built for long sessions — and bufline.nvim, a minimal bufferline with diagnostics.",
+    tech: ["Lua", "Neovim", "VimScript"],
+    openSource: true,
+    links: [
+      { label: "onyx-colorscheme", url: "https://github.com/kadam-x/onyx-colorscheme/tree/main" },
+      { label: "bufline.nvim", url: "https://github.com/kadam-x/bufline.nvim" },
+    ],
+    emote: "Every colorscheme I tried either burned my eyes or put me to sleep. So I made my own. Onyx is what happens when you spend too much time staring at a screen.",
+  },
+  {
+    id: "portfolio",
+    title: "Portfolio Website",
+    description:
+      "This very site — a personal portfolio built with Astro. Features a retro-inspired UI, an animated robot mascot with dialogue system, and custom project cards.",
+    tech: ["Astro", "Three.js", "React"],
+    openSource: true,
+    links: [
+      { label: "Source", url: "https://github.com/kadam-x/portfolio-website" },
+    ],
+    emote: "Built the whole thing in Astro. Wanted a retro vibe that still felt polished. The robot was supposed to be a small easter egg but now she's basically the front desk.",
+  },
+];
 ---
 
 <Layout title="kovacsadam.dev">
-    <main>
-        <pre
-            class="ascii-art"
-            aria-hidden="true">
-         _,adP"'\  "Y,                       _____
-       ,P"  d"Y,  \  8                  ,adP"""""""Yba,_
-     ,d" /,d' `Yb, ,P'              ,adP"'           `""Yba,
-     d'   d'    `"""         _,aadP"""""""Ya,             `"Ya,_
-     8  | 8              _,adP"'                              `"Ya,
-     8    I,           ,dP"           __              "baa,       "Yb,
-     I,   Ya         ,db___           `"Yb,      a       `"         `"b,
-     `Y, \ Y,      ,d8888888baa8a,_      `"      `"b,                 `"b,
-      `Ya, `b,    d8888888888888888b,               "ba,                `8,
-        "Ya,`b  ,d8888888888888888888,   d,           `"Ya,_             `Y,
-          `Ybd8d8888888888888888888888b, `"Ya,            `""Yba,         `8,
-             "Y8888888888888888888888888,   `Yb,               `"Ya        `b
-              d8888888888888888888888888b,    `"'            ,    "b,       8,
-              888888888888888888888888888b,                  b      "b      `b
-              8888888888888888888888888888b    b,_           8       "       8
-              I8888888888888888888888888888,    `"Yb,_       `b,             8
-               Y888888888888888888888888888I        `Yb,       8,            8
-                `Y8888888888888888888888888(          `8,       "b     a    ,P
-                  "8888""Y88888888888888888I           `b,       `b    8    d'
-                    "Y8b,  "Y888PPY8888888P'            `8,       P    8    8
-                        `b   "'  __ `"Y88P'    b,        `Y       "    8    8
-                       ""|      =""Y'   d'     `b,                     8    8
-                        /         "' |  I       b             ,       ,P   ,P
-                       (          _,"  d'       Y,           ,P       "    d'
-                        |              I        `b,          d'            8
-                        |              I          "         d,d'           8
-                        |          ;   `b                  dP"          __,8_
-                        |          |    `b                d"     _,,add8888888
-                        ",       ,"      `b              d' _,ad88888888888888
-                          \,__,a"          ",          _,add888888888888888888
-                         _,aa888b           I       ,ad88888888888888888888888
-                     _,ad88888888a___,,,gggd8,   ,ad88888888888888888888888888
-                  ,ad888888888888b88PP""''  Y  ,dd8888888888888888888888888888
-               ,ad8888888888888888'         `bd8888888888888888888888888888888
-             ,d88888888888888888P'         ,d888888888888888888888888888888888
-           ,d888888888888888888"         ,d88888888888888888888888888888888888
-         ,d8888888888888888888P        ,d8888888888888888888888888888888888888
-       ,d888888888888888888888b,     ,d888888888888888888888888888888888888888
-      ,8888888888888888888888888888=888888888888888888888888888888888888888888
-     d888888888888888888888888888=88888888888888888888888888888888888888888888
-    d88888888888888888888888888=8888888888888888888888888888888888888888888888
-   d8888888888888888888888888=888888888888888888888888888888888888888888888888
-  d888888888888888888888888=88888888888888888888888888888888888888888888888888
- ,888888888888888888888888=888888888888888888888888888888888888888888888888888
- d8888888888888888888888=88888888888888888888888888888888888888888888888888888
-,8888888888888888888888=888888888888888888888888888888888888888888888888888888
-d888888888888888888888=8888888888888888888888888888888888888888888888888888888
-888888888888888888888=88888888888888888888888888888888888888888888888888888888
-888888888888888888888=88888888888888888888888888888888888888888888888888888888</pre>
-        <pre
-            class="ascii-art-right"
-            aria-hidden="true"> 
-                                        +++=+*+=+.                                    
-                            .----: .::-=++=#***++==-                                  
-                         .-****+=+=-:*#+=-+#%##%**===+=-                              
-                         =*%@@#*++======------:=***-:-=-=                             
-                        .**#**++++=====--------------==--.                            
-                        =***+++=======-----::::::----++.:=-==                         
-                     .=+**+++=======------:::::::---=+:..::::-                        
-                    :#***++++=====--------:::::-:-+==+=-:::--:-:                      
-                    +***++++++++++===---::::::...::::++=---:::::=:                    
-                  -****+++++++++++====----::::....::-=*++:-=:.:::--                   
-                .=****+++*++++++++=====---:::.....:::=*+=.:::..:.::=                  
-              .+******+++++++++++++====---::........-=++-:=::-:::::--                 
-             -**##****++++++====+=====----::...   .:=**+:-+-:==::::-=-                
-            :*#*#*****+++++++++++++===---::.... ....-+**+++*-:==:..-:=-               
-            :*+******+++++++++++++======--::::..  ...:-+++*+===:--::::-+.             
-             +#%#******+++++=+++++++====---:::.... ...=--=++*-:---:..:-==             
-            +*#%%#*****+++++++++++++++*****+==-:.  ...:+*+===+::-=-==:==:             
-            ####%%****###****+****++**##*+++--:--:.....:+#*++==.-==-:---..            
-            -##%%###**+++*####++++*+*##****+++=-::::...:=*##+==:--==:--=..            
-            :****+##*#*****##*+==--+###***###*+-++=-....:+*++=-:---=--::-:..          
-            ***+++*####***####+=-::-++++++**+=--=+=-:.. .===+=-===-:.:::-:.           
-            -**+*#********++++=-:...:=++++===-::----:.. .:+**#*==++-::::+...          
-             ++++++++++*+++++++=:.....:-=====----::::.....:+#++*+=:---:.::            
-            .##+++++====+==+**#+=-:....--::-====--:::.:....=++=++*=:--..=..           
-             :%%**++==+==+++###*++===:.-==-----=--::.::.. .:-++==+++=-:+..            
-               -#+*++===++*#%%###+#%@#*++++==-----::::.......--==+*+=-=:.  .          
-                -#**+=+++*+++++*#*+=--==++++=-----::::....-:-:..=+=--+:.... .         
-                :***++++*+++++=-++-:::--==+++=---::::..::.::=-...====+.......         
-                =++**+**+++++=--++-+---::::=++=--:::.::::-.-==-:.-+*+=:.....          
-               :+#+*++++++*****++++++-=-::..:==-::--:-==-:.:-=+=--=-:.......          
-               -*+**++++*#########%%##*+=-:...:--:..-=++*=:.:.:--=   .   ....         
-               =+++**++*#%@@@%##%%%@@@@#++==::..--=-.--=--+:...:.:.  .. ...:          
-            ..++++++*+++*%@%*++**++***%@%#+=-:.:.-...-===::-:..:.-.  .......          
-            :.*+***++++++%#*++++====++++#*++=---:==::-==+:..::::-: .   ....           
-             .=*%*++++*+*#+*+++++====+++++%*+-=-::---===:..::-::::    .... .          
-               **++++++***++*+++=====+++++**+==--.:-===-:::-.:===:  . .....           
-               :**++#####*+++****+===+++*+**+=--=:.-+***+.=+-:::..........            
-               :++*+*#*+++++**++**+++++++++*===--::-==#*+=:-===-:. .. ..  ..          
-               .++++*+**+*+==+++==+*+*+*+**+++*+=-:-:--===-..=:--.........            
-                +*+++++**#+++=:-++**++***#*+=*+++-:+::::==-:::::--::..                
-                 -****++**+#%*+-:-===++***++-++-+-:*+::::-=-:::::-:.....              
-                  =*##+++++++*#*===-:=*+++*+++=-+--**#*=---::.::::-:.  .              
-                  =+**++++*++++**++=.:-==========-++---=-:::::::::-=....              
-                   +*++++++**++++*++=:.:===+++===--=*+=---:::::::::+.. .              
-                    =+++*+++##**+##*==-:==+++=====-::-:::::::::::::=                  
-                    =***++*######%##*+--+=+++:=-==-==-:-:--:::::::-:.                 
-                    .****#%##*+*#%****=-*+++*:-=+=---------::::::--..                 
-                    .**%%%%%++++*++***++%***+-:==::----------::::=.                   
-                     **#@%#++++****++=+##**#**-:+-:-------------=.                    
-                     -*+++*++++*+*+=-=+#****##*--+------=+=====-                      
-                      =++*#*+++***+-:=:=++****#=-==---::==+++-                        
-                       :+***-+#####+:-=--=+*+**+==-------==:                          
-                         -+==########*==+=+**++========:.                             
-                         ..-=+%%%##%##%*+*#*+**#+=+-.                                 
-                               .=###%%%%####+-. #::==                                 
-                                        </pre>
-        <pre
-            class="braille-art"
-            aria-hidden="true">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡦⢦⡀⠀⢹⠄⠀⣠⠤⠀⠢⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠤⠆⠦⠄⠖⠒⣆⠀⠀⠀⠀⠀⠀⠀⠀⡀⣠⣀⣀⠀⠀⠀⢠⠟⠊⡉⠉⠓⣄⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠫⣀⡬⠹⡆⣘⢣⠚⠀⠀⠀⡀⠀⠉⢦⡀⠀⠀⣀⡀⠀⠨⡅⠀⠀⠀⠀⠀⢘⠂⠀⠀⠀⠀⠀⢐⣞⠛⠉⠀⠉⠛⣰⡀⡏⠀⢼⠁⠀⢀⣭⠁⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⢀⣀⠀⠀⠀⠏⡖⣚⠀⢀⡸⠋⠉⢹⠀⣽⡇⢠⠏⠉⠉⠓⢦⣹⡀⡠⡆⡀⣠⢇⠔⠂⠃⢢⡀⠀⢾⠄⠀⡶⠒⣄⠀⠀⢿⢧⠀⠈⠓⡿⠊⠉⠀⠀⠀⠀⠀⠀
-⠀⢀⠖⣦⠽⠒⠱⠪⠝⢦⣴⣡⢭⠀⠀⢳⣀⢀⣉⡸⠧⠀⣈⠇⠀⠀⡀⠠⡥⡱⡛⣝⡽⢇⠅⠀⠀⠀⠸⠇⠀⠷⢧⢀⢉⡹⠮⠀⠀⣹⠾⣀⢤⠲⣞⡉⣉⣙⠘⠲⣄⡀⠀
-⢰⠿⡯⠁⡠⡤⣀⠀⠀⠀⠈⠑⢎⢦⡀⠀⠈⠘⠉⠁⠀⠀⢛⠀⠀⠀⠉⡵⢃⣿⣛⣝⣷⡘⢯⠉⠁⠀⠀⢩⡆⠀⠈⠛⠉⠓⠁⠀⣠⡽⠃⠓⠉⠀⠀⠀⢀⡈⠓⣦⡈⢧⠆
-⣼⡰⡅⠸⣁⣚⠀⢺⠀⠀⢀⠀⠀⠀⢳⢦⣠⠦⠤⠄⣀⠀⢀⡷⠗⣃⡼⢏⢃⡛⡽⢿⡓⢚⠽⠒⠠⢤⠤⠒⠁⠀⣠⣤⠤⣤⣀⠞⠃⢀⢤⡀⠀⠀⣄⣳⠋⡙⢦⠈⣆⠼⡟
-⢸⣧⠩⢦⣀⢁⣀⠏⠀⠀⠈⠉⠉⠈⠁⠀⠀⠉⠓⠘⠓⠚⠥⣠⠔⠀⠀⢀⠎⠡⣸⡍⠎⢣⠀⠀⠉⣎⡑⢲⠴⠼⠁⠐⠘⠋⠀⠉⠒⠐⠊⠁⠀⠀⣜⣥⠐⠧⠚⢩⣗⠀⠃
-⠀⠉⠱⠾⠽⡫⠄⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣀⠀⠀⠀⠀⠀⡥⡇⠀⠀⠀⠀⢀⡔⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠹⠦⢶⡞⠟⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠫⢤⢀⠾⠁⠹⣀⠀⣠⠝⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
-        <div class="separator">
-            |-------------------------------------------------------------------------------------|
-        </div>
-        <div class="hero" aria-label="KADAM portrait">
-            <div class="txt-row">
-                0x8f3A2B7c 0x9E4d1F2a 0x7C6b5D8e 0x3A1b4C2d 0x5E6f7A8b
-                0x1C2d3E4f 0x8A9b0C1d 0x2E3f4A5b 0x6C7d8E9f 0x4A1b2C3d
-                0x7E5f6A8b 0x9C1d2E3f 0x8f3A2B7c 0x9E4d1F2a 0x7C6b5D8e
-                0x3A1b4C2d 0x5E6f7A8b 0x1C2d3E4f 0x8A9b0C1d 0x2E3f4A5b
-                0x6C7d8E9f 0x4A1b2C3d 0x7E5f6A8b 0x9C1d2E3f 0x
+  <TickerLanes />
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <p class="hero-role">Software Engineer & Quantitative Researcher</p>
+      <p class="hero-intro">
+        Building systems at the intersection of finance and code.
+        I combine deep engineering with quantitative research to explore
+        prediction markets, volatility modeling, and the occasional side quest in game dev.
+      </p>
+      <p class="hero-cta">
+        Interested in algo trading, quant research, or just want to talk shop?
+      </p>
+      <div class="hero-contacts">
+        <span><span class="contact-label">github:</span> <a href="https://github.com/kadam-x" target="_blank" rel="noopener noreferrer">@kadam-x</a></span>
+        <span><span class="contact-label">email:</span> <span id="copy-email-hero" class="copy-email">contact.jumbo009@passinbox.com</span><span id="copy-hint-hero" class="copy-hint">(click to copy)</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <div class="container">
+      <div class="projects-grid">
+        {projects.map((project) => (
+          <article class="project-card" data-id={project.id}>
+            <div class="card-header">
+              <h3 class="card-title">{project.title}</h3>
+              <span class={`card-visibility ${project.openSource ? "open" : "closed"}`}>
+                {project.openSource ? "open source" : "closed source"}
+              </span>
             </div>
-            <div class="txt-row">
-                0x1d2E3f4A 0x5b6C7d8E 0x9f0A1b2C 0x3d4E5f6A 0x7b8C9d0E
-                0x1f2A3b4C 0x5d6E7f8A 0x9b0C1d2E 0x3f4A5b6C 0x7d8E9f0A
-                0x1b2C3d4E 0x5f6A7b8C 0x1d2E3f4A 0x5b6C7d8E 0x9f0A1b2C
-                0x3d4E5f6A 0x7b8C9d0E 0x1f2A3b4C 0x5d6E7f8A 0x9b0C1d2E
-                0x3f4A5b6C 0x7d8E9f0A 0x1b2C3d4E 0x5f6A7b8C 0x
+            <div class="card-media">
+              <div class="card-media-placeholder">
+                <span class="card-media-icon">▶</span>
+              </div>
             </div>
-
-            <div class="middle-row">
-                <div class="side-txt">
-                    <span>0x8F3a2B7c9</span>
-                    <span>0x7E4d1F2a8</span>
-                    <span>0x6C5b4D3e7</span>
-                    <span>0x5A3b2C1d6</span>
-                    <span>0x4E9f8A7b5</span>
-                    <span>0x3D7e6F5a4</span>
-                </div>
-
-                <div class="side-txt">
-                    <span>0x2B5c4D3e1</span>
-                    <span>0x1A4b3C2d0</span>
-                    <span>0x0F9e2B1c9</span>
-                    <span>0x9E8d1A0b8</span>
-                    <span>0x7D6c0F9a7</span>
-                    <span>0x6C5b0E8f6</span>
-                </div>
-
-                <pre
-                    class="ascii-logo"
-                    aria-label="KADAM">
-██╗  ██╗ █████╗ ██████╗  █████╗ ███╗   ███╗ 
-██║ ██╔╝██╔══██╗██╔══██╗██╔══██╗████╗ ████║
-█████╔╝ ███████║██║  ██║███████║██╔████╔██║
-██╔═██╗ ██╔══██║██║  ██║██╔══██║██║╚██╔╝██║
-██║  ██╗██║  ██║██████╔╝██║  ██║██║ ╚═╝ ██║
-╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝</pre>
-
-                <div class="side-txt">
-                    <span>0x9F8e7D6c5</span>
-                    <span>0x8E7d6C5b4</span>
-                    <span>0x7D6c5B4a3</span>
-                    <span>0x6C5b4A3f2</span>
-                    <span>0x5B4a3F2e1</span>
-                    <span>0x4A3f2E1d0</span>
-                </div>
-
-                <div class="side-txt right">
-                    <span>0xd4E5f6A7</span>
-                    <span>0xc3D4e5F6</span>
-                    <span>0xb2C3d4E5</span>
-                    <span>0xa1B2c3D4</span>
-                    <span>0xf0A1b2C3</span>
-                    <span>0xe9f0A1b2</span>
-                </div>
+            <div class="card-body">
+              <p class="card-desc">{project.description}</p>
+              <div class="card-tech">
+                {project.tech.map((t) => (
+                  <span class="tech-badge">{t}</span>
+                ))}
+              </div>
+              <div class="card-links">
+                {project.links.map((link) => (
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" class="card-link">
+                    {link.label} ↗
+                  </a>
+                ))}
+                <button class="card-info-btn" data-emote={project.emote} aria-label={`Info about ${project.title}`}>
+                  ?
+                </button>
+              </div>
             </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-            <div class="txt-row">
-                0xA1b2C3d4E 0xF5a6B7c8D 0x9E8f7A6b5C 0x3D4e5F6a7B 0x8C9d0E1f2A
-                0x5F6a7B8c9D 0x2E3f4A5b6C 0x7D8e9F0a1B 0x4C5d6E7f8A 0x9B0c1D2e3F
-                0x6A7b8C9d0E 0x3F4a5B6c7D 0xA1b2C3d4E 0xF5a6B7c8D 0x9E8f7A6b5C
-                0x3D4e5F6a7B 0x8C9d0E1f2A 0x5F6a7B8c9D 0x2E3f4A5b6C 0x7D8e9F0a1B
-                0x4C5d6E7f8A 0x9B0c1D2e3F 0x6A7b8C9d0E 0x3F4a5B6c7D 0x
-            </div>
-            <div class="txt-row">
-                0x2d3E4f5A6 0x7b8C9d0E1F 0x4e5F6a7B8C 0x9f0A1b2C3D 0x6a7B8c9D0E
-                0x1f2A3b4C5D 0x8d9e0F1a2B 0x3c4d5E6f7A 0x5b6c7D8e9F 0x7a8b9C0d1E
-                0x2e3f4A5b6C 0x4d5e6F7a8B 0x2d3E4f5A6 0x7b8C9d0E1F 0x4e5F6a7B8C
-                0x9f0A1b2C3D 0x6a7B8c9D0E 0x1f2A3b4C5D 0x8d9e0F1a2B 0x3c4d5E6f7A
-                0x5b6c7D8e9F 0x7a8b9C0d1E 0x2e3f4A5b6C 0x4d5e6F7a8B 0x
-            </div>
-            <div class="txt-row">
-                0x9C1d2E3f4A 0x5b6C7d8E9f 0x8A1b2C3d4E 0x1f2A3b4C5d 0x7D8e9f0A1b
-                0x3E4f5a6B7c 0x6C7d8E9f0A 0x9A1b2C3d4E 0x4F5a6B7c8D 0x2E3f4A5b6C
-                0x7D8e9F0a1B 0x5C6d7E8f9A 0x9C1d2E3f4A 0x5b6C7d8E9f 0x8A1b2C3d4E
-                0x1f2A3b4C5d 0x7D8e9f0A1b 0x3E4f5a6B7c 0x6C7d8E9f0A 0x9A1b2C3d4E
-                0x4F5a6B7c8D 0x2E3f4A5b6C 0x7D8e9F0a1B 0x5C6d7E8f9A 0x
-            </div>
-        </div>
+  <AvatarCurator />
 
-        <!-- ========================================================
-         SECTION 3 -- nav links
-         ======================================================== -->
-        <nav>
-            <a href="/about">about</a>
-            <span class="sep">&lt;&lt;&lt;---&gt;&gt;&gt;</span>
-            <a href="/projects">projects</a>
-        </nav>
+  <style>
+    .hero {
+      min-height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 0 3rem;
+      position: relative;
+      z-index: 1;
+    }
 
-        <div class="separator">
-            |-------------------------------------------------------------------------------------|
-        </div>
+    .hero .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
 
-        <!-- ========================================================
-         SECTION 4 -- contact / social links
-         ======================================================== -->
-        <div class="links">
-            <p>
-                contact :: <span id="copy-email" class="copy"
-                    >kadamx [at] proton [dot] me</span
-                >
-                <span id="copy-hint">(click to copy)</span>
-            </p>
-            <p>
-                github :: <a href="https://github.com/kadam-x" target="_blank"
-                    >@kadam-x</a
-                >
-            </p>
-            <p>
-                linkedin :: <a
-                    href="https://www.linkedin.com/in/kvcs-adam-s/"
-                    target="_blank">@adam kovacs</a
-                >
-            </p>
-            <p>
-                leetcode :: <a
-                    href="https://leetcode.com/u/kadam-x/"
-                    target="_blank">@kadam-x</a
-                >
-            </p>
-        </div>
+    .hero-role {
+      font-family: var(--font-mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--fg-bright);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 40px rgba(0, 0, 0, 1), 0 6px 30px rgba(0, 0, 0, 1), 0 2px 10px rgba(0, 0, 0, 1);
+    }
 
-        <div class="separator">
-            |-------------------------------------------------------------------------------------|
-        </div>
+    .hero-intro {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      color: var(--fg);
+      max-width: 620px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 40px rgba(0, 0, 0, 1), 0 6px 30px rgba(0, 0, 0, 1), 0 2px 10px rgba(0, 0, 0, 1);
+    }
 
-        <!-- ========================================================
-         SECTION 5 -- Dune quote
-         ======================================================== -->
-        <blockquote class="quote">
-            <p>>>>>>Once men turned their thinking over to machines</p>
-            <p>>>>>>in the hope that this would set them free</p>
-            <p>
-                >>>>>But that only permitted other men with machines to enslave
-                them
-            </p>
-            <p class="attr">- Frank Herbert, Dune</p>
-        </blockquote>
-    </main>
+    .hero-cta {
+      font-size: clamp(0.9rem, 1.3vw, 1rem);
+      color: var(--fg);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 40px rgba(0, 0, 0, 1), 0 6px 30px rgba(0, 0, 0, 1), 0 2px 10px rgba(0, 0, 0, 1);
+    }
 
-    <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .hero-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      text-shadow: 0 0 40px rgba(0, 0, 0, 1), 0 6px 30px rgba(0, 0, 0, 1), 0 2px 10px rgba(0, 0, 0, 1);
+    }
 
-        .hero {
-            width: 100%;
-            overflow: visible;
-            line-height: 1.45;
-            padding-left: 48px;
-            padding-right: 48px;
-        }
+    .hero-contacts a {
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
 
-        .txt-row {
-            white-space: nowrap;
-            overflow: hidden;
-            font-size: 11px;
-            color: #cbcbcb;
-            letter-spacing: 0.04em;
-        }
+    .contact-label {
+      color: var(--fg-bright);
+    }
 
-        .middle-row {
-            display: flex;
-            width: 100%;
-            gap: 6px;
-        }
+    .projects {
+      padding: 0 0 6rem;
+      position: relative;
+      z-index: 1;
+    }
 
-        .side-txt {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 11px;
-            color: #cbcbcb;
-            letter-spacing: 0.04em;
-            line-height: 1.45;
-        }
+    .projects .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
 
-        .side-txt.right {
-            text-align: right;
-        }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
 
-        .ascii-logo {
-            font-size: 11.3px;
-            line-height: 1.5;
-            color: #cbcbcb;
-            white-space: pre;
-            flex: 1;
-            overflow: visible;
-        }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
 
-        :global(body) {
-            background: #131313;
-            color: #cbcbcb;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 13px;
-        }
+    .project-card:hover {
+      border-color: var(--accent-orange);
+      box-shadow: 0 4px 24px rgba(243, 139, 63, 0.15);
+    }
 
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 120px 0 110px;
-            gap: 16px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: #161820;
+      border-bottom: 1px solid var(--border);
+    }
 
-        /* ── nav ── */
-        nav {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-            font-size: 14px;
-            color: #cbcbcb;
-        }
+    .card-title {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--fg-bright);
+      margin: 0;
+    }
 
-        nav a {
-            color: #ffffff;
-            font-weight: 700;
-            text-decoration: underline;
-            text-decoration-color: #ffffff;
-        }
+    .card-visibility {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid;
+    }
 
-        .sep {
-            color: #cbcbcb;
-        }
+    .card-visibility.open {
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
 
-        /* ── contact ── */
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            font-size: 13px;
-            color: #cbcbcb;
-            width: 100%;
-            align-items: flex-start;
-            padding-left: 45px;
-        }
+    .card-visibility.closed {
+      color: var(--accent-red);
+      border-color: var(--accent-red);
+    }
 
-        .links a {
-            color: #ffffff;
-            font-weight: 700;
-            text-decoration: underline;
-            text-decoration-color: #ffffff;
-        }
+    .card-media {
+      aspect-ratio: 16 / 9;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-        .copy {
-            color: #ffffff;
-            font-weight: 700;
-            text-decoration: underline;
-            text-decoration-color: #ffffff;
-            cursor: pointer;
-        }
+    .card-media-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--border);
+    }
 
-        #copy-hint {
-            font-size: 11px;
-            opacity: 0.35;
-        }
+    .card-media-icon {
+      font-size: 1.5rem;
+      opacity: 0.4;
+    }
 
-        /* ── quote ── */
-        .quote {
-            font-size: 12px;
-            color: #cbcbcb;
-            line-height: 1.85;
-            width: 100%;
-            padding-left: 45px;
-        }
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      text-align: left;
+    }
 
-        .quote .attr {
-            margin-top: 4px;
-            color: #cbcbcb;
-        }
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--fg);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
 
-        .ascii-art {
-            position: fixed;
-            left: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            line-height: 1.45;
-            color: #cbcbcb;
-            white-space: pre;
-            z-index: 0;
-        }
+    .card-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
 
-        .ascii-art-right {
-            position: fixed;
-            right: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            line-height: 1.45;
-            color: #cbcbcb;
-            white-space: pre;
-            z-index: 0;
-        }
+    .tech-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--bg);
+      color: var(--accent-cyan);
+      border: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
 
-        @media (max-width: 1600px) {
-            .ascii-art,
-            .ascii-art-right {
-                display: none;
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-orange);
+      transition: color 0.2s;
+    }
+
+    .card-link:hover {
+      color: var(--fg-bright);
+    }
+
+    .card-info-btn {
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .card-info-btn:hover {
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+    }
+
+    .copy-email {
+      color: var(--accent-cyan);
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .copy-email:hover {
+      opacity: 0.8;
+    }
+
+    .copy-hint {
+      font-size: 0.7rem;
+      opacity: 0.35;
+      margin-left: 0.5rem;
+    }
+
+    @media (max-width: 1100px) {
+      .hero .container,
+      .projects .container {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 6rem 0 1rem;
+      }
+    }
+  </style>
+
+  <script>
+    function init() {
+      const email = "contact.jumbo009@passinbox.com";
+
+      document.querySelectorAll("[id^='copy-email']").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(email);
+            const hintId = btn.id.replace("copy-email", "copy-hint");
+            const hint = document.getElementById(hintId);
+            if (hint) {
+              hint.textContent = "(copied!)";
+              setTimeout(() => {
+                hint.textContent = "(click to copy)";
+              }, 2000);
             }
-        }
-
-        .braille-art {
-            font-size: 11px;
-            line-height: 1.45;
-            color: #cbcbcb;
-            text-align: center;
-            margin: 12px 0;
-        }
-
-        .separator {
-            font-size: 11px;
-            color: #cbcbcb;
-            letter-spacing: 0.04em;
-            line-height: 1;
-        }
-    </style>
-
-    <script>
-        const emailBtn = document.getElementById("copy-email");
-        const copyHint = document.getElementById("copy-hint");
-        emailBtn?.addEventListener("click", async () => {
-            try {
-                await navigator.clipboard.writeText("kadamx@proton.me");
-                if (copyHint) {
-                    copyHint.textContent = "(copied!)";
-                    setTimeout(() => {
-                        copyHint.textContent = "(click to copy)";
-                    }, 2000);
-                }
-            } catch (err) {
-                console.error("Failed to copy:", err);
-            }
+          } catch (err) {
+            console.error("Failed to copy:", err);
+          }
         });
-    </script>
+      });
+
+      document.querySelectorAll(".card-info-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const text = btn.getAttribute("data-emote");
+          if (text) {
+            window.dispatchEvent(
+              new CustomEvent("robot-emote", {
+                detail: { text, expression: "talking" },
+              })
+            );
+          }
+        });
+      });
+    }
+
+    init();
+    document.addEventListener("astro:page-load", init);
+  </script>
 </Layout>

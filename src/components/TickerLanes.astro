@@ -1,0 +1,152 @@
+---
+---
+
+<canvas id="tickerCanvas"></canvas>
+
+<script>
+  const tickers = ["NVDA", "TSLA", "SPY", "BTC", "QQQ"];
+
+  type Candle = { open: number; high: number; low: number; close: number };
+
+  const CANDLE_INTERVAL_MS = 1400; // how often a new candle forms
+  const VOLATILITY = 32;           // typical open->close move
+  const WICK_RANGE = 16;           // extra high/low beyond body
+
+  function nextCandle(prevClose: number): Candle {
+    const open = prevClose;
+    // occasional bigger "news" move to break up monotony
+    const shock = Math.random() < 0.12 ? (Math.random() - 0.5) * 80 : 0;
+    let close = open + (Math.random() - 0.5) * VOLATILITY + shock;
+    close = Math.max(-100, Math.min(100, close));
+
+    const bodyTop = Math.max(open, close);
+    const bodyBottom = Math.min(open, close);
+    const high = Math.min(100, bodyTop + Math.random() * WICK_RANGE);
+    const low = Math.max(-100, bodyBottom - Math.random() * WICK_RANGE);
+
+    return { open, high, low, close };
+  }
+
+  function makeSeries(len: number): Candle[] {
+    const arr: Candle[] = [];
+    let last = (Math.random() - 0.5) * 60;
+    for (let i = 0; i < len; i++) {
+      const c = nextCandle(last);
+      arr.push(c);
+      last = c.close;
+    }
+    return arr;
+  }
+
+  function init() {
+    const canvas = document.getElementById("tickerCanvas") as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let w: number, h: number;
+
+    const green = "#71e9c4";
+    const red = "#ab092c";
+
+    function resize() {
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * devicePixelRatio;
+      canvas.height = h * devicePixelRatio;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const candlesPerRow = 18;
+    const rowHeight = h / tickers.length;
+
+    const rows = tickers.map((sym) => ({
+      sym,
+      data: makeSeries(candlesPerRow),
+    }));
+
+    let lastTick = performance.now();
+
+    function tick() {
+      rows.forEach((row) => {
+        row.data.shift();
+        const prevClose = row.data[row.data.length - 1].close;
+        row.data.push(nextCandle(prevClose));
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      const rh = h / rows.length;
+
+      rows.forEach((row, i) => {
+        const baseY = (i + 0.5) * rh;
+        const amp = rh * 0.42;
+        const slotW = w / row.data.length;
+        const candleW = Math.max(3, slotW * 0.55);
+
+        row.data.forEach((c, idx) => {
+          const x = idx * slotW + slotW / 2;
+          const color = c.close >= c.open ? green : red;
+
+          const yOpen = baseY - (c.open / 100) * amp;
+          const yClose = baseY - (c.close / 100) * amp;
+          const yHigh = baseY - (c.high / 100) * amp;
+          const yLow = baseY - (c.low / 100) * amp;
+
+          // wick
+          ctx.globalAlpha = 0.5;
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x, yHigh);
+          ctx.lineTo(x, yLow);
+          ctx.stroke();
+
+          // body
+          const top = Math.min(yOpen, yClose);
+          const bodyH = Math.max(2, Math.abs(yClose - yOpen));
+          ctx.globalAlpha = 0.45;
+          ctx.fillStyle = color;
+          ctx.fillRect(x - candleW / 2, top, candleW, bodyH);
+
+          ctx.globalAlpha = 0.65;
+          ctx.strokeStyle = color;
+          ctx.strokeRect(x - candleW / 2, top, candleW, bodyH);
+        });
+
+        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = "#9fb3aa";
+        ctx.font = "13px monospace";
+        ctx.fillText(row.sym, 8, baseY - rh * 0.38);
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    function loop(now: number) {
+      if (now - lastTick >= CANDLE_INTERVAL_MS) {
+        tick();
+        lastTick = now;
+      }
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+
+  init();
+  document.addEventListener("astro:page-load", init);
+</script>
+
+<style>
+  #tickerCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>
