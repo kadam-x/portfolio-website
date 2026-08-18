@@ -12,20 +12,18 @@ import { projects } from "../data/projects";
     <Signature />
     <a
       class="old-site-link"
-      href="https://old.kovacsadam.dev"
+      href="https://portfolio-website-lxa9otmei-kadamx.vercel.app/"
       target="_blank"
-      rel="noopener noreferrer"
-      >Old Site</a
+      rel="noopener noreferrer">Old Site</a
     >
   </header>
 
   <main class="content-box">
     <section id="intro" class="intro">
       <p class="bio">
-        Building systems at the intersection of finance and code. I combine
-        deep engineering with quantitative research to explore prediction
-        markets, volatility modeling, and the occasional side quest in game
-        dev.
+        Building systems at the intersection of finance and code. I combine deep
+        engineering with quantitative research to explore prediction markets,
+        volatility modeling, and the occasional side quest in game dev.
       </p>
       <div class="links">
         <span class="link-item"
@@ -50,9 +48,9 @@ import { projects } from "../data/projects";
 
     <section id="projects" class="projects">
       <h2>Projects</h2>
-        <div class="project-list">
-          {projects.map((project) => <ProjectEntry project={project} />)}
-        </div>
+      <div class="project-list">
+        {projects.map((project) => <ProjectEntry project={project} />)}
+      </div>
     </section>
   </main>
 
