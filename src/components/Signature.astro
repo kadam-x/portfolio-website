@@ -1,0 +1,146 @@
+---
+export interface Props {
+  strokeCount?: number;
+  basePath?: string;
+  alt?: string;
+  strokeDuration?: number;
+  stagger?: number;
+  initialDelay?: number;
+  aspectRatio?: string;
+  maxWidth?: string;
+  replayOnView?: boolean;
+}
+
+const {
+  strokeCount = 15,
+  basePath = "/signature",
+  alt = "Signature",
+  strokeDuration = 0.35,
+  stagger = 0.09,
+  initialDelay = 0.15,
+  aspectRatio = "603.47 / 221.98",
+  maxWidth = "160px",
+  replayOnView = false,
+} = Astro.props;
+
+const strokes = Array.from({ length: strokeCount }, (_, i) => i + 1);
+---
+
+<div
+  class="signature"
+  style={`aspect-ratio: ${aspectRatio}; max-width: ${maxWidth};`}
+  data-replay={replayOnView ? "true" : "false"}
+  role="img"
+  aria-label={alt}
+>
+  {strokes.map((n) => (
+    <img
+      src={`${basePath}/${n}.svg`}
+      class="stroke"
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+      decoding="async"
+      style={`animation-duration:${strokeDuration}s; animation-delay:${(initialDelay + (n - 1) * stagger).toFixed(3)}s;`}
+    />
+  ))}
+</div>
+
+<style>
+  .signature {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: 100%;
+    line-height: 0;
+  }
+
+  .stroke {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    opacity: 0;
+    animation-name: draw-in;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes draw-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+      filter: blur(1.5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .signature[data-replay="true"] .stroke {
+    animation-play-state: paused;
+    opacity: 1;
+  }
+  .signature[data-replay="true"].is-visible .stroke {
+    animation-play-state: running;
+  }
+  .signature[data-replay="true"]:not(.has-animated) .stroke {
+    opacity: 0;
+    animation-play-state: paused;
+  }
+  .signature[data-replay="true"].is-visible:not(.has-animated) .stroke {
+    animation-play-state: running;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stroke {
+      animation: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+{replayOnView && (
+  <script>
+    document.querySelectorAll<HTMLElement>('.signature[data-replay="true"]').forEach((el) => {
+      const strokes = Array.from(el.querySelectorAll<HTMLImageElement>('.stroke'));
+
+      const play = () => {
+        el.classList.remove('has-animated');
+        strokes.forEach((s) => {
+          s.style.animation = 'none';
+          void s.offsetWidth;
+          s.style.animation = '';
+        });
+        el.classList.add('is-visible');
+        const last = strokes[strokes.length - 1];
+        last?.addEventListener(
+          'animationend',
+          () => el.classList.add('has-animated'),
+          { once: true }
+        );
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              play();
+            } else {
+              el.classList.remove('is-visible', 'has-animated');
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+
+      observer.observe(el);
+    });
+  </script>
+)}

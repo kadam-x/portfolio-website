@@ -11,17 +11,17 @@
 </div>
 
 <script>
-  let bubbleTimeout = null;
+  let bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
   let currentTypeId = 0;
-  let blinkInterval = null;
+  let blinkInterval: ReturnType<typeof setTimeout> | number | null = null;
   let isEmoting = false;
 
-  function showDialogue(text) {
+  function showDialogue(text: string) {
     const bubble = document.getElementById("avatar-bubble");
     const content = bubble?.querySelector(".bubble-content");
     if (!bubble || !content) return;
 
-    clearTimeout(bubbleTimeout);
+    clearTimeout(bubbleTimeout!);
     bubble.classList.remove("hidden");
     content.textContent = "";
 
@@ -43,7 +43,7 @@
     }, 5500);
   }
 
-  function setExpression(name) {
+  function setExpression(name: string) {
     const blink = document.getElementById("avatar-blink");
     const talking = document.getElementById("avatar-talking");
     if (!blink || !talking) return;
@@ -62,9 +62,11 @@
   }
 
   function stopBlinking() {
-    clearInterval(blinkInterval);
-    clearTimeout(blinkInterval);
-    blinkInterval = null;
+    if (blinkInterval !== null) {
+      clearInterval(blinkInterval as number);
+      clearTimeout(blinkInterval as ReturnType<typeof setTimeout>);
+      blinkInterval = null;
+    }
   }
 
   function startBlinking() {
@@ -72,13 +74,13 @@
     blinkInterval = setInterval(() => {
       triggerBlink();
       const nextBlink = 2500 + Math.random() * 3000;
-      clearInterval(blinkInterval);
+      clearInterval(blinkInterval as number);
       blinkInterval = setTimeout(startBlinking, nextBlink);
     }, 3000 + Math.random() * 2000);
   }
 
-  function onRobotEmote(e) {
-    const { name, text, expression } = e.detail;
+  function onRobotEmote(e: Event) {
+    const { text, expression } = (e as CustomEvent).detail;
     const wrap = document.getElementById("avatar-wrap");
     if (!wrap) return;
 
@@ -111,10 +113,10 @@
 <style>
   #avatar-container {
     position: fixed;
-    bottom: -0.5rem;
-    left: 6rem;
-    width: 240px;
-    height: 300px;
+    bottom: -1rem;
+    left: 1.5rem;
+    width: 150px;
+    height: 200px;
     z-index: 100;
     pointer-events: none;
     transform: translateZ(0);
@@ -125,8 +127,8 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 240px;
-    height: 240px;
+    width: 150px;
+    height: 150px;
     transform: translateZ(0);
     backface-visibility: hidden;
     view-transition-name: none;
@@ -164,16 +166,17 @@
 
   #avatar-bubble {
     position: absolute;
-    bottom: 280px;
-    left: 40px;
-    background: #d8d9ed;
-    border: 1px solid #000000;
-    padding: 1rem 1.5rem;
-    max-width: 280px;
-    min-width: 220px;
-    color: #000000;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    bottom: 170px;
+    left: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    max-width: 220px;
+    min-width: 160px;
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1.5;
     z-index: 20;
     transition: opacity 0.3s;
     white-space: normal;
@@ -187,39 +190,34 @@
 
   .bubble-arrow {
     position: absolute;
-    bottom: -11px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: -8px;
+    left: 30px;
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #000000;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--border);
   }
 
   .bubble-arrow::after {
-    content: '';
+    content: "";
     position: absolute;
-    top: -9px;
-    left: -8px;
+    top: -5px;
+    left: -5px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #d8d9ed;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--bg);
   }
 
   @keyframes bounce {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-3px); }
-  }
-
-  @keyframes avatarEntry {
-    from { transform: scale(0.99); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  #avatar-wrap {
-    animation: none;
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
   }
 </style>
