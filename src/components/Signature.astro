@@ -15,8 +15,8 @@ const {
   strokeCount = 15,
   basePath = "/signature",
   alt = "Signature",
-  strokeDuration = 0.35,
-  stagger = 0.025,
+  strokeDuration = 0.32,
+  stagger = 0.055,
   initialDelay = 0.15,
   aspectRatio = "603.47 / 221.98",
   maxWidth = "160px",
@@ -99,6 +99,31 @@ const strokes = Array.from({ length: strokeCount }, (_, i) => i + 1);
     }
   }
 </style>
+
+<script>
+  const MIN_DURATION = 0.08;
+  const DURATION_RANGE = 0.16;
+  const MIN_GAP = 0.004;
+  const GAP_RANGE = 0.028;
+
+  function jitterStrokes() {
+    const strokes = document.querySelectorAll<HTMLElement>(".signature .stroke");
+    let cursor = parseFloat(
+      strokes[0]?.style.animationDelay.replace("s", "") || "0",
+    );
+
+    strokes.forEach((stroke) => {
+      const duration = MIN_DURATION + Math.random() * DURATION_RANGE;
+      cursor += MIN_GAP + Math.random() * GAP_RANGE;
+      stroke.style.animationDuration = `${duration.toFixed(3)}s`;
+      stroke.style.animationDelay = `${cursor.toFixed(3)}s`;
+      cursor += duration * 0.6;
+    });
+  }
+
+  jitterStrokes();
+  document.addEventListener("astro:page-load", jitterStrokes);
+</script>
 
 {replayOnView && (
   <script>
