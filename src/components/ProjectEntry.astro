@@ -12,6 +12,18 @@ const { project } = Astro.props;
   <summary class="entry-summary">
     <span class="entry-title">{project.title}</span>
     <span class="entry-status">— {project.status}</span>
+    <svg
+      class="entry-chevron"
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 4.5 6 8.5 10 4.5"></path>
+    </svg>
   </summary>
   <div class="entry-body">
     <p class="entry-desc">
@@ -61,21 +73,19 @@ const { project } = Astro.props;
     gap: 0;
   }
 
-  .entry-summary::after {
-    content: "";
+  .entry-chevron {
     margin-left: auto;
     padding-left: 1rem;
-    width: 0.4rem;
-    height: 0.4rem;
-    border-right: 1.5px solid var(--fg-muted);
-    border-bottom: 1.5px solid var(--fg-muted);
-    transform: translateY(-0.15rem) rotate(45deg);
-    transform-origin: center;
-    transition: transform 0.2s ease;
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+    align-self: center;
+    color: var(--fg-muted);
+    transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
-  .project-entry[open] > .entry-summary::after {
-    transform: translateY(0.1rem) rotate(-135deg);
+  .project-entry[open] > .entry-summary .entry-chevron {
+    transform: translateY(0.15rem);
   }
 
   .entry-title {
