@@ -6,7 +6,6 @@
   --fg-muted: #444444;
   --border: #000000;
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  interpolate-size: allow-keywords;
 }
 
 *,

@@ -25,31 +25,33 @@ const { project } = Astro.props;
       <path d="M2 4.5 6 8.5 10 4.5"></path>
     </svg>
   </summary>
-  <div class="entry-body">
-    <p class="entry-desc">
-      {project.description} Built with {project.tech.join(", ")}.
-    </p>
-    <div class="entry-video">
-      <span>video placeholder</span>
+  <div class="entry-collapse">
+    <div class="entry-body">
+      <p class="entry-desc">
+        {project.description} Built with {project.tech.join(", ")}.
+      </p>
+      <div class="entry-video">
+        <span>video placeholder</span>
+      </div>
+      <div class="entry-links">
+        {project.links.map((link) => (
+          <span class="link-item">
+            <span class="link-label">{link.label}</span>
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.url.replace(/^https?:\/\//, "")}
+            </a>
+          </span>
+        ))}
+      </div>
+      <details class="entry-insight">
+        <summary class="insight-toggle">Additional notes</summary>
+        <p class="insight-text">{project.insight}</p>
+      </details>
     </div>
-    <div class="entry-links">
-      {project.links.map((link) => (
-        <span class="link-item">
-          <span class="link-label">{link.label}</span>
-          <a
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {link.url.replace(/^https?:\/\//, "")}
-          </a>
-        </span>
-      ))}
-    </div>
-    <details class="entry-insight">
-      <summary class="insight-toggle">Additional notes</summary>
-      <p class="insight-text">{project.insight}</p>
-    </details>
   </div>
 </details>
 
@@ -58,18 +60,24 @@ const { project } = Astro.props;
     margin-left: 1.25rem;
   }
 
-  .project-entry::details-content {
-    block-size: 0;
-    overflow: clip;
-    opacity: 0;
-    transition:
-      block-size 0.28s ease,
-      content-visibility 0.28s allow-discrete,
-      opacity 0.22s ease;
+  .entry-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s ease;
   }
 
-  .project-entry[open]::details-content {
-    block-size: auto;
+  .entry-collapse > .entry-body {
+    overflow: hidden;
+    min-height: 0;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+
+  .project-entry[open] > .entry-collapse {
+    grid-template-rows: 1fr;
+  }
+
+  .project-entry[open] > .entry-collapse > .entry-body {
     opacity: 1;
   }
 
