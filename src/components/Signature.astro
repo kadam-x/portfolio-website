@@ -105,6 +105,9 @@ const strokes = Array.from({ length: strokeCount }, (_, i) => i + 1);
   const DURATION_RANGE = 0.12;
   const MIN_GAP = 0.004;
   const GAP_RANGE = 0.024;
+  const OPENING_STROKES = 5;
+  const OPENING_DURATION_MULTIPLIER = 1.5;
+  const OPENING_GAP_MULTIPLIER = 1.6;
 
   function jitterStrokes() {
     const strokes = document.querySelectorAll<HTMLElement>(".signature .stroke");
@@ -112,9 +115,15 @@ const strokes = Array.from({ length: strokeCount }, (_, i) => i + 1);
       strokes[0]?.style.animationDelay.replace("s", "") || "0",
     );
 
-    strokes.forEach((stroke) => {
-      const duration = MIN_DURATION + Math.random() * DURATION_RANGE;
-      cursor += MIN_GAP + Math.random() * GAP_RANGE;
+    strokes.forEach((stroke, i) => {
+      const opening = i < OPENING_STROKES;
+      const duration =
+        (MIN_DURATION + Math.random() * DURATION_RANGE) *
+        (opening ? OPENING_DURATION_MULTIPLIER : 1);
+      const gap =
+        (MIN_GAP + Math.random() * GAP_RANGE) *
+        (opening ? OPENING_GAP_MULTIPLIER : 1);
+      cursor += gap;
       stroke.style.animationDuration = `${duration.toFixed(3)}s`;
       stroke.style.animationDelay = `${cursor.toFixed(3)}s`;
       cursor += duration * 0.55;
