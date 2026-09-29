@@ -74,10 +74,10 @@ const { project } = Astro.props;
   }
 
   .entry-chevron {
-    margin-left: auto;
-    padding-left: 1rem;
     width: 0.75rem;
     height: 0.75rem;
+    margin-left: auto;
+    padding-left: 0;
     flex-shrink: 0;
     align-self: center;
     color: var(--fg-muted);
@@ -95,6 +95,7 @@ const { project } = Astro.props;
   }
 
   .entry-status {
+    padding-left: 0.75rem;
     font-weight: 400;
     color: var(--fg-muted);
     text-transform: uppercase;
