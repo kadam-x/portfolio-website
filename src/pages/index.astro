@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Signature from "../components/Signature.astro";
-import AvatarCurator from "../components/AvatarCurator.astro";
 import ProjectEntry from "../components/ProjectEntry.astro";
 import { projects } from "../data/projects";
 ---
@@ -55,8 +54,6 @@ import { projects } from "../data/projects";
   </main>
 
   <div class="border-bottom"></div>
-
-  <AvatarCurator />
 
   <style>
     .border-top {
@@ -197,19 +194,6 @@ import { projects } from "../data/projects";
 
   <script>
     function init() {
-      document.querySelectorAll(".entry-note").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const text = btn.getAttribute("data-emote");
-          if (text) {
-            window.dispatchEvent(
-              new CustomEvent("robot-emote", {
-                detail: { text, expression: "talking" },
-              }),
-            );
-          }
-        });
-      });
-
       document.querySelectorAll(".email-copy").forEach((btn) => {
         const hint = btn.parentElement?.querySelector(".copy-hint");
         const originalHint = hint?.textContent ?? "(click to copy)";

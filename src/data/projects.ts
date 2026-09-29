@@ -10,7 +10,7 @@ export interface Project {
   description: string;
   tech: string[];
   links: ProjectLink[];
-  emote: string;
+  insight: string;
 }
 
 export const projects: Project[] = [
@@ -31,7 +31,7 @@ export const projects: Project[] = [
         url: "https://github.com/kadam-x/TradingAgents",
       },
     ],
-    emote:
+    insight:
       "I built this because prediction markets and DeFi are one of the few places where insider positioning is both legal and detectable.",
   },
   {
@@ -51,7 +51,7 @@ export const projects: Project[] = [
         url: "https://github.com/kadam-x/volatility-surface-pipeline/blob/main/docs/architecture.md",
       },
     ],
-    emote:
+    insight:
       "I wanted to build something that sits closer to how risk systems actually work than a typical portfolio project. Getting Brent's method to behave at the wings was the part that kept me up.",
   },
   {
@@ -62,7 +62,7 @@ export const projects: Project[] = [
       "A dual-screen arcade shooter where you control two ships simultaneously. Each ship mirrors the other's movement but fires in opposite directions. Survive waves and unlock weapons.",
     tech: ["JavaScript", "Canvas", "Game Dev"],
     links: [],
-    emote:
+    insight:
       "Two ships. One keyboard. Zero mercy. The core mechanic of mirrored movement but opposite firing directions creates this puzzle-like flow where you have to think about both sides simultaneously.",
   },
   {
@@ -79,7 +79,7 @@ export const projects: Project[] = [
       },
       { label: "bufline.nvim", url: "https://github.com/kadam-x/bufline.nvim" },
     ],
-    emote:
+    insight:
       "Every colorscheme I tried either burned my eyes or put me to sleep. So I made my own. Onyx is what happens when you spend too much time staring at a screen.",
   },
   {
@@ -87,12 +87,12 @@ export const projects: Project[] = [
     title: "Portfolio Website",
     status: "open source",
     description:
-      "This very site, a personal portfolio built with Astro. Features a clean, academic-inspired UI, an animated robot mascot with dialogue system, and minimal project entries.",
+      "This very site, a personal portfolio built with Astro. Features a clean, academic-inspired UI and minimal, expandable project entries.",
     tech: ["Astro", "TypeScript"],
     links: [
       { label: "Source", url: "https://github.com/kadam-x/portfolio-website" },
     ],
-    emote:
+    insight:
       "Built the whole thing in Astro. Wanted a clean, academic vibe that still felt polished. The robot was supposed to be a small easter egg but now she's basically the front desk.",
   },
 ];

@@ -8,49 +8,80 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article class="project-entry" data-id={project.id}>
-  <h3 class="entry-title">
-    <button
-      class="entry-note"
-      type="button"
-      data-emote={project.emote}
-      aria-label={`Info about ${project.title}`}
-    >
-      ?
-    </button>
-    {project.title}
+<details class="project-entry">
+  <summary class="entry-summary">
+    <span class="entry-title">{project.title}</span>
     <span class="entry-status">— {project.status}</span>
-  </h3>
-  <p class="entry-desc">
-    {project.description} Built with {project.tech.join(", ")}.
-  </p>
-  <div class="entry-video">
-    <span>video placeholder</span>
+  </summary>
+  <div class="entry-body">
+    <p class="entry-desc">
+      {project.description} Built with {project.tech.join(", ")}.
+    </p>
+    <div class="entry-video">
+      <span>video placeholder</span>
+    </div>
+    <div class="entry-links">
+      {project.links.map((link) => (
+        <span class="link-item">
+          <span class="link-label">{link.label}</span>
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link.url.replace(/^https?:\/\//, "")}
+          </a>
+        </span>
+      ))}
+    </div>
+    <details class="entry-insight">
+      <summary class="insight-toggle">Additional notes</summary>
+      <p class="insight-text">{project.insight}</p>
+    </details>
   </div>
-  <div class="entry-links">
-    {project.links.map((link) => (
-      <span class="link-item">
-        <span class="link-label">{link.label}</span>
-        <a
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {link.url.replace(/^https?:\/\//, "")}
-        </a>
-      </span>
-    ))}
-  </div>
-</article>
+</details>
 
 <style>
   .project-entry {
     margin-left: 1.25rem;
   }
 
+  .project-entry summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .project-entry summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .entry-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+
+  .entry-summary::after {
+    content: "";
+    margin-left: auto;
+    padding-left: 1rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid var(--fg-muted);
+    border-bottom: 1.5px solid var(--fg-muted);
+    transform: translateY(-0.15rem) rotate(45deg);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+  }
+
+  .project-entry[open] > .entry-summary::after {
+    transform: translateY(0.1rem) rotate(-135deg);
+  }
+
   .entry-title {
     font-size: 1rem;
     font-weight: 600;
+    white-space: nowrap;
   }
 
   .entry-status {
@@ -59,6 +90,7 @@ const { project } = Astro.props;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-size: 0.75rem;
+    white-space: nowrap;
   }
 
   .entry-desc {
@@ -113,24 +145,48 @@ const { project } = Astro.props;
     text-underline-offset: 3px;
   }
 
-  .entry-note {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    margin-right: 0.25rem;
-    font: inherit;
-    font-size: inherit;
-    font-weight: 700;
-    color: var(--fg);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-    vertical-align: baseline;
+  .entry-insight {
+    margin-top: 1rem;
+    margin-left: 1.25rem;
   }
 
-  .entry-note:hover {
+  .insight-toggle {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
     color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+
+  .insight-toggle:hover {
+    color: var(--fg);
+  }
+
+  .insight-toggle::after {
+    content: "";
+    margin-left: 0.6rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-0.15rem) rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .entry-insight[open] > .insight-toggle::after {
+    transform: translateY(0.1rem) rotate(-135deg);
+  }
+
+  .insight-text {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--fg-muted);
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 700px;
   }
 
   @media (max-width: 768px) {
