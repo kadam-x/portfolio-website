@@ -58,6 +58,21 @@ const { project } = Astro.props;
     margin-left: 1.25rem;
   }
 
+  .project-entry::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size 0.28s ease,
+      content-visibility 0.28s allow-discrete,
+      opacity 0.22s ease;
+  }
+
+  .project-entry[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+
   .project-entry summary {
     list-style: none;
     cursor: pointer;
@@ -85,8 +100,7 @@ const { project } = Astro.props;
   }
 
   .project-entry[open] > .entry-summary .entry-chevron {
-    transform: translateY(0.3rem);
-    opacity: 0.45;
+    transform: rotate(180deg);
   }
 
   .entry-title {
