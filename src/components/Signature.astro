@@ -4,6 +4,7 @@ export interface Props {
   basePath?: string;
   alt?: string;
   strokeDuration?: number;
+  stagger?: number;
   initialDelay?: number;
   aspectRatio?: string;
   maxWidth?: string;
@@ -15,6 +16,7 @@ const {
   basePath = "/signature",
   alt = "Signature",
   strokeDuration = 0.35,
+  stagger = 0.025,
   initialDelay = 0.15,
   aspectRatio = "603.47 / 221.98",
   maxWidth = "160px",
@@ -39,7 +41,7 @@ const strokes = Array.from({ length: strokeCount }, (_, i) => i + 1);
       aria-hidden="true"
       loading="eager"
       decoding="async"
-      style={`animation-duration:${strokeDuration}s; animation-delay:${initialDelay.toFixed(3)}s;`}
+      style={`animation-duration:${strokeDuration}s; animation-delay:${(initialDelay + (n - 1) * stagger).toFixed(3)}s;`}
     />
   ))}
 </div>
