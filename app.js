@@ -65,9 +65,87 @@ function initEmailCopy() {
   });
 }
 
+function initEntries() {
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  document.querySelectorAll(".project-entry").forEach((entry) => {
+    const summary = entry.querySelector(":scope > summary");
+    const collapse = entry.querySelector(":scope > .entry-collapse");
+    const body = collapse?.querySelector(":scope > .entry-body");
+    if (!summary || !collapse || !body) return;
+
+    let expanded = entry.open;
+    let cancel = null;
+
+    function setOpen(open) {
+      cancel?.();
+      cancel = null;
+      entry.open = open;
+      collapse.style.height = open ? "auto" : "0px";
+    }
+
+    function animate(from, to, done) {
+      cancel?.();
+      collapse.style.transition = "none";
+      collapse.style.height = `${from}px`;
+      void collapse.offsetHeight;
+      collapse.style.transition = `height var(--entry-duration) var(--entry-ease)`;
+      collapse.style.height = `${to}px`;
+
+      let ended = false;
+      const onEnd = (event) => {
+        if (event.target !== collapse || event.propertyName !== "height") return;
+        ended = true;
+        cancel = null;
+        collapse.removeEventListener("transitionend", onEnd);
+        done();
+      };
+
+      collapse.addEventListener("transitionend", onEnd);
+      cancel = () => {
+        if (ended) return;
+        ended = true;
+        collapse.removeEventListener("transitionend", onEnd);
+      };
+    }
+
+    // Closing keeps entry.open true for the duration so the browser keeps the
+    // content rendered; it is only cleared once the panel has finished
+    // collapsing. Without this the content is hidden before it can animate.
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      expanded = !expanded;
+
+      if (reducedMotion) {
+        setOpen(expanded);
+        return;
+      }
+
+      const from = collapse.getBoundingClientRect().height;
+
+      if (expanded) {
+        entry.open = true;
+        animate(from, body.scrollHeight, () => {
+          collapse.style.transition = "none";
+          collapse.style.height = "auto";
+        });
+      } else {
+        animate(from, 0, () => {
+          collapse.style.transition = "none";
+          collapse.style.height = "0px";
+          entry.open = false;
+        });
+      }
+    });
+  });
+}
+
 function init() {
   jitterStrokes();
   initEmailCopy();
+  initEntries();
 }
 
 init();

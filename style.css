@@ -260,9 +260,13 @@ section:last-child {
 }
 
 .entry-collapse {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--entry-duration) var(--entry-ease);
+  height: 0;
+  overflow: hidden;
+}
+
+/* Fallback for no-JS: app.js takes over the height inline when it runs. */
+.project-entry[open] > .entry-collapse {
+  height: auto;
 }
 
 .entry-collapse > .entry-body {
@@ -270,10 +274,6 @@ section:last-child {
   min-height: 0;
   opacity: 0;
   transition: opacity var(--entry-duration) var(--entry-ease);
-}
-
-.project-entry[open] > .entry-collapse {
-  grid-template-rows: 1fr;
 }
 
 .project-entry[open] > .entry-collapse > .entry-body {
@@ -461,7 +461,6 @@ section:last-child {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .entry-collapse,
   .entry-collapse > .entry-body,
   .entry-chevron,
   .insight-toggle::after {
