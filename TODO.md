@@ -1,1 +1,0 @@
-- fix opening and closing of projects to be consistent and lag free
